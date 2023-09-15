@@ -5,6 +5,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
 import HelloWorld from './components/HelloWorld.vue'
 import Btn_Salvar from './components/Btn_Salvar.vue'
+import Btn_Limpar from './components/Btn_Limpar.vue'
+
 </script>
 
  
@@ -14,21 +16,25 @@ import Btn_Salvar from './components/Btn_Salvar.vue'
   <header>
 
     <img alt="logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
- 
-
     <div class="wrapper">
 
-      <HelloWorld msg="You did it!" />
-      <Btn_Salvar />
+      <HelloWorld msg="Banco de CHA" txt="Procure os CHA's que você já criou na plataforma." />
+      <div class="btn-container">
+        <div class="btn-group">
+          <Btn_Limpar />
+          <Btn_Salvar />
+        </div>
+      </div>
+      <hr class="linha-horizontal">
+     
 
- 
+      <!-- menu elaborado -->
+      <nav> 
 
-      <nav>
-
-        <RouterLink to="/">Home</RouterLink>
-
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/">Inserir Descrição</RouterLink>
+        <RouterLink to="/">Resultados</RouterLink>
+        <RouterLink to="/about">Banco de CHA</RouterLink>
+        <RouterLink to="/about">Configurações</RouterLink>
 
       </nav>
 
@@ -42,9 +48,52 @@ import Btn_Salvar from './components/Btn_Salvar.vue'
 
 </template>
 
- 
+<style> /**estilo global, vai ser aplicado a todos os componentes */
+  .btn{
+    color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 12px;
+    border-radius: 2px;
+    background: #5D5DFF;
+    box-shadow: 0px 10px 15px -3px rgba(21, 23, 25, 0.16);
+    height: 40px;
+    width: 80px;
+  }
+  .select-option{
+    border-radius: 8px;
+    width: auto;
+    height: 32px;
+  }
 
-<style scoped>
+  body{
+    color: #FFF;
+    background-color: #151719;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+</style>
+
+<style scoped> /**estilo scoped será aplicado apenas nos componentes que eu quiser, msm se ja tiver um global o scoped será aplicado por cima. */
+.btn-container {
+  display: flex;
+  flex-grow: 1; /* Isso faz com que o contêiner dos botões cresça e empurre os botões para o canto direito */
+  justify-content: flex-end; /* Isso alinha os botões à direita */
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+}
+
+
+.linha-horizontal {
+  border: 1px solid #5B5B5B; /* Estilo da linha, você pode personalizar as propriedades de acordo com suas preferências */
+  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
+  width: 100%;
+}
+
 
 header {
 
