@@ -3,10 +3,6 @@
 
 import { RouterLink, RouterView } from 'vue-router'
 
-import HelloWorld from './components/HelloWorld.vue'
-import Btn_Salvar from './components/Btn_Salvar.vue'
-import Btn_Limpar from './components/Btn_Limpar.vue'
-
 </script>
 
  
@@ -17,16 +13,6 @@ import Btn_Limpar from './components/Btn_Limpar.vue'
 
     <img alt="logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     <div class="wrapper">
-
-      <HelloWorld msg="Banco de CHA" txt="Procure os CHA's que você já criou na plataforma." />
-      <div class="btn-container">
-        <div class="btn-group">
-          <Btn_Limpar />
-          <Btn_Salvar />
-        </div>
-      </div>
-      <hr class="linha-horizontal">
-     
 
       <!-- menu elaborado -->
       <nav> 
@@ -76,34 +62,11 @@ import Btn_Limpar from './components/Btn_Limpar.vue'
 </style>
 
 <style scoped> /**estilo scoped será aplicado apenas nos componentes que eu quiser, msm se ja tiver um global o scoped será aplicado por cima. */
-.btn-container {
-  display: flex;
-  flex-grow: 1; /* Isso faz com que o contêiner dos botões cresça e empurre os botões para o canto direito */
-  justify-content: flex-end; /* Isso alinha os botões à direita */
-}
-
-.btn-group {
-  display: flex;
-  gap: 10px; /* Espaçamento entre os botões */
-}
-
-
-.linha-horizontal {
-  border: 1px solid #5B5B5B; /* Estilo da linha, você pode personalizar as propriedades de acordo com suas preferências */
-  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
-  width: 100%;
-}
-
 
 header {
-
   line-height: 1.5;
-
   max-height: 100vh;
-
 }
-
- 
 
 .logo {
 
@@ -112,8 +75,6 @@ header {
   margin: 0 auto 2rem;
 
 }
-
- 
 
 nav {
 
@@ -188,13 +149,9 @@ nav a:first-of-type {
  
 
   header .wrapper {
-
     display: flex;
-
     place-items: flex-start;
-
     flex-wrap: wrap;
-
   }
 
  

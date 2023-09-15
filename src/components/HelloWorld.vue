@@ -7,7 +7,7 @@ defineProps<{
 
 <template>
   <div class="greetings"> <!--DIV que seleciona os campos para busca;-->
-    <h1 class="green">{{ msg }}</h1> <!--a mensagem esta sendo definida qnd o componente é chamado na page App.vue-->
+    <h1 class="msg">{{ msg }}</h1> <!--a mensagem esta sendo definida qnd o componente é chamado na page App.vue-->
     <h2>{{ txt }}</h2>
 
     <span class="span-cargo">Selecione o título do cargo:</span>
@@ -61,6 +61,11 @@ h2{
 
 h3 {
   font-size: 1.2rem;
+}
+
+.msg{
+  color: #FFF;
+  font-size: 30px;
 }
 
 .greetings h1,
