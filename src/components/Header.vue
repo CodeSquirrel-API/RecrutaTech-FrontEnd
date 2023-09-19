@@ -19,6 +19,7 @@
         text-align: center;
         width:2.5rem;
         height:2.5rem;
+        margin-left: 10px;
     }
 
 </style>

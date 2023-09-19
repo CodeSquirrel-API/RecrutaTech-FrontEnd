@@ -21,5 +21,5 @@
         background-color: #FFF;
         width: 100%;
         height: 315px;
-    }
+        }
 </style>
