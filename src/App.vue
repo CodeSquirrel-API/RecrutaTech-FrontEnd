@@ -2,6 +2,8 @@
 <script setup lang="ts">
 
 import { RouterLink, RouterView } from 'vue-router'
+import Header from './components/Header.vue'
+
 
 </script>
 
@@ -27,7 +29,10 @@ import { RouterLink, RouterView } from 'vue-router'
     </div>
 
   </header> -->
+  <Header />
   <RouterView />
+  
+  
 
 </template>
 
@@ -54,6 +59,7 @@ import { RouterLink, RouterView } from 'vue-router'
     background-color: #151719;
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
   }
 
 </style>
