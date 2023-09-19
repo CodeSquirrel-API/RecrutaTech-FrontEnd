@@ -5,6 +5,7 @@ import Btn_Limpar from '../components/Btn_Limpar.vue'
 import Btn_Buscar from '../components/Btn_Buscar.vue'
 
 
+
 import Cha from '../components/Cha.vue'
 
 </script>
@@ -16,6 +17,7 @@ import Cha from '../components/Cha.vue'
         <div class="btn-group">
           <Btn_Limpar />
           <Btn_Buscar />
+          
         </div>
       </div>
       <hr class="linha-horizontal">
