@@ -1,8 +1,9 @@
 <template>
     <div >
-      <h2 class="titulo font"><strong>Entrar</strong></h2>
-      <br/>
-      <br/>
+      <div class="icon">
+        <img src="../../public/favicon.ico" :height="altura" :width="largura"/>
+      </div>
+      <h2 class="titulo font">Entrar</h2>
       <form @submit.prevent="login">
         <div class="center">
           <label for="username" class="font" >E-mail:</label>
@@ -17,7 +18,7 @@
           <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
         </div>
         <div class="center">
-          <input type="checkbox" id="meuCheckbox" v-model="aceitarTermos" />
+          <input type="checkbox" id="meuCheckbox" v-model="manterConectado" />
           <label for="meuCheckbox" class="font">   Manter conectado </label>
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
         </div>
@@ -26,7 +27,7 @@
         </div>
         <div class="center">
           <label for="text" class="font">Não tem uma conta?</label>
-          <RouterLink to="/CadastroCPF">   Cadastre-se   </RouterLink>
+          <RouterLink to="/CadastroCPF">Cadastre-se</RouterLink>
         </div>
       </form>
     </div>  
@@ -37,8 +38,8 @@
 .background{
   padding: 7px;
   background-color: #33363A;
-  width: 568px;
-  height: 50px;
+  width: 400px;
+  height: 38px;
   color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
@@ -55,16 +56,21 @@
   border-radius: 10px;
   margin-top: 50px;
   margin-bottom: 25px;
-  width: 568px;
-  height: 50px;
+  width: 400px;
+  height: 48px;
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
 }
 .direita{
-  margin-left: 280px;
+  margin-left: 80px;
 }
 .center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.icon{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,7 +83,9 @@
       return {
         username: '',
         password: '',
-        aceitarTermos: false,
+        manterConectado: false,
+        altura: 91,
+        largura: 87
       };
     },
     methods: {
