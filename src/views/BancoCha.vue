@@ -7,7 +7,6 @@ import Btn_Buscar from '../components/Btn_Buscar.vue'
 
 
 import Cha from '../components/Cha.vue'
-
 </script>
 
 <template>
