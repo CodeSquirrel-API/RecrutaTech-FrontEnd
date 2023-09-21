@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BancoCha from '../views/BancoCha.vue'
+import Home from '../views/Home.vue'
 import Chat from '../components/Chat.vue'
 
 
@@ -7,8 +8,14 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/BancoCha',
+      path: '/Home',
       name: 'home',
+      component: Home
+    },
+    
+    {
+      path: '/BancoCha',
+      name: 'bancocha',
       component: BancoCha
     },
     {
