@@ -3,6 +3,7 @@
 
 import { RouterLink, RouterView } from 'vue-router'
 import Header from './components/Header.vue'
+import chat from './components/chat.vue'
 
 
 </script>
@@ -29,7 +30,9 @@ import Header from './components/Header.vue'
     </div>
 
   </header> -->
-  <Header />
+
+  <!-- <chat /> -->
+  <Header /> <!--Remover e adicionar na page HOME quando estiver pronta-->
   <RouterView />
   
   

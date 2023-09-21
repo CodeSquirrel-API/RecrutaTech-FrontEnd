@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import BancoCha from '../views/BancoCha.vue'
+import Chat from '../components/Chat.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -8,6 +10,11 @@ const router = createRouter({
       path: '/BancoCha',
       name: 'home',
       component: BancoCha
+    },
+    {
+      path: '/Chat',
+      name: 'chat',
+      component: Chat
     },
     
     {
