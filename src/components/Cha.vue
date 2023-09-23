@@ -20,7 +20,6 @@
 
     .campo{
         display: flex;
-        justify-content: center;
         margin-bottom: 10px;
     }
     .campo-texto{

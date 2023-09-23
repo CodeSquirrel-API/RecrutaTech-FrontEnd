@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
+import HelloWorld from '@/components/HelloWorld.vue'   //aqui esta a tabela com opçoes de cargos.
 import Btn_Salvar from '../components/Btn_Salvar.vue'
 import Btn_Limpar from '../components/Btn_Limpar.vue'
 import Btn_Buscar from '../components/Btn_Buscar.vue'
@@ -51,5 +51,8 @@ import Cha from '../components/Cha.vue'
   border: 1px solid #5B5B5B; /* Estilo da linha, você pode personalizar as propriedades de acordo com suas preferências */
   margin: 20px 0; /* Espaçamento acima e abaixo da linha */
   width: 100%;
+}
+main{
+  margin-left: 45px;
 }
 </style>

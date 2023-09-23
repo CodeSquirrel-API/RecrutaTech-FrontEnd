@@ -23,7 +23,7 @@ defineProps<{
 
     <span class="span-nivel" >Selecione o nível de atuação profissional:</span> <br>
 
-    <select name="nivel" class="select-option txt-select">
+    <select name="nivel" class="select-nivel select-option txt-select">
         <option value="" class="select-option txt-select">Junior</option>
         <option value="" class="select-option txt-select">Pleno</option>
         <option value="" class="select-option txt-select">Sênior</option>
@@ -35,13 +35,18 @@ defineProps<{
 
 
 <style scoped>
+.select-nivel{
+  margin-top: 10px;
+}
 .txt-select{
   color:rgb(0, 0, 0, 50%);
   font-size: 17px;
   margin-bottom: 30px;
+
 }
 .select-cargo{
-  width: 100%;
+  width: 50%;
+  margin-left: 10px;
 }
 
 h1 {
