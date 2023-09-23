@@ -2,10 +2,11 @@
 
 import axios from 'axios';
 import { ref } from 'vue';
-var cargo: string = "";
-var chaText: string = "";
 
-const resposta = ref('');
+
+const cargo = ref("") ;
+const chaText = ref("") ;
+const experience = ref("") ;
 
 const azureOpenAIAPI = {
   ResourceName: 'interactai',
@@ -26,38 +27,44 @@ function getCargoGpt() {
   const data = {
     messages: [
       {
-        "role": "user", "content": `Quais as competencias, habilidades e atitudes que um ${cargo} precisa ter? Responda dentro de um Json nesse modelo :
-                            {{
-                                "Competencias":[],
-                                "Habilidades":[],
-                                "Atitudes":[]
-                            }}`  }
+        "role": "user", "content":
+          `Quais as competencias, habilidades e atitudes que um ${cargo.value} ${experience.value} precisa ter?`
+      }
     ]
-
   };
-
+  chaText.value = "Buscando CHA...";
   axios.post(apiUrl, data, { headers })
-    .then(response => {
-      chaText = response.data.choices[0].message.content;
+    .then(async response => {
+      chaText.value = await response.data.choices[0].message.content;
     })
     .catch(error => {
       console.error(error);
     });
 }
 
+async function salvarCha() {
+  await axios.post("/position/create",
+    {
+      name: cargo.value,
+      cha: chaText.value,
+      experience: experience.value
+    });
+
+}
+
 </script>
 <template>
   <div>
-    <h1 class="title">Descrição da Vaga</h1>
+    <h1 class="title">Descrição da Vaga </h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo">
 
     <div class="nivel-container">
       <span class="span-nivel">Selecione o nível de atuação profissional:</span> <br>
-      <select name="nivel" class="select-option txt-select">
-        <option value="" class="select-option txt-select">Junior</option>
-        <option value="" class="select-option txt-select">Pleno</option>
-        <option value="" class="select-option txt-select">Sênior</option>
+      <select v-model="experience" name="nivel" class="select-option txt-select">
+        <option value="JUNIOR" class="select-option txt-select">Junior</option>
+        <option value="PLENO" class="select-option txt-select">Pleno</option>
+        <option value="SENIOR" class="select-option txt-select">Sênior</option>
       </select>
     </div>
 
@@ -79,7 +86,7 @@ function getCargoGpt() {
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
       <button class="custom-button edit-button">Editar</button>
-      <button class="custom-button search-button">Buscar</button>
+      <button class="custom-button search-button" @click="salvarCha">Salvar</button>
     </div>
   </div>
 </template>
