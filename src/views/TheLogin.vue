@@ -1,41 +1,51 @@
 <template>
-    <div >
+
+
+    <div class="container">
       <div class="icon">
-        <img src="../../public/favicon.ico" :height="altura" :width="largura"/>
+        <img src="../../public/squirrel.png" width="100" height="100" />
       </div>
-      <h2 class="titulo font">Entrar</h2>
+
+
+      <h2 class="titulo ">Entrar</h2>
+
       <form @submit.prevent="login">
-        <div class="center">
-          <label for="username" class="font" >E-mail:</label>
+
+        <div class="">
+          <label for="username" class="" >E-mail:</label>
+          <input type="text" class="campoInput" id="username" v-model="username" placeholder="exemplo@gmail.com"/>
         </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="Seu email"/>
+
+        <div class="">
+          <label for="password" class="" >Senha:</label>
+          <input type="password" class="campoInput" id="password" v-model="password" placeholder="********"/>
         </div>
-        <div class="center">
-          <label for="password" class="font" >Senha:</label>
-        </div>
-        <div class="center">
-          <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
-        </div>
+
         <div class="center">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado" />
-          <label for="meuCheckbox" class="font">   Manter conectado </label>
+          <label for="meuCheckbox" class="">   Manter conectado </label>
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
         </div>
+
+
         <div class="center">
           <button @click="entrar" class="entrar">Entrar</button>
         </div>
+
+
         <div class="center">
           <label for="text" class="font">Não tem uma conta?</label>
           <RouterLink to="/CadastroCPF">Cadastre-se</RouterLink>
         </div>
+
       </form>
+      
     </div>  
   </template>
 
 <style scoped>
 
-.background{
+.campoInput{
   padding: 7px;
   background-color: #33363A;
   width: 400px;
@@ -43,6 +53,7 @@
   color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
+  border: none;
 }
 .font{
   color: #FFFFFF;
@@ -53,28 +64,34 @@
   font-weight: bolder;
 }
 .entrar{
-  border-radius: 10px;
   margin-top: 50px;
   margin-bottom: 25px;
   width: 400px;
   height: 48px;
   background-color: #5D5DFF;
   color: white;
+  border: none;
   font-size: 20px;
 }
 .direita{
   margin-left: 80px;
 }
+
 .center{
   display: flex;
   justify-content: center;
   align-items: center;
+  border:none;
+  margin-top: 10px;
+
 }
 .icon{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 25px;
 }
+
 </style>
   
   <script lang="ts">
@@ -84,8 +101,6 @@
         username: '',
         password: '',
         manterConectado: false,
-        altura: 91,
-        largura: 87
       };
     },
     methods: {

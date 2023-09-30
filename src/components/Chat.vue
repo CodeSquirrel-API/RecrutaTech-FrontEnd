@@ -12,7 +12,7 @@ const resposta = ref('');
 const azureOpenAIAPI = {
   ResourceName: 'interactai',
   DeploymentId: 'modelgpt35t',
-  Key: 'CHAVE API',
+  Key: '',
   Version: '2023-05-15'
 };
 

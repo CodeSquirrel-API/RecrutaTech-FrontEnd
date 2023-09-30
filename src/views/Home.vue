@@ -11,7 +11,7 @@ const experience = ref("") ;
 const azureOpenAIAPI = {
   ResourceName: 'interactai',
   DeploymentId: 'modelgpt35t',
-  Key: 'CHAVE API',
+  Key: 'KEY',
   Version: '2023-05-15'
 };
 
