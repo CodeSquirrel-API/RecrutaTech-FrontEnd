@@ -27,7 +27,6 @@
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
         </div>
 
-
         <div class="center">
           <button @click="entrar" class="entrar">Entrar</button>
         </div>
