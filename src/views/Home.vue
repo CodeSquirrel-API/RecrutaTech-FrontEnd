@@ -42,6 +42,11 @@ function getCargoGpt() {
     });
 }
 
+function LimparCampos(){
+  this.cargo = '';
+  this.experience='';
+}
+
 async function salvarCha() {
   await axios.post("/position/create",
     {
@@ -70,7 +75,7 @@ async function salvarCha() {
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button clear-button">Limpar</button>
+      <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
       <button class="custom-button save-button" @click="getCargoGpt()">Gerar CHA</button>
     </div>
 
