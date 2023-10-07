@@ -15,27 +15,27 @@
       <div class="center">
         <form @submit.prevent="CadastroCPF">
           <div>
-            <label for="username" class="font" >Nome da Empresa:</label>    
+            <label for="razaoSocial" class="font" >Nome da Empresa:</label>    
           </div>
 
           <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="Razão Social" />
+            <input type="text" class="" id="razaoSocial" v-model="razaoSocial" placeholder="Razão Social" />
           </div>
 
           <div>
-            <label for="username" class="font" >CNPJ:</label>
+            <label for="cnpj" class="font" >CNPJ:</label>
           </div>
 
           <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="XX.XXX.XXX/0001-XX" />
+            <input type="text" class="" id="cnpj" v-model="cnpj" placeholder="XX.XXX.XXX/0001-XX" />
           </div>
 
           <div>
-            <label for="username" class="font" >E-mail:</label>
+            <label for="email" class="font" >E-mail:</label>
           </div>
 
           <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="email@exemplo.com"/>
+            <input type="text" class="" id="email" v-model="email" placeholder="email@exemplo.com"/>
           </div>
 
           <div>
@@ -65,13 +65,14 @@
 
 input{
   padding: 7px;
-  background-color: #33363A;
+  background-color: #33363a00;
   width: 400px;
   height: 38px;
   color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
-  border: none;
+  border-style:solid;
+  border-color:#33363A;
 }
 .background{
   padding: 7px;
@@ -141,7 +142,9 @@ label {
   export default {
     data() {
       return {
-        username: '',
+        razaoSocial: '',
+        cnpj:'',
+        email:'',
         password: '',
         aceitarTermos: false,
       };
@@ -150,7 +153,7 @@ label {
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
+        console.log('Usuário:', this.razaoSocial);
         console.log('Senha:', this.password);
       },
       entrar() {

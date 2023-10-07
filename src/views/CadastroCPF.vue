@@ -26,19 +26,19 @@
             </div>
 
             <div>
-              <label for="username" class="font" >CPF:</label>
+              <label for="cpf" class="font" >CPF:</label>
             </div>
 
             <div class="">
-              <input type="text" class="" id="username" v-model="username" placeholder="000.000.000-00" />
+              <input type="text" class="" id="cpf" v-model="cpf" placeholder="000.000.000-00" />
             </div>
 
             <div>
-              <label for="username" class="font" >E-mail:</label>
+              <label for="email" class="font" >E-mail:</label>
             </div>
 
             <div class="">
-              <input type="text" class="" id="username" v-model="username" placeholder="email@exemplo.com"/>
+              <input type="text" class="" id="email" v-model="email" placeholder="email@exemplo.com"/>
             </div>
 
             <div>
@@ -67,13 +67,14 @@
 
 input{
   padding: 7px;
-  background-color: #33363A;
+  background-color: #33363a00;
   width: 400px;
   height: 38px;
   color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
-  border: none;
+  border-style:solid;
+  border-color:#33363A;
 }
 
 .font{
@@ -137,6 +138,8 @@ label {
     data() {
       return {
         username: '',
+        cpf:'',
+        email:'',
         password: '',
         aceitarTermos: false,
       };
