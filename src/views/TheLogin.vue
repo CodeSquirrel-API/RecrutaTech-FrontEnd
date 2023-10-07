@@ -45,16 +45,16 @@
   display:flex;
 }
 
-
 .campoInput{
   padding: 7px;
-  background-color: #33363A;
+  background-color: #33363a00;
   width: 400px;
   height: 38px;
   color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
-  border: none;
+  border-style:solid;
+  border-color:#33363A;
 }
 .font{
   color: #FFFFFF;
