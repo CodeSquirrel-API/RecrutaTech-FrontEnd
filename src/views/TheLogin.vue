@@ -1,14 +1,12 @@
 <template>
-
-
-    <div class="container">
+  
+    <div class="center">
       <div class="icon">
         <img src="../../public/squirrel.png" width="100" height="100" />
       </div>
 
 
       <h2 class="titulo ">Entrar</h2>
-
       <form @submit.prevent="login">
 
         <div class="">
@@ -21,20 +19,20 @@
           <input type="password" class="campoInput" id="password" v-model="password" placeholder="********"/>
         </div>
 
-        <div class="center">
-          <input type="checkbox" id="meuCheckbox" v-model="manterConectado" />
-          <label for="meuCheckbox" class="">   Manter conectado </label>
+        <div class="checkbox">
+          <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
+          <label for="meuCheckbox" class="">Manter conectado </label>
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
-        </div>
-
+        </div>       
+        
         <div class="center">
           <button @click="entrar" class="entrar">Entrar</button>
         </div>
 
 
         <div class="center">
-          <label for="text" class="font">Não tem uma conta?</label>
-          <RouterLink to="/CadastroCPF">Cadastre-se</RouterLink>
+          <label for="text" class="font">Não tem uma conta?
+          <RouterLink to="/CadastroCPF">Cadastre-se</RouterLink></label>
         </div>
 
       </form>
@@ -43,6 +41,10 @@
   </template>
 
 <style scoped>
+.checkbox{
+  display:flex;
+}
+
 
 .campoInput{
   padding: 7px;
@@ -76,20 +78,29 @@
   margin-left: 80px;
 }
 
-.center{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border:none;
-  margin-top: 10px;
 
-}
 .icon{
   display: flex;
   justify-content: center;
   align-items: center;
   margin-top: 25px;
 }
+
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: none;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 5px;
+  margin-left: 5px; 
+  align-items: flex-start;
+}
+
 
 </style>
   
