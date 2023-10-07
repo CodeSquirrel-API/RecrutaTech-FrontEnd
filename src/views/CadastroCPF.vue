@@ -16,50 +16,50 @@
 
 
       <div class="center">
-      <form @submit.prevent="CadastroCPF">
-          <div>
-            <label for="username" class="font" >Nome Completo:</label>    
-          </div>
+        <form @submit.prevent="CadastroCPF">
+            <div>
+              <label for="username" class="font" >Nome Completo:</label>    
+            </div>
 
-          <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="Digite o seu nome" />
-          </div>
+            <div class="">
+              <input type="text" class="" id="username" v-model="username" placeholder="Digite o seu nome" />
+            </div>
 
-          <div>
-            <label for="username" class="font" >CPF:</label>
-          </div>
+            <div>
+              <label for="username" class="font" >CPF:</label>
+            </div>
 
-          <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="000.000.000-00" />
-          </div>
+            <div class="">
+              <input type="text" class="" id="username" v-model="username" placeholder="000.000.000-00" />
+            </div>
 
-          <div>
-            <label for="username" class="font" >E-mail:</label>
-          </div>
+            <div>
+              <label for="username" class="font" >E-mail:</label>
+            </div>
 
-          <div class="">
-            <input type="text" class="" id="username" v-model="username" placeholder="email@exemplo.com"/>
-          </div>
+            <div class="">
+              <input type="text" class="" id="username" v-model="username" placeholder="email@exemplo.com"/>
+            </div>
 
-          <div>
-            <label for="password" class="font" >Senha:</label>
-          </div>
+            <div>
+              <label for="password" class="font" >Senha:</label>
+            </div>
 
-          <div class="">
-            <input type="password" class="" id="password" v-model="password" placeholder="********"/>
-          </div>
+            <div class="">
+              <input type="password" class="" id="password" v-model="password" placeholder="********"/>
+            </div>
 
-          <div class="center">
-            <button @click="entrar" class="btnCadastrar">Cadastrar</button>
-          </div>
+            <div class="center">
+              <button @click="entrar" class="btnCadastrar">Cadastrar</button>
+            </div>
 
-          <div class="center">
-            <label for="text">Já tem uma conta?
-              <RouterLink to="/login">Entre</RouterLink> 
-            </label>
-          </div>
-      </form>
-    </div>
+            <div class="center">
+              <label for="text">Já tem uma conta?
+                <RouterLink to="/login">Entre</RouterLink> 
+              </label>
+            </div>
+        </form>
+      </div>
     </div>  
   </template>
 
@@ -75,9 +75,7 @@ input{
   margin: 5px 5px;
   border: none;
 }
-.link{
- 
-}
+
 .font{
   color: #FFFFFF;
 }

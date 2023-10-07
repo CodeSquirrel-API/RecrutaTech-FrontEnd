@@ -1,55 +1,78 @@
 <template>
-    <div >
+    <div class="center">
       <h2 class="titulo">Cadastre-se</h2>
 
-      <div class="center">
+      <div class="">
       <RouterLink to="/CadastroCPF">
-        <button @click="entrar" class="entrar2">CPF</button>
+        <button @click="entrar" class="opcao2">CPF</button>
       </RouterLink>
       
       <RouterLink to="/CadastroCNPJ">
-        <button @click="entrar" class="entrar1">CNPJ</button>
+        <button @click="entrar" class="opcao1">CNPJ</button>
       </RouterLink>
       </div>
 
-      <form @submit.prevent="CadastroCPF">
-        <div>
-          <label for="username" class="font" >Nome da Empresa:</label>    
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="Razão Social" />
-        </div>
-        <div>
-          <label for="username" class="font" >CNPJ:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="XX.XXX.XXX/0001-XX" />
-        </div>
-        <div>
-          <label for="username" class="font" >E-mail:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="email@exemplo.com"/>
-        </div>
-        <div>
-          <label for="password" class="font" >Senha:</label>
-        </div>
-        <div class="center">
-          <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
-        </div>
-        <div class="center">
-            <button @click="entrar" class="entrar1">Cadastrar</button>
-        </div>
-        <div class="center">
-          <label for="text" >Não tem uma conta?</label>
-          <RouterLink to="/login">Entre</RouterLink>
-        </div>
-      </form>
+      <div class="center">
+        <form @submit.prevent="CadastroCPF">
+          <div>
+            <label for="username" class="font" >Nome da Empresa:</label>    
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="username" v-model="username" placeholder="Razão Social" />
+          </div>
+
+          <div>
+            <label for="username" class="font" >CNPJ:</label>
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="username" v-model="username" placeholder="XX.XXX.XXX/0001-XX" />
+          </div>
+
+          <div>
+            <label for="username" class="font" >E-mail:</label>
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="username" v-model="username" placeholder="email@exemplo.com"/>
+          </div>
+
+          <div>
+            <label for="password" class="font" >Senha:</label>
+          </div>
+
+          <div class="">
+            <input type="password" class="" id="password" v-model="password" placeholder="********"/>
+          </div>
+
+          <div class="center">
+              <button @click="entrar" class="btnCadastrar">Cadastrar</button>
+          </div>
+
+          <div class="center">
+            <label for="text" >Já tem uma conta?
+              <RouterLink to="/login">Entre</RouterLink>
+            </label>
+          </div>
+
+        </form>
+      </div>
     </div>  
   </template>
 
 <style scoped>
 
+input{
+  padding: 7px;
+  background-color: #33363A;
+  width: 400px;
+  height: 38px;
+  color: #707D86;
+  font-size: 16px;
+  margin: 5px 5px;
+  border: none;
+}
 .background{
   padding: 7px;
   background-color: #33363A;
@@ -59,40 +82,56 @@
   font-size: 16px;
   margin: 5px 5px;
 }
+.btnCadastrar{
+  background-color: #5D5DFF;
+  border: none;
+  border-radius: 5px;
+  width: 133px;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+}
 .font{
   color: #FFFFFF;
-  margin-left: 475px;
 }
 .titulo{
   text-align: center;
   font-size: 35px;
   font-weight: bolder;
 }
-.entrar1{
-  margin: 30px 30px 30px 30px;
-  border-radius: 10px;
+.opcao1{
+ margin-left: 10px;
+  border-radius: 5px;
   width: 133px;
   height: 40px;
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
+  border: none;
 }
-.entrar2{
-  margin: 30px 30px 30px 30px;
-  border-radius: 10px;
+.opcao2{
+  margin-right: 10px;
+  border-radius: 5px;
   width: 133px;
   height: 40px;
   background-color: #666666;
   color: white;
   font-size: 20px;
+  border: none;
 }
-.direita{
-  margin-left: 280px;
-}
-.center{
+.center {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border: none;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-left: 5px; 
+  align-items: flex-start;
 }
 
 
