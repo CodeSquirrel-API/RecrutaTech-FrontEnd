@@ -26,7 +26,19 @@
       <hr class="line" />
 
       <!-- Título "CHA" -->
-      <h2 class="cha-title">CHA - Conhecimentos, Habilidades e Atitudes</h2>
+      <h2 class="title"> Digite o CHA </h2>
+
+      <h2 class="cha-title"> Conhecimentos </h2>
+
+      <!-- Campo de texto multilinea -->
+      <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+      <h2 class="cha-title"> Habilidades </h2>
+
+      <!-- Campo de texto multilinea -->
+      <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+      <h2 class="cha-title"> Atitudes </h2>
 
       <!-- Campo de texto multilinea -->
       <textarea v-model="chaText" class="cha-textarea"></textarea>
@@ -42,7 +54,7 @@
   <style scoped>
   .title {
     color: rgb(255, 255, 255); 
-    font-size: 35px; 
+    font-size: 30px; 
     font-weight: bold; 
     margin-left: 25px;
   }
@@ -135,19 +147,20 @@
 .cha-title {
   font-size: 22px;
   margin-top: 30px; 
-  margin-left: 18px;
+  margin-left: 25px;
 }
 
 /* Estilos para o campo de texto multilinear */
 .cha-textarea {
-  width: 100%;
-  height: 200px; 
-  padding: 10px;
+  width: 80%;
+  height: 100px; 
+  padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
-  margin-top: 10px; 
-  margin-bottom: 10px; 
+  margin-top: 5px; 
+  margin-left: 25px;
+  margin-bottom: 15px; 
 }
 
 /* Estilos para os botões "Editar" e "Buscar" */
