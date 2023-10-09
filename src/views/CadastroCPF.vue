@@ -40,17 +40,17 @@
             <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
           </div>
           <div class="center">
-            <button @click="entrar" class="entrar1">Cadastrar</button>
+            <button @click="showPopup" class="entrar1">Cadastrar</button>
           </div>
           <div class="center">
-            <label for="text">Não tem uma conta?</label>
+            <label for="text">Já tem uma conta?</label>
             <RouterLink to="/login">Entre</RouterLink>
           </div>
       </form>
     </div>  
   </template>
 
-<style scoped>
+<style scoped>  
 
 .background{
   padding: 7px;
@@ -108,6 +108,10 @@
       };
     },
     methods: {
+      showPopup() {
+        const message = 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.'
+        alert(message)
+      },
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
