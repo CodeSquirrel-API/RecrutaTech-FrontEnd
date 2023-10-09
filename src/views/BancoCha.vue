@@ -1,55 +1,188 @@
 <script setup lang="ts">
-import HelloWorld from '@/components/HelloWorld.vue'
-import Btn_Salvar from '../components/Btn_Salvar.vue'
-import Btn_Limpar from '../components/Btn_Limpar.vue'
-import Btn_Buscar from '../components/Btn_Buscar.vue'
 
-
-
-import Cha from '../components/Cha.vue'
 </script>
-
-<template>
-  <main>
-      <HelloWorld msg="Banco de CHA" txt="Procure os CHA's que você já criou na plataforma." />
-      <div class="btn-container">
-        <div class="btn-group">
-          <Btn_Limpar />
-          <Btn_Buscar />
-          
-        </div>
+  <template>
+    <div>
+      <h1 class="title">Banco de CHA</h1>
+      <label for="descricao" class="input-label">Digite o título do cargo:</label>
+      <input class="custom-input" type="text" placeholder="Digite aqui...">
+      
+      <div class="nivel-container">
+        <span class="span-nivel">Selecione o nível de atuação profissional:</span> <br>
+        <select name="nivel" class="select-option txt-select">
+          <option value="" class="select-option txt-select">Junior</option>
+          <option value="" class="select-option txt-select">Pleno</option>
+          <option value="" class="select-option txt-select">Sênior</option>
+        </select>
       </div>
-      <hr class="linha-horizontal">
-      <Cha />
-
-      <div class="btn-container">
-        <div class="btn-group">
-          <button class="btn">Editar CHA</button> 
-          <Btn_Salvar />
-        </div>
+  
+      <!-- Botões Limpar e Salvar -->
+      <div class="button-container">
+        <button class="custom-button clear-button">Limpar</button>
+        <button class="custom-button save-button">Buscar</button>
       </div>
 
-  </main>
-</template>
+      <!-- Linha cinza abaixo dos botões -->
+      <hr class="line" />
 
+      <!-- Título "CHA" -->
+      <h2 class="title"> Digite o CHA </h2>
 
+      <h2 class="cha-title"> Conhecimentos </h2>
 
-<style scoped> /**estilo scoped será aplicado apenas nos componentes que eu quiser, msm se ja tiver um global o scoped será aplicado por cima. */
-.btn-container {
-  display: flex;
-  flex-grow: 1; /* Isso faz com que o contêiner dos botões cresça e empurre os botões para o canto direito */
-  justify-content: flex-end; /* Isso alinha os botões à direita */
+      <!-- Campo de texto multilinea -->
+      <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+      <h2 class="cha-title"> Habilidades </h2>
+
+      <!-- Campo de texto multilinea -->
+      <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+      <h2 class="cha-title"> Atitudes </h2>
+
+      <!-- Campo de texto multilinea -->
+      <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+      <!-- Botões Editar e Buscar -->
+      <div class="button-container">
+        <button class="custom-button edit-button">Editar CHA</button>
+        <button class="custom-button search-button">Salvar</button>
+      </div>
+    </div>
+  </template>
+  
+  <style scoped>
+  .title {
+    color: rgb(255, 255, 255); 
+    font-size: 30px; 
+    font-weight: bold; 
+    margin-left: 25px;
+  }
+  .input-label {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+    margin-left: 25px;
+  }
+  .custom-input {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 6px; 
+  }
+
+  .custom-input:focus {
+    border-color: #007bff;
+  }
+
+  .nivel-container {
+    margin-left: 25px;
+    margin-top: 30px; 
+  }
+
+  .span-nivel {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+  }
+
+  .select-option {
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-top: 5px;
+  }
+
+  .select-option:focus {
+    border-color: #007bff;
+  }
+
+  /* Estilos dos botões */
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 55px;
+  }
+
+  .custom-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+  }
+
+  .clear-button {
+    background-color: #6666;
+    color: #fff;
+  }
+
+  .save-button {
+    background-color: #5D5DFF;
+    color: #fff;
+  }
+
+  .custom-button:hover {
+    filter: brightness(0.9); /* Escurece a cor ao passar o mouse */
+  }
+
+  .line {
+  border: none;
+  border-top: 1px solid #999898;
+  margin-top: 10px; /* Espaçamento acima da linha */
+  margin-bottom: 10px; /* Espaçamento abaixo da linha */
 }
 
-.btn-group {
-  display: flex;
-  gap: 10px; /* Espaçamento entre os botões */
+/* Estilos para o título "CHA" */
+.cha-title {
+  font-size: 22px;
+  margin-top: 30px; 
+  margin-left: 25px;
 }
 
-
-.linha-horizontal {
-  border: 1px solid #5B5B5B; /* Estilo da linha, você pode personalizar as propriedades de acordo com suas preferências */
-  margin: 20px 0; /* Espaçamento acima e abaixo da linha */
-  width: 100%;
+/* Estilos para o campo de texto multilinear */
+.cha-textarea {
+  width: 80%;
+  height: 100px; 
+  padding: 30px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 5px; 
+  margin-left: 25px;
+  margin-bottom: 15px; 
 }
+
+/* Estilos para os botões "Editar" e "Buscar" */
+.edit-button,
+.search-button {
+  background-color: #5D5DFF; 
+  color: #fff; 
+  border: 1px solid #5D5DFF; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  margin-right: 2px; 
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Estilos de hover para os botões "Editar" e "Buscar" */
+.edit-button:hover,
+.search-button:hover {
+  background-color: #4455cc;
+  border-color: #4455cc; 
+}
+
 </style>
+  
