@@ -3,7 +3,6 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
-
 const cargo = ref("") ;
 const chaText = ref("") ;
 const experience = ref("") ;
@@ -78,7 +77,19 @@ async function salvarCha() {
     <hr class="line" />
 
     <!-- Título "CHA" -->
-    <h2 class="cha-title">CHA - Conhecimentos, Habilidades e Atitudes</h2>
+    <h2 class="title"> Digite o CHA </h2>
+
+    <h2 class="cha-title"> Conhecimentos </h2>
+
+    <!-- Campo de texto multilinea -->
+    <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+    <h2 class="cha-title"> Habilidades </h2>
+
+    <!-- Campo de texto multilinea -->
+    <textarea v-model="chaText" class="cha-textarea"></textarea>
+
+    <h2 class="cha-title"> Atitudes </h2>
 
     <!-- Campo de texto multilinea -->
     <textarea v-model="chaText" class="cha-textarea"></textarea>
@@ -92,130 +103,126 @@ async function salvarCha() {
 </template>
   
 <style scoped>
-.title {
-  color: rgb(255, 255, 255);
-  font-size: 35px;
-  font-weight: bold;
-  margin-left: 25px;
-}
+  .title {
+    color: rgb(255, 255, 255); 
+    font-size: 30px; 
+    font-weight: bold; 
+    margin-left: 25px;
+  }
+  .input-label {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+    margin-left: 25px;
+  }
+  .custom-input {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 6px; 
+  }
 
-.input-label {
-  color: #ffffff;
-  font-size: 20px;
-  margin-bottom: 8px;
-  margin-left: 25px;
-}
+  .custom-input:focus {
+    border-color: #007bff;
+  }
 
-.custom-input {
-  width: 90%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-left: 25px;
-  margin-right: 25px;
-  margin-top: 6px;
-}
+  .nivel-container {
+    margin-left: 25px;
+    margin-top: 30px; 
+  }
 
-.custom-input:focus {
-  border-color: #007bff;
-}
+  .span-nivel {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+  }
 
-.nivel-container {
-  margin-left: 25px;
-  margin-top: 30px;
-}
+  .select-option {
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-top: 5px;
+  }
 
-.span-nivel {
-  color: #ffffff;
-  font-size: 20px;
-  margin-bottom: 8px;
-}
+  .select-option:focus {
+    border-color: #007bff;
+  }
 
-.select-option {
-  width: 30%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-top: 5px;
-}
+  /* Estilos dos botões */
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 55px;
+  }
 
-.select-option:focus {
-  border-color: #007bff;
-}
+  .custom-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+  }
 
-/* Estilos dos botões */
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-right: 55px;
-}
+  .clear-button {
+    background-color: #6666;
+    color: #fff;
+  }
 
-.custom-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.2s;
-}
+  .save-button {
+    background-color: #5D5DFF;
+    color: #fff;
+  }
 
-.clear-button {
-  background-color: #6666;
-  color: #fff;
-}
+  .custom-button:hover {
+    filter: brightness(0.9); /* Escurece a cor ao passar o mouse */
+  }
 
-.save-button {
-  background-color: #5D5DFF;
-  color: #fff;
-}
-
-.custom-button:hover {
-  filter: brightness(0.9);
-  /* Escurece a cor ao passar o mouse */
-}
-
-.line {
+  .line {
   border: none;
   border-top: 1px solid #999898;
-  margin-top: 10px;
-  /* Espaçamento acima da linha */
-  margin-bottom: 10px;
-  /* Espaçamento abaixo da linha */
+  margin-top: 10px; /* Espaçamento acima da linha */
+  margin-bottom: 10px; /* Espaçamento abaixo da linha */
 }
 
 /* Estilos para o título "CHA" */
 .cha-title {
   font-size: 22px;
-  margin-top: 30px;
-  margin-left: 18px;
+  margin-top: 30px; 
+  margin-left: 25px;
 }
 
 /* Estilos para o campo de texto multilinear */
 .cha-textarea {
-  width: 100%;
-  height: 200px;
-  padding: 10px;
+  width: 80%;
+  height: 100px; 
+  padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px; 
+  margin-left: 25px;
+  margin-bottom: 15px; 
 }
 
 /* Estilos para os botões "Editar" e "Buscar" */
 .edit-button,
 .search-button {
-  background-color: #5D5DFF;
-  color: #fff;
-  border: 1px solid #5D5DFF;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin-right: 2px;
+  background-color: #5D5DFF; 
+  color: #fff; 
+  border: 1px solid #5D5DFF; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  margin-right: 2px; 
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
@@ -225,7 +232,8 @@ async function salvarCha() {
 .edit-button:hover,
 .search-button:hover {
   background-color: #4455cc;
-  border-color: #4455cc;
+  border-color: #4455cc; 
 }
+
 </style>
   
