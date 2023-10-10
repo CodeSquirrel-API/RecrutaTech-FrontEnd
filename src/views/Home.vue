@@ -1,65 +1,11 @@
-<script setup lang="ts">
-
-import axios from 'axios';
-import { ref } from 'vue';
-
-const cargo = ref("") ;
-const chaText = ref("") ;
-const experience = ref("") ;
-
-const azureOpenAIAPI = {
-  ResourceName: 'interactai',
-  DeploymentId: 'modelgpt35t',
-  Key: 'CHAVE API',
-  Version: '2023-05-15'
-};
-
-const apiUrl = `https://${azureOpenAIAPI.ResourceName}.openai.azure.com/openai/deployments/${azureOpenAIAPI.DeploymentId}/chat/completions?api-version=${azureOpenAIAPI.Version}`;
-
-const headers = {
-  'Content-Type': 'application/json',
-  'api-key': azureOpenAIAPI.Key
-};
-
-
-function getCargoGpt() {
-  const data = {
-    messages: [
-      {
-        "role": "user", "content":
-          `Quais as competencias, habilidades e atitudes que um ${cargo.value} ${experience.value} precisa ter?`
-      }
-    ]
-  };
-  chaText.value = "Buscando CHA...";
-  axios.post(apiUrl, data, { headers })
-    .then(async response => {
-      chaText.value = await response.data.choices[0].message.content;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-async function salvarCha() {
-  await axios.post("/position/create",
-    {
-      name: cargo.value,
-      cha: chaText.value,
-      experience: experience.value
-    });
-
-}
-
-</script>
 <template>
   <div>
-    <h1 class="title">Descrição da Vaga </h1>
+    <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo">
 
     <div class="nivel-container">
-      <span class="span-nivel">Selecione o nível de atuação profissional:</span> <br>
+      <span class="span-nivel">Selecione o nível de atuação profissional:</span><br>
       <select v-model="experience" name="nivel" class="select-option txt-select">
         <option value="JUNIOR" class="select-option txt-select">Junior</option>
         <option value="PLENO" class="select-option txt-select">Pleno</option>
@@ -77,22 +23,16 @@ async function salvarCha() {
     <hr class="line" />
 
     <!-- Título "CHA" -->
-    <h2 class="title"> Digite o CHA </h2>
+    <h2 class="title">CHA - Conhecimento, Habilidade e Atitude</h2>
 
-    <h2 class="cha-title"> Conhecimentos </h2>
+    <h2 class="cha-title">Conhecimento</h2>
+    <textarea v-model="conhecimentos" class="cha-textarea"></textarea>
 
-    <!-- Campo de texto multilinea -->
-    <textarea v-model="chaText" class="cha-textarea"></textarea>
+    <h2 class="cha-title">Habilidade</h2>
+    <textarea v-model="habilidades" class="cha-textarea"></textarea>
 
-    <h2 class="cha-title"> Habilidades </h2>
-
-    <!-- Campo de texto multilinea -->
-    <textarea v-model="chaText" class="cha-textarea"></textarea>
-
-    <h2 class="cha-title"> Atitudes </h2>
-
-    <!-- Campo de texto multilinea -->
-    <textarea v-model="chaText" class="cha-textarea"></textarea>
+    <h2 class="cha-title">Atitude</h2>
+    <textarea v-model="atitudes" class="cha-textarea"></textarea>
 
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
@@ -100,6 +40,83 @@ async function salvarCha() {
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      cargo: '',
+      experience: '',
+      conhecimentos: '',
+      habilidades: '',
+      atitudes: '',
+    };
+  },
+  methods: {
+    async getCargoGpt() {
+      const azureOpenAIAPI = {
+        ResourceName: 'interactai',
+        DeploymentId: 'modelgpt35t',
+        Key: '66a6b8c8d3c449d4b53fa75d09b04366',
+        Version: '2023-05-15',
+      };
+
+      const apiUrl = `https://${azureOpenAIAPI.ResourceName}.openai.azure.com/openai/deployments/${azureOpenAIAPI.DeploymentId}/chat/completions?api-version=${azureOpenAIAPI.Version}`;
+
+      const data = {
+        messages: [
+          {
+            role: 'user',
+            content: `Quais os conhecimentos, habilidades e atitudes que um ${this.cargo} ${this.experience} precisa ter? Devolver a resposta como um json que possui as chaves "conhecimento", "habilidade" e "atitude" com os respectivos valores`,
+          },
+        ],
+      };
+
+      try {
+        const response = await axios.post(apiUrl, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'api-key': azureOpenAIAPI.Key,
+          },
+        });
+
+        const content = response.data.choices[0].message.content;
+        if (content) {
+          try {
+            const conteudoJson = JSON.parse (content)
+            this.conhecimentos = conteudoJson.conhecimento
+            this.habilidades = conteudoJson.habilidade
+            this.atitudes = conteudoJson.atitude
+          } catch (error) {
+            console.log(`error: ${error}`)
+          }
+
+        } else {
+          console.error('Erro');
+
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    
+    async salvarCha() {
+      try {
+        const response = await axios.post('/position/create', {
+          name: this.cargo,
+          cha: this.conhecimentos + '\n\n' + this.habilidades + '\n\n' + this.atitudes,
+          experience: this.experience,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+};
+</script>
   
 <style scoped>
   .title {
@@ -196,7 +213,7 @@ async function salvarCha() {
 /* Estilos para o título "CHA" */
 .cha-title {
   font-size: 22px;
-  margin-top: 30px; 
+  margin-top: 35px; 
   margin-left: 25px;
 }
 
