@@ -96,7 +96,6 @@ async function salvarCha() {
 
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
-      <button class="custom-button edit-button">Editar</button>
       <button class="custom-button search-button" @click="salvarCha">Salvar</button>
     </div>
   </div>
@@ -222,7 +221,7 @@ async function salvarCha() {
   border: 1px solid #5D5DFF; 
   border-radius: 5px; 
   padding: 10px 20px; 
-  margin-right: 2px; 
+  margin-right: 15px; 
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
