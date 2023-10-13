@@ -25,13 +25,13 @@
             <label for="username" class="font" >CPF:</label>
           </div>
           <div class="center">
-            <input type="text" class="background" id="username" v-model="username" placeholder="000.000.000-00" />
+            <input type="text" class="background" id="CPF" v-model="CPF" placeholder="000.000.000-00" />
           </div>
           <div>
             <label for="username" class="font" >E-mail:</label>
           </div>
           <div class="center">
-            <input type="text" class="background" id="username" v-model="username" placeholder="email@exemplo.com"/>
+            <input type="text" class="background" id="email" v-model="email" placeholder="email@exemplo.com"/>
           </div>
           <div>
             <label for="password" class="font" >Senha:</label>
@@ -40,7 +40,7 @@
             <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
           </div>
           <div class="center">
-            <button class="open-popup-button entrar1" @click="showPopup">Cadastrar</button>
+            <button class="open-popup-button entrar1" @click="cadastrar">Cadastrar</button>
 
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
@@ -135,18 +135,34 @@
 }
 </style>
   
-  <script lang="ts">
+<script lang="ts">
+import axios from 'axios';
+
+
   export default {
+
     data() {
       return {
+        email: '',
         username: '',
         password: '',
-        aceitarTermos: false,
+        CPF: '',
         isPopupVisible: false,
         popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
     },
     methods: {
+      async cadastrar() {
+        axios({
+          method: 'get',
+          url: 'https://8080-codesquirre-recrutatech-x75p1gsa7ic.ws-us105.gitpod.io/user/getAll',
+          headers: {
+          }
+        })
+        .then(async function (response) {
+          console.log(response.data)
+        });
+      },
       showPopup() {
         this.isPopupVisible = true;
       },
@@ -158,6 +174,7 @@
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
         console.log('Usuário:', this.username);
         console.log('Senha:', this.password);
+        
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
