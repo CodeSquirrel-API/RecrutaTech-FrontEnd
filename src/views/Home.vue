@@ -43,6 +43,9 @@
 
 <script lang="ts">
 import axios from 'axios';
+import { ref } from 'vue'
+
+const chaContent = ref ({}) 
 
 export default {
   data() {
@@ -52,6 +55,7 @@ export default {
       conhecimentos: '',
       habilidades: '',
       atitudes: '',
+      chaContent,
     };
   },
   methods: {
@@ -89,6 +93,13 @@ export default {
             this.conhecimentos = conteudoJson.conhecimento
             this.habilidades = conteudoJson.habilidade
             this.atitudes = conteudoJson.atitude
+            chaContent.value = {
+              name: this.cargo,
+              knowledge: this.conhecimentos,
+              skill: this.habilidades,
+              attitude: this.atitudes,
+              experience: this.experience
+            }
           } catch (error) {
             console.log(`error: ${error}`)
           }
@@ -105,16 +116,20 @@ export default {
     
     async salvarCha() {
       try {
-        const response = await axios.post('/position/create', {
-          name: this.cargo,
-          cha: this.conhecimentos + '\n\n' + this.habilidades + '\n\n' + this.atitudes,
-          experience: this.experience,
-        });
+        const payload = chaContent.value
+        console.log (payload)
+        const response = await axios.post('/position/create', payload);
+        console.log(response)
       } catch (error) {
         console.error(error);
       }
     },
   },
+  watch: {
+    chaContent (){
+    this.salvarCha()
+   }
+  }
 };
 </script>
   
