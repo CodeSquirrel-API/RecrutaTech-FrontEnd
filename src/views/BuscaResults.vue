@@ -1,0 +1,49 @@
+<template>
+	<Sidebar></Sidebar>
+	<div class="container">
+		
+		<h1>Resultados</h1>
+		<p>Lista de buscas, clique em uma profissão para verificar os resultados.</p>
+		<SelectMenu></SelectMenu>
+	</div>
+</template>
+  
+<script>
+import SelectMenu from "../components/Select.vue";
+import Sidebar from '../components/Sidebar.vue';
+
+export default {
+	components: {
+		SelectMenu, Sidebar
+	},
+};
+</script>
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+	font-family: Poppins;
+}
+
+.container {
+	width: 100%;
+}
+
+.container h1 {
+	color: #fff;
+	min-height: 10vh;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: bold;
+	font-size: 40px;
+	margin-left: 40px;
+	margin-top: 4vh;
+}
+
+.container p {
+	color: #fff;
+	font-size: 20px;
+	margin-left: 10vh;
+}
+</style>
+  

@@ -1,183 +1,48 @@
-
-<script setup lang="ts">
-
-import { RouterLink, RouterView } from 'vue-router'
-import Header from './components/Header.vue'
-
-
-</script>
-
- 
-
 <template>
-
-  <!-- <header>
-
-    <img alt="logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> /**ICONEEEE */
-    <div class="wrapper">
-
-       menu elaborado 
-      <nav> 
-
-        <RouterLink to="/">Inserir Descrição</RouterLink>
-        <RouterLink to="/">Resultados</RouterLink>
-        <RouterLink to="/about">Banco de CHA</RouterLink>
-        <RouterLink to="/about">Configurações</RouterLink>
-
-      </nav>
-
-    </div>
-
-  </header> -->
-
-  <!-- <chat /> -->
-  <Header /> <!--Remover e adicionar na page HOME quando estiver pronta-->
-  <RouterView />
-  <Menu />
-  
-  
-
+<div class="app">
+		<router-view />
+	</div>
 </template>
 
-<style> /**estilo global, vai ser aplicado a todos os componentes */
-  .btn{
-    color: white;
-    border: none;
-    font-weight: bold;
-    font-size: 12px;
-    border-radius: 2px;
-    background: #5D5DFF;
-    box-shadow: 0px 10px 15px -3px rgba(21, 23, 25, 0.16);
-    height: 40px;
-    width: 80px;
-  }
-  .select-option{
-    border-radius: 8px;
-    width: auto;
-    height: 32px;
-  }
+<script setup>
+import Sidebar from './components/Sidebar.vue'
+import Select from './components/Select.vue';
+</script>
 
-  body{
-    color: #FFF;
-    background-color: #151719;
-    font-size: 18px;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-  }
-
-</style>
-
-<style scoped> /**estilo scoped será aplicado apenas nos componentes que eu quiser, msm se ja tiver um global o scoped será aplicado por cima. */
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style lang="scss">
+:root {
+	--sidebar-width: 300px;
 }
 
-.logo {
-
-  display: block;
-
-  margin: 0 auto 2rem;
-
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Poppins;
 }
 
-nav {
-
-  width: 100%;
-
-  font-size: 12px;
-
-  text-align: center;
-
-  margin-top: 2rem;
-
+body {
+	background: #151719;
 }
 
- 
-
-nav a.router-link-exact-active {
-
-  color: var(--color-text);
-
+button {
+	cursor: pointer;
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
 }
 
- 
+.app {
+	display: flex;
 
-nav a.router-link-exact-active:hover {
+	main {
+		flex: 1 1 0;
+		padding: 2rem;
 
-  background-color: transparent;
-
+		@media (max-width: 1024px) {
+			padding-left: 6rem;
+		}
+	}
 }
-
- 
-
-nav a {
-
-  display: inline-block;
-
-  padding: 0 1rem;
-
-  border-left: 1px solid var(--color-border);
-
-}
-
- 
-
-nav a:first-of-type {
-
-  border: 0;
-
-}
-
- 
-
-@media (min-width: 1024px) {
-
-  header {
-
-    display: flex;
-
-    place-items: center;
-
-    padding-right: calc(var(--section-gap) / 2);
-
-  }
-
- 
-
-  .logo {
-
-    margin: 0 2rem 0 0;
-
-  }
-
- 
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
- 
-
-  nav {
-
-    text-align: left;
-
-    margin-left: -1rem;
-
-    font-size: 1rem;
-
- 
-
-    padding: 1rem 0;
-
-    margin-top: 1rem;
-
-  }
-
-}
-
 </style>

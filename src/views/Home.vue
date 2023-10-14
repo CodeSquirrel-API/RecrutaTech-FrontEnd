@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Sidebar></Sidebar>
+  <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo">
@@ -44,10 +45,14 @@
 <script lang="ts">
 import axios from 'axios';
 import { ref } from 'vue'
+import Sidebar from '../components/Sidebar.vue';
 
 const chaContent = ref ({}) 
 
 export default {
+  components: {
+		Sidebar,
+	},
   data() {
     return {
       cargo: '',
@@ -63,7 +68,7 @@ export default {
       const azureOpenAIAPI = {
         ResourceName: 'interactai',
         DeploymentId: 'modelgpt35t',
-        Key: 'CHAVE API',
+        Key: '66a6b8c8d3c449d4b53fa75d09b04366',
         Version: '2023-05-15',
       };
 
@@ -134,6 +139,10 @@ export default {
 </script>
   
 <style scoped>
+
+.home{
+  width: 100%;
+}
   .title {
     color: rgb(255, 255, 255); 
     font-size: 30px; 
@@ -200,6 +209,7 @@ export default {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    box-shadow: 0 5px 10px rgb(0,0,0, 0.3);
     margin-left: 10px;
     transition: background-color 0.2s;
   }
@@ -229,6 +239,7 @@ export default {
 .cha-title {
   font-size: 22px;
   margin-top: 35px; 
+  color: #fff;
   margin-left: 25px;
 }
 

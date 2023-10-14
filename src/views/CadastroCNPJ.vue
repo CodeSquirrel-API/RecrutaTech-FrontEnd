@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div class="cadastro" >
       <h2 class="titulo">Cadastre-se</h2>
 
       <div class="center">
@@ -41,7 +41,7 @@
             <button @click="entrar" class="entrar1">Cadastrar</button>
         </div>
         <div class="center">
-          <label for="text" >Não tem uma conta?</label>
+          <label style="color: #Fff;" for="text" >Não tem uma conta?</label>
           <RouterLink to="/login">Entre</RouterLink>
         </div>
       </form>
@@ -50,12 +50,16 @@
 
 <style scoped>
 
+.cadastro{
+  width: 100%;
+}
 .background{
   padding: 7px;
   background-color: #33363A;
   width: 400px;
   height: 38px;
-  color: #707D86;
+  color: #fff;
+  border-radius: 10px;
   font-size: 16px;
   margin: 5px 5px;
 }
@@ -66,6 +70,7 @@
 .titulo{
   text-align: center;
   font-size: 35px;
+  color: #fff;
   font-weight: bolder;
 }
 .entrar1{
@@ -76,7 +81,14 @@
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
+  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
+  transition: all 0.5s ease;
 }
+
+.entrar2:hover{
+  transform: translateY(-3px);
+}
+
 .entrar2{
   margin: 30px 30px 30px 30px;
   border-radius: 10px;
@@ -85,6 +97,12 @@
   background-color: #666666;
   color: white;
   font-size: 20px;
+  transition: all 0.5s ease;
+  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
+}
+
+.entrar1:hover{
+  transform:translateY(-3px)
 }
 .direita{
   margin-left: 280px;

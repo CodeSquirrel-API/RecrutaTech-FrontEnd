@@ -1,68 +1,56 @@
 <template>
-	<aside :class="`${is_expanded ? 'is-expanded' : ''}`">
-		
-
-		<div class="menu-toggle-wrap">
-			<button class="menu-toggle" @click="ToggleMenu">
-				<span class="material-icons">keyboard_double_arrow_right</span>
-			</button>
+	<aside class="is-expanded">
+		<div class="logo">
+			<img :src="logoURL" alt="Vue" />
 		</div>
 
 		<h3>Menu</h3>
 		<div class="menu">
-			<router-link to="/" class="button">
+			<router-link to="/home" class="button">
 				<span class="material-icons">description</span>
 				<span class="text">Inserir Descrição</span>
 			</router-link>
-			<router-link to="/about" class="button">
-				<span class="material-icons">results</span>
+			<router-link to="/busca" class="button">
+				<span class="material-icons">search</span>
+				<span class="text">Buscar</span>
+			</router-link>
+			<router-link to="/resultados" class="button">
+				<span class="material-icons">timeline</span>
 				<span class="text">Resultados</span>
 			</router-link>
-			<router-link to="/team" class="button">
-				<span class="material-icons">cha</span>
+			<router-link to="/bancocha" class="button">
+				<span class="material-icons">group</span>
 				<span class="text">Banco CHA</span>
-			</router-link>
-			<router-link to="/contact" class="button">
-				<span class="material-icons">email</span>
-				<span class="text">Contato</span>
 			</router-link>
 		</div>
 
 		<div class="flex"></div>
-		
+
 		<div class="menu">
 			<router-link to="/settings" class="button">
 				<span class="material-icons">settings</span>
-				<span class="text">Settings</span>
+				<span class="text">Configurações</span>
 			</router-link>
 		</div>
 	</aside>
 </template>
-
+  
 <script setup>
-import { ref } from 'vue'
-
-const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
-
-const ToggleMenu = () => {
-	is_expanded.value = !is_expanded.value
-	localStorage.setItem("is_expanded", is_expanded.value)
-}
+	import logoURL from '../assets/logo.png';
+	
 </script>
-
+  
 <style lang="scss" scoped>
 aside {
 	display: flex;
 	flex-direction: column;
-
 	background-color: #121415;
-	color: var(--light);
-
+	color: #fff;
 	width: calc(2rem + 32px);
 	overflow: hidden;
+	width: 300px;
 	min-height: 100vh;
 	padding: 1rem;
-
 	transition: 0.2s ease-in-out;
 
 	.flex {
@@ -77,39 +65,8 @@ aside {
 		}
 	}
 
-	.menu-toggle-wrap {
-		display: flex;
-		justify-content: flex-end;
-		margin-bottom: 1rem;
-
-		position: relative;
-		top: 0;
-		transition: 0.2s ease-in-out;
-
-		.menu-toggle {
-			transition: 0.2s ease-in-out;
-			.material-icons {
-				font-size: 2rem;
-				color: var(--light);
-				transition: 0.2s ease-out;
-			}
-			
-			&:hover {
-				.material-icons {
-					color: var(--primary);
-					transform: translateX(0.5rem);
-				}
-			}
-		}
-	}
-
-	h3, .button .text {
-		opacity: 0;
-		transition: opacity 0.3s ease-in-out;
-	}
-
 	h3 {
-		color: var(--grey);
+		color: #fff;
 		font-size: 0.875rem;
 		margin-bottom: 0.5rem;
 		text-transform: uppercase;
@@ -122,34 +79,37 @@ aside {
 			display: flex;
 			align-items: center;
 			text-decoration: none;
-
 			transition: 0.2s ease-in-out;
 			padding: 0.5rem 1rem;
 
 			.material-icons {
 				font-size: 2rem;
-				color: var(--light);
+				color: #fff;
+				margin-right: 10px;
 				transition: 0.2s ease-in-out;
 			}
+
 			.text {
-				color: var(--light);
+				color: #fff;
 				transition: 0.2s ease-in-out;
 			}
 
 			&:hover {
-				background-color: var(--dark-alt);
+				background-color: #121415;
 
-				.material-icons, .text {
-					color: var(--primary);
+				.material-icons,
+				.text {
+					color: #5D5DFF;
 				}
 			}
 
 			&.router-link-exact-active {
-				background-color: var(--dark-alt);
-				border-right: 5px solid var(--primary);
+				background-color: #121415;
+				border-right: 5px solid #5D5DFF;
 
-				.material-icons, .text {
-					color: var(--primary);
+				.material-icons,
+				.text {
+					color: #5D5DFF;
 				}
 			}
 		}
@@ -161,33 +121,7 @@ aside {
 
 		p {
 			font-size: 0.875rem;
-			color: var(--grey);
-		}
-	}
-
-	&.is-expanded {
-		width: var(--sidebar-width);
-
-		.menu-toggle-wrap {
-			top: -3rem;
-			
-			.menu-toggle {
-				transform: rotate(-180deg);
-			}
-		}
-
-		h3, .button .text {
-			opacity: 1;
-		}
-
-		.button {
-			.material-icons {
-				margin-right: 1rem;
-			}
-		}
-
-		.footer {
-			opacity: 0;
+			color: #121415;
 		}
 	}
 
@@ -197,3 +131,4 @@ aside {
 	}
 }
 </style>
+  

@@ -1,8 +1,16 @@
-<script setup lang="ts">
+<script>
+import Sidebar from '../components/Sidebar.vue';
+
+export default {
+	components: {
+		Sidebar,
+	},
+};
 
 </script>
   <template>
-    <div>
+    <Sidebar></Sidebar>
+    <div class="bancocha">
       <h1 class="title">Banco de CHA</h1>
       <label for="descricao" class="input-label">Digite o título do cargo:</label>
       <input class="custom-input" type="text" placeholder="Digite aqui...">
@@ -51,6 +59,10 @@
   </template>
   
   <style scoped>
+
+  .bancocha{
+    width: 100%;
+  }
   .title {
     color: rgb(255, 255, 255); 
     font-size: 30px; 
@@ -146,6 +158,7 @@
 .cha-title {
   font-size: 22px;
   margin-top: 30px; 
+  color: #fff;
   margin-left: 25px;
 }
 
@@ -174,6 +187,7 @@
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
+  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
 }
 
 /* Estilos de hover para os botões "Editar" e "Buscar" */

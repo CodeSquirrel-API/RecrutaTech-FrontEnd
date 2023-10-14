@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div class="login">
       <div class="icon">
         <img src="../../public/favicon.ico" :height="altura" :width="largura"/>
       </div>
@@ -24,6 +24,7 @@
         </div>
         <div class="center">
           <button @click="entrar" class="entrar">Entrar</button>
+          <RouterLink to="/Home"></RouterLink>
         </div>
         <div class="center">
           <label for="text" class="font">Não tem uma conta?</label>
@@ -35,12 +36,17 @@
 
 <style scoped>
 
+
+.login{
+  width: 100%;
+}
 .background{
   padding: 7px;
   background-color: #33363A;
   width: 400px;
   height: 38px;
-  color: #707D86;
+  color: #fff;
+  border-radius: 10px;
   font-size: 16px;
   margin: 5px 5px;
 }
@@ -60,7 +66,15 @@
   height: 48px;
   background-color: #5D5DFF;
   color: white;
+  cursor: pointer;
+  border-radius: 10px;
   font-size: 20px;
+  box-shadow: 0, 5px, 15px rgb(0,0,0,0.4);
+  transition: all 0.4s ease;
+}
+
+.entrar:hover{
+  transform: translateY(-3px);
 }
 .direita{
   margin-left: 80px;
