@@ -1,71 +1,11 @@
-<script setup lang="ts">
-
-import axios from 'axios';
-import { ref } from 'vue';
-
-
-const cargo = ref("") ;
-const chaText = ref("") ;
-const experience = ref("") ;
-
-const azureOpenAIAPI = {
-  ResourceName: 'interactai',
-  DeploymentId: 'modelgpt35t',
-  Key: 'KEY',
-  Version: '2023-05-15'
-};
-
-const apiUrl = `https://${azureOpenAIAPI.ResourceName}.openai.azure.com/openai/deployments/${azureOpenAIAPI.DeploymentId}/chat/completions?api-version=${azureOpenAIAPI.Version}`;
-
-const headers = {
-  'Content-Type': 'application/json',
-  'api-key': azureOpenAIAPI.Key
-};
-
-
-function getCargoGpt() {
-  const data = {
-    messages: [
-      {
-        "role": "user", "content":
-          `Quais as competencias, habilidades e atitudes que um ${cargo.value} ${experience.value} precisa ter?`
-      }
-    ]
-  };
-  chaText.value = "Buscando CHA...";
-  axios.post(apiUrl, data, { headers })
-    .then(async response => {
-      chaText.value = await response.data.choices[0].message.content;
-    })
-    .catch(error => {
-      console.error(error);
-    });
-}
-
-function LimparCampos(){
-  this.cargo = '';
-  this.experience='';
-}
-
-async function salvarCha() {
-  await axios.post("/position/create",
-    {
-      name: cargo.value,
-      cha: chaText.value,
-      experience: experience.value
-    });
-
-}
-
-</script>
 <template>
   <div>
-    <h1 class="title">Descrição da Vaga </h1>
+    <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo">
 
     <div class="nivel-container">
-      <span class="span-nivel">Selecione o nível de atuação profissional:</span> <br>
+      <span class="span-nivel">Selecione o nível de atuação profissional:</span><br>
       <select v-model="experience" name="nivel" class="select-option txt-select">
         <option value="JUNIOR" class="select-option txt-select">Junior</option>
         <option value="PLENO" class="select-option txt-select">Pleno</option>
@@ -83,144 +23,237 @@ async function salvarCha() {
     <hr class="line" />
 
     <!-- Título "CHA" -->
-    <h2 class="cha-title">CHA - Conhecimentos, Habilidades e Atitudes</h2>
+    <h2 class="title">CHA - Conhecimento, Habilidade e Atitude</h2>
 
-    <!-- Campo de texto multilinea -->
-    <textarea v-model="chaText" class="cha-textarea"></textarea>
+    <h2 class="cha-title">Conhecimento</h2>
+    <textarea v-model="conhecimentos" class="cha-textarea"></textarea>
+
+    <h2 class="cha-title">Habilidade</h2>
+    <textarea v-model="habilidades" class="cha-textarea"></textarea>
+
+    <h2 class="cha-title">Atitude</h2>
+    <textarea v-model="atitudes" class="cha-textarea"></textarea>
 
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
-      <button class="custom-button edit-button">Editar</button>
       <button class="custom-button search-button" @click="salvarCha">Salvar</button>
     </div>
   </div>
 </template>
+
+<script lang="ts">
+import axios from 'axios';
+import { ref } from 'vue'
+
+const chaContent = ref ({}) 
+
+export default {
+  data() {
+    return {
+      cargo: '',
+      experience: '',
+      conhecimentos: '',
+      habilidades: '',
+      atitudes: '',
+      chaContent,
+    };
+  },
+  methods: {
+    async getCargoGpt() {
+      const azureOpenAIAPI = {
+        ResourceName: 'interactai',
+        DeploymentId: 'modelgpt35t',
+        Key: '66a6b8c8d3c449d4b53fa75d09b04366',
+        Version: '2023-05-15',
+      };
+
+      const apiUrl = `https://${azureOpenAIAPI.ResourceName}.openai.azure.com/openai/deployments/${azureOpenAIAPI.DeploymentId}/chat/completions?api-version=${azureOpenAIAPI.Version}`;
+
+      const data = {
+        messages: [
+          {
+            role: 'user',
+            content: `Quais os conhecimentos, habilidades e atitudes que um ${this.cargo} ${this.experience} precisa ter? Devolver a resposta como um json que possui as chaves "conhecimento", "habilidade" e "atitude" com os respectivos valores`,
+          },
+        ],
+      };
+
+      try {
+        const response = await axios.post(apiUrl, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'api-key': azureOpenAIAPI.Key,
+          },
+        });
+
+        const content = response.data.choices[0].message.content;
+        if (content) {
+          try {
+            const conteudoJson = JSON.parse (content)
+            this.conhecimentos = conteudoJson.conhecimento
+            this.habilidades = conteudoJson.habilidade
+            this.atitudes = conteudoJson.atitude
+            chaContent.value = {
+              name: this.cargo,
+              knowledge: this.conhecimentos,
+              skill: this.habilidades,
+              attitude: this.atitudes,
+              experience: this.experience
+            }
+          } catch (error) {
+            console.log(`error: ${error}`)
+          }
+
+        } else {
+          console.error('Erro');
+
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    
+    async salvarCha() {
+      try {
+        const payload = chaContent.value
+        console.log (payload)
+        const response = await axios.post('/position/create', payload);
+        console.log(response)
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
+  watch: {
+    chaContent (){
+    this.salvarCha()
+   }
+  }
+};
+</script>
   
 <style scoped>
-.title {
-  color: rgb(255, 255, 255);
-  font-size: 35px;
-  font-weight: bold;
-  margin-left: 25px;
-}
+  .title {
+    color: rgb(255, 255, 255); 
+    font-size: 30px; 
+    font-weight: bold; 
+    margin-left: 25px;
+  }
+  .input-label {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+    margin-left: 25px;
+  }
+  .custom-input {
+    width: 90%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 6px; 
+  }
 
-.input-label {
-  color: #ffffff;
-  font-size: 20px;
-  margin-bottom: 8px;
-  margin-left: 25px;
-}
+  .custom-input:focus {
+    border-color: #007bff;
+  }
 
-.custom-input {
-  width: 90%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-left: 25px;
-  margin-right: 25px;
-  margin-top: 6px;
-}
+  .nivel-container {
+    margin-left: 25px;
+    margin-top: 30px; 
+  }
 
-.custom-input:focus {
-  border-color: #007bff;
-}
+  .span-nivel {
+    color: #ffffff; 
+    font-size: 20px; 
+    margin-bottom: 8px; 
+  }
 
-.nivel-container {
-  margin-left: 25px;
-  margin-top: 30px;
-}
+  .select-option {
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-top: 5px;
+  }
 
-.span-nivel {
-  color: #ffffff;
-  font-size: 20px;
-  margin-bottom: 8px;
-}
+  .select-option:focus {
+    border-color: #007bff;
+  }
 
-.select-option {
-  width: 30%;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  outline: none;
-  transition: border-color 0.2s;
-  margin-top: 5px;
-}
+  /* Estilos dos botões */
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    margin-right: 55px;
+  }
 
-.select-option:focus {
-  border-color: #007bff;
-}
+  .custom-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.2s;
+  }
 
-/* Estilos dos botões */
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-  margin-right: 55px;
-}
+  .clear-button {
+    background-color: #6666;
+    color: #fff;
+  }
 
-.custom-button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-left: 10px;
-  transition: background-color 0.2s;
-}
+  .save-button {
+    background-color: #5D5DFF;
+    color: #fff;
+  }
 
-.clear-button {
-  background-color: #6666;
-  color: #fff;
-}
+  .custom-button:hover {
+    filter: brightness(0.9); /* Escurece a cor ao passar o mouse */
+  }
 
-.save-button {
-  background-color: #5D5DFF;
-  color: #fff;
-}
-
-.custom-button:hover {
-  filter: brightness(0.9);
-  /* Escurece a cor ao passar o mouse */
-}
-
-.line {
+  .line {
   border: none;
   border-top: 1px solid #999898;
-  margin-top: 10px;
-  /* Espaçamento acima da linha */
-  margin-bottom: 10px;
-  /* Espaçamento abaixo da linha */
+  margin-top: 10px; /* Espaçamento acima da linha */
+  margin-bottom: 10px; /* Espaçamento abaixo da linha */
 }
 
 /* Estilos para o título "CHA" */
 .cha-title {
   font-size: 22px;
-  margin-top: 30px;
-  margin-left: 18px;
+  margin-top: 35px; 
+  margin-left: 25px;
 }
 
 /* Estilos para o campo de texto multilinear */
 .cha-textarea {
-  width: 100%;
-  height: 200px;
-  padding: 10px;
+  width: 80%;
+  height: 100px; 
+  padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px; 
+  margin-left: 25px;
+  margin-bottom: 15px; 
 }
 
 /* Estilos para os botões "Editar" e "Buscar" */
 .edit-button,
 .search-button {
-  background-color: #5D5DFF;
-  color: #fff;
-  border: 1px solid #5D5DFF;
-  border-radius: 5px;
-  padding: 10px 20px;
-  margin-right: 2px;
+  background-color: #5D5DFF; 
+  color: #fff; 
+  border: 1px solid #5D5DFF; 
+  border-radius: 5px; 
+  padding: 10px 20px; 
+  margin-right: 15px; 
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
@@ -230,7 +263,8 @@ async function salvarCha() {
 .edit-button:hover,
 .search-button:hover {
   background-color: #4455cc;
-  border-color: #4455cc;
+  border-color: #4455cc; 
 }
+
 </style>
   
