@@ -25,7 +25,7 @@
             <label for="username" class="font" >CPF:</label>
           </div>
           <div class="center">
-            <input type="text" class="background" id="CPF" v-model="CPF" placeholder="000.000.000-00" />
+            <input type="text" class="background" id="cpf" v-model="cpf" placeholder="000.000.000-00" />
           </div>
           <div>
             <label for="username" class="font" >E-mail:</label>
@@ -136,8 +136,7 @@
 </style>
   
 <script lang="ts">
-import axios from 'axios';
-
+import api from '../service/api'
 
   export default {
 
@@ -146,22 +145,23 @@ import axios from 'axios';
         email: '',
         username: '',
         password: '',
-        CPF: '',
+        cpf: '',
         isPopupVisible: false,
         popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
     },
     methods: {
       async cadastrar() {
-        axios({
-          method: 'get',
-          url: 'https://8080-codesquirre-recrutatech-x75p1gsa7ic.ws-us105.gitpod.io/user/getAll',
-          headers: {
-          }
-        })
-        .then(async function (response) {
+        await api.post('user/create', {
+          "name": this.username,
+          "password": this.password,
+          "email": this.email,
+          "cpf_cnpj": this.cpf,
+          "userType": 0
+        }).then((response)=>{
+          alert("Usuário Cadastrado")
           console.log(response.data)
-        });
+        })
       },
       showPopup() {
         this.isPopupVisible = true;
@@ -174,6 +174,8 @@ import axios from 'axios';
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
         console.log('Usuário:', this.username);
         console.log('Senha:', this.password);
+        console.log('Email:', this.email);
+        console.log('CPF:', this.cpf);
         
       },
       entrar() {

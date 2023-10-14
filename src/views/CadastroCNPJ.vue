@@ -3,6 +3,7 @@
       <h2 class="titulo">Cadastre-se</h2>
 
       <div class="center">
+
       <RouterLink to="/CadastroCPF">
         <button @click="entrar" class="entrar2">CPF</button>
       </RouterLink>
@@ -10,35 +11,36 @@
       <RouterLink to="/CadastroCNPJ">
         <button @click="entrar" class="entrar1">CNPJ</button>
       </RouterLink>
+
       </div>
 
-      <form @submit.prevent="CadastroCPF">
-        <div>
-          <label for="username" class="font" >Nome da Empresa:</label>    
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="Razão Social" />
-        </div>
-        <div>
-          <label for="username" class="font" >CNPJ:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="XX.XXX.XXX/0001-XX" />
-        </div>
-        <div>
-          <label for="username" class="font" >E-mail:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="email@exemplo.com"/>
-        </div>
-        <div>
-          <label for="password" class="font" >Senha:</label>
-        </div>
-        <div class="center">
-          <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
-        </div>
-        <div class="center">
-            <button class="open-popup-button entrar1" @click="showPopup">Cadastrar</button>
+      <form @submit.prevent="CadastroCNPJ">
+          <div>
+            <label for="username" class="font" >Nome da Empresa:</label>    
+          </div>
+          <div class="center">
+            <input type="text" class="background" id="empresa" v-model="empresa" placeholder="Razão Social" />
+          </div>
+          <div>
+            <label for="username" class="font" >CNPJ:</label>
+          </div>
+          <div class="center">
+            <input type="text" class="background" id="cnpj" v-model="cnpj" placeholder="XX.XXX.XXX/0001-XX" />
+          </div>
+          <div>
+            <label for="username" class="font" >E-mail:</label>
+          </div>
+          <div class="center">
+            <input type="text" class="background" id="email" v-model="email" placeholder="email@exemplo.com"/>
+          </div>
+          <div>
+            <label for="password" class="font" >Senha:</label>
+          </div>
+          <div class="center">
+            <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
+          </div>
+          <div class="center">
+            <button class="open-popup-button entrar1" @click="cadastrar">Cadastrar</button>
 
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
@@ -46,11 +48,11 @@
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
               </div>
             </div>
-        </div>
-        <div class="center">
-          <label for="text" >Já tem uma conta?</label>
-          <RouterLink to="/login">Entre</RouterLink>
-        </div>
+          </div>
+          <div class="center">
+            <label for="text" >Já tem uma conta?</label>
+            <RouterLink to="/login">Entre</RouterLink>
+          </div>
       </form>
     </div>  
   </template>
@@ -135,18 +137,32 @@
 
 </style>
   
-  <script lang="ts">
+<script lang="ts">
+import api from "../service/api"
   export default {
     data() {
       return {
-        username: '',
+        empresa: '',
         password: '',
-        aceitarTermos: false,
+        cnpj: '',
+        email: '',
         isPopupVisible: false,
         popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
       };
     },
     methods: {
+      async cadastrar() {
+        await api.post('user/create', {
+          "name": this.empresa,
+          "password": this.password,
+          "email": this.email,
+          "cpf_cnpj": this.cnpj,
+          "userType": 1
+        }).then((response)=>{
+          alert("Usuário Cadastrado")
+          console.log(response.data)
+        })
+      },
       showPopup() {
         this.isPopupVisible = true;
       },
@@ -156,8 +172,10 @@
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
+        console.log('Empresa:', this.empresa);
         console.log('Senha:', this.password);
+        console.log('Empresa', this.cnpj);
+        console.log('Email:', this.email);
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
