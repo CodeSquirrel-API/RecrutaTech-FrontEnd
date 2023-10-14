@@ -13,6 +13,8 @@
           conhecimento: '',
           habilidade: '',
           atitude: '',
+          cargo:'',
+          nivel:'',
         }
       },
       methods: {
@@ -35,6 +37,13 @@
           this.habilidade = CHA.skill
           this.atitude = CHA.attitude
         },
+        LimparCampos(){
+          this.cargo = '';
+          this.nivel='';
+          this.conhecimento='';
+          this.habilidade='';
+          this.atitude='';
+}
         
       },
       beforeMount() //Chama esse metodo se quiser executar uma função ao carregar a pagina
@@ -70,7 +79,7 @@
   
       <!-- Botões  -->
       <div class="button-container">
-        <button class="custom-button clear-button">Limpar</button>
+        <button class="custom-button clear-button" @click="LimparCampos">Limpar</button>
         <button class="custom-button save-button" @click="BuscarCha">Buscar</button>
       </div>
 
