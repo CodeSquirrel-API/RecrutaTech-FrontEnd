@@ -1,57 +1,82 @@
 <template>
-    <div class="cadastro" >
+
+    <div class="center">
+
       <h2 class="titulo">Cadastre-se</h2>
 
-      <div class="center">
+      <div class="">
       <RouterLink to="/CadastroCPF">
-        <button @click="entrar" class="entrar2">CPF</button>
+        <button @click="entrar" class="opcao2">CPF</button>
       </RouterLink>
       
       <RouterLink to="/CadastroCNPJ">
-        <button @click="entrar" class="entrar1">CNPJ</button>
+        <button @click="entrar" class="opcao1">CNPJ</button>
       </RouterLink>
       </div>
 
-      <form @submit.prevent="CadastroCPF">
-        <div>
-          <label for="username" class="font" >Nome da Empresa:</label>    
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="Razão Social" />
-        </div>
-        <div>
-          <label for="username" class="font" >CNPJ:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="XX.XXX.XXX/0001-XX" />
-        </div>
-        <div>
-          <label for="username" class="font" >E-mail:</label>
-        </div>
-        <div class="center">
-          <input type="text" class="background" id="username" v-model="username" placeholder="email@exemplo.com"/>
-        </div>
-        <div>
-          <label for="password" class="font" >Senha:</label>
-        </div>
-        <div class="center">
-          <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
-        </div>
-        <div class="center">
-            <button @click="entrar" class="entrar1">Cadastrar</button>
-        </div>
-        <div class="center">
-          <label style="color: #Fff;" for="text" >Não tem uma conta?</label>
-          <RouterLink to="/login">Entre</RouterLink>
-        </div>
-      </form>
+      <div class="center">
+        <form @submit.prevent="CadastroCPF">
+          <div>
+            <label for="razaoSocial" class="font" >Nome da Empresa:</label>    
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="razaoSocial" v-model="razaoSocial" placeholder="Razão Social" />
+          </div>
+
+          <div>
+            <label for="cnpj" class="font" >CNPJ:</label>
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="cnpj" v-model="cnpj" placeholder="XX.XXX.XXX/0001-XX" />
+          </div>
+
+          <div>
+            <label for="email" class="font" >E-mail:</label>
+          </div>
+
+          <div class="">
+            <input type="text" class="" id="email" v-model="email" placeholder="email@exemplo.com"/>
+          </div>
+
+          <div>
+            <label for="password" class="font" >Senha:</label>
+          </div>
+
+          <div class="">
+            <input type="password" class="" id="password" v-model="password" placeholder="********"/>
+          </div>
+
+          <div class="center">
+              <button @click="entrar" class="btnCadastrar">Cadastrar</button>
+          </div>
+
+          <div class="center">
+            <label for="text" >Já tem uma conta?
+              <RouterLink to="/login">Entre</RouterLink>
+            </label>
+          </div>
+
+        </form>
+      </div>
     </div>  
   </template>
 
 <style scoped>
 
-.cadastro{
-  width: 100%;
+
+input{
+  padding: 7px;
+  background-color: #33363a00;
+  width: 400px;
+  height: 38px;
+  color: #707D86;
+  font-size: 16px;
+  margin: 5px 5px;
+  border-style:solid;
+  border-color:#33363A;
+
 }
 .background{
   padding: 7px;
@@ -63,9 +88,17 @@
   font-size: 16px;
   margin: 5px 5px;
 }
+.btnCadastrar{
+  background-color: #5D5DFF;
+  border: none;
+  border-radius: 5px;
+  width: 133px;
+  height: 40px;
+  color: white;
+  font-size: 16px;
+}
 .font{
   color: #FFFFFF;
-  margin-left: 475px;
 }
 .titulo{
   text-align: center;
@@ -73,44 +106,42 @@
   color: #fff;
   font-weight: bolder;
 }
-.entrar1{
-  margin: 30px 30px 30px 30px;
-  border-radius: 10px;
+.opcao1{
+ margin-left: 10px;
+  border-radius: 5px;
   width: 133px;
   height: 40px;
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
-  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
-  transition: all 0.5s ease;
+  border: none;
 }
+.opcao2{
+  margin-right: 10px;
+  border-radius: 5px;
 
-.entrar2:hover{
-  transform: translateY(-3px);
-}
-
-.entrar2{
-  margin: 30px 30px 30px 30px;
-  border-radius: 10px;
   width: 133px;
   height: 40px;
   background-color: #666666;
   color: white;
   font-size: 20px;
+  border: none;
   transition: all 0.5s ease;
   box-shadow: 0 5px 10px rgb(0,0,0,0.3);
 }
-
-.entrar1:hover{
-  transform:translateY(-3px)
-}
-.direita{
-  margin-left: 280px;
-}
-.center{
+.center {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  border: none;
+  margin-top: 10px;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  margin-left: 5px; 
+  align-items: flex-start;
 }
 
 
@@ -120,7 +151,9 @@
   export default {
     data() {
       return {
-        username: '',
+        razaoSocial: '',
+        cnpj:'',
+        email:'',
         password: '',
         aceitarTermos: false,
       };
@@ -129,7 +162,7 @@
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
+        console.log('Usuário:', this.razaoSocial);
         console.log('Senha:', this.password);
       },
       entrar() {

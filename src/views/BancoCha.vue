@@ -1,33 +1,94 @@
 <script>
+  import axios from 'axios'
+
+    export default {
+      data() {
+        return {
+          positions: null,
+          loading: true,
+          positionsExperience: [],
+          positionsName: [],
+          positions: [],
+          cargo: '',
+          conhecimento: '',
+          habilidade: '',
+          atitude: '',
+          cargo:'',
+          nivel:'',
+        }
+      },
+      methods: {
+        async getPositions() {
+        await axios.get('/position/getAll').then((response) => {
+            this.positions = response.data;
+            this.positionsName = [... new Set(this.positions.map(pos => pos.name))] // Removendo os results duplicados. Arrumar no BD Depois
+          });          
+        },
+
+        getNivel(cargo) {
+          this.positionsExperience = [];
+          this.positionsExperience = [... new Set(this.positions.filter((pos) => pos.name == cargo).map((posi) => posi.experience))];
+          console.log(this.positionsExperience);
+        },
+        BuscarCha()
+        {
+          const CHA = this.positions.find((cha) => cha.name == this.cargo && cha.experience == this.nivel)
+          this.conhecimento = CHA.knowledge
+          this.habilidade = CHA.skill
+          this.atitude = CHA.attitude
+        },
+        LimparCampos(){
+          this.cargo = '';
+          this.nivel='';
+          this.conhecimento='';
+          this.habilidade='';
+          this.atitude='';
+}
+        
+      },
+      beforeMount() //Chama esse metodo se quiser executar uma função ao carregar a pagina
+      {
+        this.getPositions();
+      }
+    }
+
+
 import Sidebar from '../components/Sidebar.vue';
 
-export default {
 	components: {
 		Sidebar,
 	},
-};
+
 
 </script>
   <template>
     <Sidebar></Sidebar>
     <div class="bancocha">
       <h1 class="title">Banco de CHA</h1>
-      <label for="descricao" class="input-label">Digite o título do cargo:</label>
-      <input class="custom-input" type="text" placeholder="Digite aqui...">
+      <div>
+        <label for="descricao" class="input-label">Digite o título do cargo:</label>
+        <!-- <input class="custom-input" type="text" placeholder="Digite aqui..."> -->
+        <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
+            <option
+              v-for="(item, index) in positionsName" :key="index"
+              v-bind:value="item"
+              class="select-option txt-select">
+              {{ item }}
+            </option>
+          </select>
+      </div>
       
       <div class="nivel-container">
-        <span class="span-nivel">Selecione o nível de atuação profissional:</span> <br>
-        <select name="nivel" class="select-option txt-select">
-          <option value="" class="select-option txt-select">Junior</option>
-          <option value="" class="select-option txt-select">Pleno</option>
-          <option value="" class="select-option txt-select">Sênior</option>
+        <span  class="span-nivel">Selecione o nível de atuação profissional:</span> <br> 
+        <select v-model="nivel" name="experience" class="select-option txt-select">
+          <option v-for="(experience, index) in positionsExperience" :key="index" v-bind:value="experience">{{ experience }}</option>
         </select>
       </div>
   
-      <!-- Botões Limpar e Salvar -->
+      <!-- Botões  -->
       <div class="button-container">
-        <button class="custom-button clear-button">Limpar</button>
-        <button class="custom-button save-button">Buscar</button>
+        <button class="custom-button clear-button" @click="LimparCampos">Limpar</button>
+        <button class="custom-button save-button" @click="BuscarCha">Buscar</button>
       </div>
 
       <!-- Linha cinza abaixo dos botões -->
@@ -39,17 +100,17 @@ export default {
       <h2 class="cha-title"> Conhecimentos </h2>
 
       <!-- Campo de texto multilinea -->
-      <textarea v-model="chaText" class="cha-textarea"></textarea>
+      <textarea v-model="conhecimento" class="cha-textarea"></textarea>
 
       <h2 class="cha-title"> Habilidades </h2>
 
       <!-- Campo de texto multilinea -->
-      <textarea v-model="chaText" class="cha-textarea"></textarea>
+      <textarea v-model="habilidade" class="cha-textarea"> {{ skill }}</textarea>
 
       <h2 class="cha-title"> Atitudes </h2>
-
+<!--  -->
       <!-- Campo de texto multilinea -->
-      <textarea v-model="chaText" class="cha-textarea"></textarea>
+      <textarea v-model="atitude" class="cha-textarea"></textarea>
 
       <!-- Botões Editar e Buscar -->
       <div class="button-container">

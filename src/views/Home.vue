@@ -16,7 +16,7 @@
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button clear-button">Limpar</button>
+      <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
       <button class="custom-button save-button" @click="getCargoGpt()">Gerar CHA</button>
     </div>
 
