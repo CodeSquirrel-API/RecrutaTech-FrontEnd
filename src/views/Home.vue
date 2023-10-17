@@ -47,11 +47,14 @@ import axios from 'axios';
 import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue';
 
+
 const chaContent = ref ({}) 
 
 export default {
   components: {
 		Sidebar,
+   
+    
 	},
   data() {
     return {
@@ -68,7 +71,7 @@ export default {
       const azureOpenAIAPI = {
         ResourceName: 'interactai',
         DeploymentId: 'modelgpt35t',
-        Key: 'API_KEY',
+        Key: 'KEY',
         Version: '2023-05-15',
       };
 

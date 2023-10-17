@@ -1,5 +1,6 @@
 <script>
   import axios from 'axios'
+  import Sidebar from '../components/Sidebar.vue';
 
     export default {
       data() {
@@ -43,22 +44,20 @@
           this.conhecimento='';
           this.habilidade='';
           this.atitude='';
-}
+        }
         
       },
+
       beforeMount() //Chama esse metodo se quiser executar uma função ao carregar a pagina
       {
         this.getPositions();
-      }
+      },
+      
+
+      components: {
+        Sidebar,
+      },
     }
-
-
-import Sidebar from '../components/Sidebar.vue';
-
-	components: {
-		Sidebar,
-	},
-
 
 </script>
   <template>
