@@ -15,8 +15,10 @@
   "dependencies": {
     "@azure/openai": "^1.0.0-beta.5",
     "axios": "^1.5.0",
+    "node": "^20.7.0",
     "openai": "^4.0.0",
     "pinia": "^2.1.6",
+    "sass": "^1.69.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"
   },
@@ -31,7 +33,7 @@
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/test-utils": "^2.4.1",
     "@vue/tsconfig": "^0.4.0",
-    "eslint": "^8.46.0",
+    "eslint": "^8.51.0",
     "eslint-plugin-vue": "^9.16.1",
     "http-proxy-middleware": "^2.0.6",
     "jsdom": "^22.1.0",

@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Chat from '../components/Chat.vue'
 
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +38,20 @@ const router = createRouter({
       name: 'login',
       component: () => import('../views/TheLogin.vue')
     },
+
+    {
+      path: '/resultados',
+      name: 'resultados',
+      component: () => import('../views/Resultados.vue')
+    },
+
+    {
+      path: '/busca',
+      name: 'busca',
+      component: () => import('../views/BuscaResults.vue')
+    },
+
+
     {
       path: '/cadastroCPF',
       name: 'cadastroCPF',

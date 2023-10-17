@@ -1,5 +1,6 @@
 <template>
     <div class="center">
+
       <h2 class="titulo">Cadastre-se</h2>
 
       <div class="opcoes">
@@ -13,7 +14,6 @@
         </RouterLink>
 
       </div>
-
 
       <div class="center">
         <form @submit.prevent="CadastroCPF">
@@ -64,13 +64,12 @@
   </template>
 
 <style scoped>
-
 input{
   padding: 7px;
   background-color: #33363a00;
   width: 400px;
   height: 38px;
-  color: #707D86;
+  color: #fff;
   font-size: 16px;
   margin: 5px 5px;
   border-style:solid;
@@ -83,6 +82,7 @@ input{
 
 .titulo{
   text-align: center;
+  color: #fff;
   font-size: 35px;
   font-weight: bolder;
 }
@@ -105,6 +105,7 @@ input{
   background-color: #666666;
   color: white;
   font-size: 20px;
+
   border: none;
 }
 

@@ -1,5 +1,7 @@
 <template>
+
     <div class="center">
+
       <h2 class="titulo">Cadastre-se</h2>
 
       <div class="">
@@ -63,6 +65,7 @@
 
 <style scoped>
 
+
 input{
   padding: 7px;
   background-color: #33363a00;
@@ -73,13 +76,15 @@ input{
   margin: 5px 5px;
   border-style:solid;
   border-color:#33363A;
+
 }
 .background{
   padding: 7px;
   background-color: #33363A;
   width: 400px;
   height: 38px;
-  color: #707D86;
+  color: #fff;
+  border-radius: 10px;
   font-size: 16px;
   margin: 5px 5px;
 }
@@ -98,6 +103,7 @@ input{
 .titulo{
   text-align: center;
   font-size: 35px;
+  color: #fff;
   font-weight: bolder;
 }
 .opcao1{
@@ -113,12 +119,15 @@ input{
 .opcao2{
   margin-right: 10px;
   border-radius: 5px;
+
   width: 133px;
   height: 40px;
   background-color: #666666;
   color: white;
   font-size: 20px;
   border: none;
+  transition: all 0.5s ease;
+  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
 }
 .center {
   display: flex;

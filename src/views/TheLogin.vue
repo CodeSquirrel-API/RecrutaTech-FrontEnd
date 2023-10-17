@@ -1,6 +1,8 @@
 <template>
+
   
     <div class="center">
+
       <div class="icon">
         <img src="../../public/squirrel.png" width="100" height="100" />
       </div>
@@ -27,6 +29,7 @@
         
         <div class="center">
           <button @click="entrar" class="entrar">Entrar</button>
+          <RouterLink to="/Home"></RouterLink>
         </div>
 
 
@@ -50,7 +53,8 @@
   background-color: #33363a00;
   width: 400px;
   height: 38px;
-  color: #707D86;
+  color: #fff;
+  border-radius: 10px;
   font-size: 16px;
   margin: 5px 5px;
   border-style:solid;
@@ -73,6 +77,12 @@
   color: white;
   border: none;
   font-size: 20px;
+  box-shadow: 0, 5px, 15px rgb(0,0,0,0.4);
+  transition: all 0.4s ease;
+}
+
+.entrar:hover{
+  transform: translateY(-3px);
 }
 .direita{
   margin-left: 80px;
