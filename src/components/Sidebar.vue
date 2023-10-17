@@ -73,6 +73,7 @@ aside {
 	}
 
 	.menu {
+		
 		margin: 0 -1rem;
 
 		.button {

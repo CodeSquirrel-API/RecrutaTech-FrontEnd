@@ -53,7 +53,7 @@
               <button @click="entrar" class="btnCadastrar">Cadastrar</button>
             </div>
 
-            <div class="center">
+            <div class="center font">
               <label for="text">Já tem uma conta?
                 <RouterLink to="/login">Entre</RouterLink> 
               </label>

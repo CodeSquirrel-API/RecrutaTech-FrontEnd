@@ -1,5 +1,4 @@
 <template>
-
   
     <div class="center">
 
@@ -12,16 +11,16 @@
       <form @submit.prevent="login">
 
         <div class="">
-          <label for="username" class="" >E-mail:</label>
+          <label for="username" class="font" >E-mail:</label>
           <input type="text" class="campoInput" id="username" v-model="username" placeholder="exemplo@gmail.com"/>
         </div>
 
         <div class="">
-          <label for="password" class="" >Senha:</label>
+          <label for="password" class="font" >Senha:</label>
           <input type="password" class="campoInput" id="password" v-model="password" placeholder="********"/>
         </div>
 
-        <div class="checkbox">
+        <div class="checkbox font">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
           <label for="meuCheckbox" class="">Manter conectado </label>
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
@@ -67,6 +66,7 @@
   text-align: center;
   font-size: 35px;
   font-weight: bolder;
+  color: white;
 }
 .entrar{
   margin-top: 50px;
@@ -98,6 +98,7 @@
 
 .center {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
   border: none;
