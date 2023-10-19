@@ -16,7 +16,6 @@
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
       <button class="custom-button save-button" @click="getCargoGpt()">Gerar CHA</button>
     </div>
 
@@ -132,12 +131,20 @@ export default {
         console.error(error);
       }
     },
+
+    limparCHA() {
+      this.conhecimentos = '';
+      this.habilidades = '';
+      this.atitudes = '';
+    },
+
   },
+  
   watch: {
-    chaContent (){
-    this.salvarCha()
-   }
-  }
+    cargo: 'limparCHA',
+    experience: 'limparCHA',
+  },
+
 };
 </script>
   
