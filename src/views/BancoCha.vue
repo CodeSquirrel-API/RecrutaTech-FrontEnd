@@ -1,64 +1,86 @@
 <script>
-  import axios from 'axios'
-  import Sidebar from '../components/Sidebar.vue';
+import axios from 'axios';
+import Sidebar from '../components/Sidebar.vue';
 
-    export default {
-      data() {
-        return {
-          positions: null,
-          loading: true,
-          positionsExperience: [],
-          positionsName: [],
-          positions: [],
-          cargo: '',
-          conhecimento: '',
-          habilidade: '',
-          atitude: '',
-          cargo:'',
-          nivel:'',
-        }
-      },
-      methods: {
-        async getPositions() {
-        await axios.get('/position/getAll').then((response) => {
-            this.positions = response.data;
-            this.positionsName = [... new Set(this.positions.map(pos => pos.name))] // Removendo os results duplicados. Arrumar no BD Depois
-          });          
-        },
+export default {
+  data() {
+    return {
+      positions: null,
+      loading: true,
+      positionsExperience: [],
+      positionsName: [],
+      positions: [],
+      cargo: '',
+      conhecimento: '',
+      habilidade: '',
+      atitude: '',
+      cargo: '',
+      nivel: '',
+      buscaRealizada: false, // Variável para rastrear se uma busca foi realizada
+    };
+  },
 
-        getNivel(cargo) {
-          this.positionsExperience = [];
-          this.positionsExperience = [... new Set(this.positions.filter((pos) => pos.name == cargo).map((posi) => posi.experience))];
-          console.log(this.positionsExperience);
-        },
-        BuscarCha()
-        {
-          const CHA = this.positions.find((cha) => cha.name == this.cargo && cha.experience == this.nivel)
-          this.conhecimento = CHA.knowledge
-          this.habilidade = CHA.skill
-          this.atitude = CHA.attitude
-        },
-        LimparCampos(){
-          this.cargo = '';
-          this.nivel='';
-          this.conhecimento='';
-          this.habilidade='';
-          this.atitude='';
-        }
-        
-      },
+  methods: {
+    async getPositions() {
+      await axios.get('/position/getAll').then((response) => {
+        this.positions = response.data;
+        this.positionsName = [...new Set(this.positions.map((pos) => pos.name))];
+      });
+    },
 
-      beforeMount() //Chama esse metodo se quiser executar uma função ao carregar a pagina
-      {
-        this.getPositions();
-      },
-      
+    getNivel(cargo) {
+      this.positionsExperience = [];
+      this.positionsExperience = [
+        ...new Set(this.positions.filter((pos) => pos.name == cargo).map((posi) => posi.experience)),
+      ];
+      console.log(this.positionsExperience);
+    },
 
-      components: {
-        Sidebar,
-      },
-    }
+    BuscarCha() {
+      if (this.buscaRealizada) {
+        // Verifica se uma busca anterior foi realizada
+        this.LimparCampos(); // Limpa os campos do CHA
+      }
+      const CHA = this.positions.find((cha) => cha.name == this.cargo && cha.experience == this.nivel);
+      this.conhecimento = CHA.knowledge;
+      this.habilidade = CHA.skill;
+      this.atitude = CHA.attitude;
+      this.buscaRealizada = true; // Marca que uma busca foi realizada
+    },
 
+    LimparCampos() {
+      this.cargo = '';
+      this.nivel = '';
+      this.conhecimento = '';
+      this.habilidade = '';
+      this.atitude = '';
+      this.buscaRealizada = false; // Marca que a busca foi limpa
+    },
+  },
+
+  beforeMount() {
+    this.getPositions();
+  },
+
+  components: {
+    Sidebar,
+  },
+
+  watch: {
+    cargo(newValue, oldValue) {
+      if (this.buscaRealizada && newValue !== oldValue) {
+        // Se uma busca foi realizada e o cargo mudou, limpe os campos do CHA
+        this.LimparCampos();
+      }
+    },
+    nivel(newValue, oldValue) {
+      if (this.buscaRealizada && newValue !== oldValue) {
+        // Se uma busca foi realizada e o nível mudou, limpe os campos do CHA
+        this.LimparCampos();
+      }
+    },
+  },
+};
 </script>
   <template>
     <Sidebar></Sidebar>
@@ -117,7 +139,6 @@
       </div>
     </div>
   </template>
-  
   <style scoped>
 
   .bancocha{
