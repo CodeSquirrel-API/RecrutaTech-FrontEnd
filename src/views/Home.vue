@@ -70,7 +70,7 @@ export default {
       const azureOpenAIAPI = {
         ResourceName: 'interactai',
         DeploymentId: 'modelgpt35t',
-        Key: 'KEY',
+        Key: '66a6b8c8d3c449d4b53fa75d09b04366',
         Version: '2023-05-15',
       };
 
@@ -122,10 +122,20 @@ export default {
     },
     
     async salvarCha() {
+      const payload = chaContent.value
+
+      let position = {
+          name: payload.name,
+          knowledge: payload.knowledge.join(""),
+          skill: payload.skill.join(""),
+          attitude: payload.attitude.join(""),
+          experience: payload.experience
+        }
       try {
-        const payload = chaContent.value
-        console.log (payload)
-        const response = await axios.post('/position/create', payload);
+        // console.log (payload)
+        // console.log( payload.skill.join(""))
+        // payload.skill = payload.skill.join("")
+        const response = await axios.post('/position/create', position);
         console.log(response)
       } catch (error) {
         console.error(error);
