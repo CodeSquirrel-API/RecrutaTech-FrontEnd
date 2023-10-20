@@ -176,6 +176,7 @@ export default {
     margin-left: 25px;
   }
   .custom-input {
+    text-transform: uppercase;
     width: 90%;
     padding: 8px;
     border: 1px solid #ccc;
@@ -185,6 +186,9 @@ export default {
     margin-left: 25px;
     margin-right: 25px;
     margin-top: 6px; 
+  }
+  .custom-input::placeholder{
+    text-transform:none ;
   }
 
   .custom-input:focus {
