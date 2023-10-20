@@ -16,7 +16,13 @@
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button save-button" @click="getCargoGpt()">Gerar CHA</button>
+      <button class="custom-button save-button" @click="getCargoGpt(), showPopupcomAtraso1()">Gerar CHA</button>
+      <div class="custom-popup" v-if="showPopup1">
+            <div>
+              <p class="popup-message">{{ popupMessage1 }}</p>
+              <button class="close-popup-button" @click="closePopup1">Fechar</button>
+            </div>
+          </div>
     </div>
 
     <!-- Linha cinza abaixo dos botões -->
@@ -36,7 +42,13 @@
 
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
-      <button class="custom-button search-button" @click="salvarCha">Salvar</button>
+      <button class="custom-button search-button" @click="salvarCha, showPopupcomAtraso2()">Salvar</button>
+      <div class="custom-popup" v-if="showPopup2">
+            <div>
+              <p class="popup-message">{{ popupMessage2 }}</p>
+              <button class="close-popup-button" @click="closePopup2">Fechar</button>
+            </div>
+          </div>
     </div>
   </div>
 </template>
@@ -63,6 +75,10 @@ export default {
       habilidades: '',
       atitudes: '',
       chaContent,
+      showPopup1: false,
+      showPopup2: false,
+      popupMessage1:('Gerando CHA...'),
+      popupMessage2:('salvo com sucesso!'),
     };
   },
   methods: {
@@ -148,6 +164,24 @@ export default {
       this.atitudes = '';
     },
 
+    showPopupcomAtraso1() {
+      this.showPopup1=!true;
+      setTimeout(()=>{
+        this.showPopup1=!false;
+        }, 500);
+    },
+    showPopupcomAtraso2() {
+      this.showPopup2=!true;
+      setTimeout(()=>{
+        this.showPopup2=!false;
+      }, 500);
+    },
+    closePopup1() {
+      this.showPopup1 = false;
+    },
+    closePopup2() {
+      this.showPopup2 = false;
+    },
   },
   
   watch: {
@@ -159,6 +193,39 @@ export default {
 </script>
   
 <style scoped>
+
+.custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #33363A;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.popup-content {
+  text-align: center;
+}
+.popup-message {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+.close-popup-button {
+  margin: 30px 30px 30px 30px;
+  border-radius: 10px;
+  width: 133px;
+  height: 40px;
+  background-color: #5D5DFF;
+  color: white;
+  font-size: 20px;
+}
+.close-popup-button:hover {
+  background-color: #2980b9;
+}
+
 
 .home{
   width: 100%;
