@@ -55,8 +55,6 @@ export default {
     },
 
     LimparCampos() {
-      this.cargo = '';
-      this.nivel = '';
       this.conhecimento = '';
       this.habilidade = '';
       this.atitude = '';
