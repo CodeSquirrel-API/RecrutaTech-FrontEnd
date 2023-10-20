@@ -6,7 +6,6 @@ export default {
   data() {
     return {
       positions: null,
-      loading: true,
       positionsExperience: [],
       positionsName: [],
       positions: [],
@@ -17,13 +16,13 @@ export default {
       cargo: '',
       nivel: '',
       buscaRealizada: false, // Variável para rastrear se uma busca foi realizada
-      showPopup: false,
-      loading: false,
-      searching: false,
-      cleaning: false,
-      popupMessage1:'',
-      popupMessage2:'CHA Salvo com sucesso!',
-      popupMessage3:'',
+      showPopup1: false,
+      showPopup2: false,
+      showPopup3: false,
+      loading: true,
+      popupMessage1:('CHA foi limpado!'),
+      popupMessage2:('Busca feita com sucesso'),
+      popupMessage3:('CHA Salvo com sucesso!'),
     };
   },
 
@@ -63,27 +62,41 @@ export default {
       this.atitude = '';
       this.buscaRealizada = false; // Marca que a busca foi limpa
     },
+  showPopupcomAtraso1() {
+    this.showPopup1=!true;
+    setTimeout(()=>{
+      this.showPopup1=!false;
+    }, 500);
+  },
+  showPopupcomAtraso2() {
+    this.showPopup2=!true;
+    setTimeout(()=>{
+      this.showPopup2=!false;
+    }, 500);
+  },
+  showPopupcomAtraso3() {
+    this.showPopup3=!true;
+    setTimeout(()=>{
+      this.showPopup3=!false;
+    }, 500);
+  },
+  closePopup1() {
+    this.showPopup1 = false;
+  },
+  closePopup2() {
+    this.showPopup2 = false;
+  },
+  closePopup3() {
+    this.showPopup3 = false;
+  },
+
   },
 
   beforeMount() {
     this.getPositions();
   },
 
-  saveSession(){
-    this.loading=!false;
-    setTimeout(() => {
-      this.loading=!true;
-    }, 2000);
-  },
-  showPopupcomAtraso() {
-    this.showPopup=!true;
-    setTimeout(()=>{
-      this.showPopup=!false;
-    }, 3000);
-  },
-  closePopup() {
-    this.showPopup = false;
-  },
+
   components: {
     Sidebar,
   },
@@ -131,20 +144,25 @@ export default {
   
       <!-- Botões  -->
       <div class="button-container">
-        <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso(), saveCleaning()">
-          <span v-if="cleaning">Limpando</span>
-          <span v-else>Limpar</span>
-        </button>
-        <button class="custom-button save-button" @click="BuscarCha, showPopupcomAtraso2(), saveSearch()">
-          <span v-if="searching">Buscando</span>
-          <span v-else>Buscar</span>
-        </button>
-        <div class="custom-popup" v-if="showPopup">
-            <div class="popup-content">
-              <p class="popup-message">{{ popupMessage }}</p>
-              <button class="close-popup-button" @click="closePopup">Fechar</button>
+        <div>
+          <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1()">Limpar</button>
+          <div class="custom-popup" v-if="showPopup1">
+            <div>
+              <p class="popup-message">{{ popupMessage1 }}</p>
+              <button class="close-popup-button" @click="closePopup1">Fechar</button>
             </div>
+          </div>
         </div>
+        <div>
+            <button class="custom-button save-button" @click="BuscarCha, showPopupcomAtraso2()">Buscar</button>
+          <div class="custom-popup" v-if="showPopup2">
+            <div class="popup-content">
+              <p class="popup-message">{{ popupMessage2 }}</p>
+              <button class="close-popup-button" @click="closePopup2">Fechar</button>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Linha cinza abaixo dos botões -->
@@ -170,15 +188,11 @@ export default {
 
       <!-- Botões Editar e Buscar -->
       <div class="button-container">
-          <button class="custom-button search-button" @click="showPopupcomAtraso3(), saveSession()">
-            <span v-if="loading">Salvando</span>
-            <span v-else>Salvar</span>
-          </button>
-        
-          <div class="custom-popup" v-if="showPopup">
+          <button class="custom-button search-button" @click="showPopupcomAtraso3()">Salvar</button>
+          <div class="custom-popup" v-if="showPopup3">
               <div class="popup-content">
-                <p class="popup-message">{{ popupMessage2 }}</p>
-                <button class="close-popup-button" @click="closePopup">Fechar</button>
+                <p class="popup-message">{{ popupMessage3 }}</p>
+                <button class="close-popup-button" @click="closePopup3">Fechar</button>
               </div>
           </div>
       </div>
