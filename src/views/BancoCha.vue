@@ -17,6 +17,13 @@ export default {
       cargo: '',
       nivel: '',
       buscaRealizada: false, // Variável para rastrear se uma busca foi realizada
+      showPopup: false,
+      loading: false,
+      searching: false,
+      cleaning: false,
+      popupMessage1:'',
+      popupMessage2:'CHA Salvo com sucesso!',
+      popupMessage3:'',
     };
   },
 
@@ -62,6 +69,21 @@ export default {
     this.getPositions();
   },
 
+  saveSession(){
+    this.loading=!false;
+    setTimeout(() => {
+      this.loading=!true;
+    }, 2000);
+  },
+  showPopupcomAtraso() {
+    this.showPopup=!true;
+    setTimeout(()=>{
+      this.showPopup=!false;
+    }, 3000);
+  },
+  closePopup() {
+    this.showPopup = false;
+  },
   components: {
     Sidebar,
   },
@@ -82,7 +104,8 @@ export default {
   },
 };
 </script>
-  <template>
+
+<template>
     <Sidebar></Sidebar>
     <div class="bancocha">
       <h1 class="title">Banco de CHA</h1>
@@ -108,8 +131,20 @@ export default {
   
       <!-- Botões  -->
       <div class="button-container">
-        <button class="custom-button clear-button" @click="LimparCampos">Limpar</button>
-        <button class="custom-button save-button" @click="BuscarCha">Buscar</button>
+        <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1(), saveCleaning()">
+          <span v-if="cleaning">Limpando</span>
+          <span v-else>Limpar</span>
+        </button>
+        <button class="custom-button save-button" @click="BuscarCha, showPopupcomAtraso2(), saveSearch()">
+          <span v-if="searching">Buscando</span>
+          <span v-else>Buscar</span>
+        </button>
+        <div class="custom-popup" v-if="isPopupVisible">
+            <div class="popup-content">
+              <p class="popup-message">{{ popupMessage }}</p>
+              <button class="close-popup-button" @click="closePopup">Fechar</button>
+            </div>
+        </div>
       </div>
 
       <!-- Linha cinza abaixo dos botões -->
@@ -135,11 +170,54 @@ export default {
 
       <!-- Botões Editar e Buscar -->
       <div class="button-container">
-        <button class="custom-button search-button">Salvar</button>
+          <button class="custom-button search-button" @click="showPopupcomAtraso3(), saveSession()">
+            <span v-if="loading">Salvando</span>
+            <span v-else>Salvar</span>
+          </button>
+        
+          <div class="custom-popup" v-if="isPopupVisible">
+              <div class="popup-content">
+                <p class="popup-message">{{ popupMessage2 }}</p>
+                <button class="close-popup-button" @click="closePopup">Fechar</button>
+              </div>
+          </div>
       </div>
     </div>
-  </template>
-  <style scoped>
+</template>
+
+<style scoped>
+
+.custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #33363A;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.popup-content {
+  text-align: center;
+}
+.popup-message {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+.close-popup-button {
+  margin: 30px 30px 30px 30px;
+  border-radius: 10px;
+  width: 133px;
+  height: 40px;
+  background-color: #5D5DFF;
+  color: white;
+  font-size: 20px;
+}
+.close-popup-button:hover {
+  background-color: #2980b9;
+}
 
   .bancocha{
     width: 100%;
