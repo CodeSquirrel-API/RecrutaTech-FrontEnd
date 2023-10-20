@@ -131,7 +131,7 @@ export default {
   
       <!-- Botões  -->
       <div class="button-container">
-        <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1(), saveCleaning()">
+        <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso(), saveCleaning()">
           <span v-if="cleaning">Limpando</span>
           <span v-else>Limpar</span>
         </button>
@@ -139,7 +139,7 @@ export default {
           <span v-if="searching">Buscando</span>
           <span v-else>Buscar</span>
         </button>
-        <div class="custom-popup" v-if="isPopupVisible">
+        <div class="custom-popup" v-if="showPopup">
             <div class="popup-content">
               <p class="popup-message">{{ popupMessage }}</p>
               <button class="close-popup-button" @click="closePopup">Fechar</button>
@@ -175,7 +175,7 @@ export default {
             <span v-else>Salvar</span>
           </button>
         
-          <div class="custom-popup" v-if="isPopupVisible">
+          <div class="custom-popup" v-if="showPopup">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage2 }}</p>
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
