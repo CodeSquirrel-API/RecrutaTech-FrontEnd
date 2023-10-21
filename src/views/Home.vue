@@ -18,11 +18,11 @@
     <div class="button-container">
       <button class="custom-button save-button" @click="getCargoGpt(), showPopupcomAtraso1()">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
-            <div>
-              <p class="popup-message">{{ popupMessage1 }}</p>
-              <button class="close-popup-button" @click="closePopup1">Fechar</button>
-            </div>
-          </div>
+        <div>
+          <p class="popup-message">{{ popupMessage1 }}</p>
+          <button class="close-popup-button" @click="closePopup1">Fechar</button>
+        </div>
+      </div>
     </div>
 
     <!-- Linha cinza abaixo dos botões -->
@@ -42,13 +42,15 @@
 
     <!-- Botões Editar e Buscar -->
     <div class="button-container">
-      <button class="custom-button search-button" @click="salvarCha, showPopupcomAtraso2()">Salvar</button>
+      <button class="custom-button search-button"
+        @click="salvarCha(); showPopupcomAtraso2(); limparCHA();limparDescricao();">Salvar</button>
+
       <div class="custom-popup" v-if="showPopup2">
-            <div>
-              <p class="popup-message">{{ popupMessage2 }}</p>
-              <button class="close-popup-button" @click="closePopup2">Fechar</button>
-            </div>
-          </div>
+        <div>
+          <p class="popup-message">{{ popupMessage2 }}</p>
+          <button class="close-popup-button" @click="closePopup2">Fechar</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -59,14 +61,14 @@ import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue';
 
 
-const chaContent = ref ({}) 
+const chaContent = ref({})
 
 export default {
   components: {
-		Sidebar,
-   
-    
-	},
+    Sidebar,
+
+
+  },
   data() {
     return {
       cargo: '',
@@ -77,8 +79,8 @@ export default {
       chaContent,
       showPopup1: false,
       showPopup2: false,
-      popupMessage1:('Gerando CHA...'),
-      popupMessage2:('salvo com sucesso!'),
+      popupMessage1: ('Gerando CHA...'),
+      popupMessage2: ('salvo com sucesso!'),
     };
   },
   methods: {
@@ -112,7 +114,7 @@ export default {
         const content = response.data.choices[0].message.content;
         if (content) {
           try {
-            const conteudoJson = JSON.parse (content)
+            const conteudoJson = JSON.parse(content)
             this.conhecimentos = conteudoJson.conhecimento
             this.habilidades = conteudoJson.habilidade
             this.atitudes = conteudoJson.atitude
@@ -136,17 +138,17 @@ export default {
         console.error(error);
       }
     },
-    
+
     async salvarCha() {
       const payload = chaContent.value
 
       let position = {
-          name: payload.name,
-          knowledge: payload.knowledge.join(""),
-          skill: payload.skill.join(""),
-          attitude: payload.attitude.join(""),
-          experience: payload.experience
-        }
+        name: payload.name,
+        knowledge: payload.knowledge.join(""),
+        skill: payload.skill.join(""),
+        attitude: payload.attitude.join(""),
+        experience: payload.experience.join(""),
+      }
       try {
         // console.log (payload)
         // console.log( payload.skill.join(""))
@@ -164,16 +166,22 @@ export default {
       this.atitudes = '';
     },
 
+    limparDescricao(){
+      this.experience = '';
+      this.cargo = '';
+    },
+
+
     showPopupcomAtraso1() {
-      this.showPopup1=!true;
-      setTimeout(()=>{
-        this.showPopup1=!false;
-        }, 500);
+      this.showPopup1 = !true;
+      setTimeout(() => {
+        this.showPopup1 = !false;
+      }, 500);
     },
     showPopupcomAtraso2() {
-      this.showPopup2=!true;
-      setTimeout(()=>{
-        this.showPopup2=!false;
+      this.showPopup2 = !true;
+      setTimeout(() => {
+        this.showPopup2 = !false;
       }, 500);
     },
     closePopup1() {
@@ -183,7 +191,7 @@ export default {
       this.showPopup2 = false;
     },
   },
-  
+
   watch: {
     cargo: 'limparCHA',
     experience: 'limparCHA',
@@ -193,7 +201,6 @@ export default {
 </script>
   
 <style scoped>
-
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -206,13 +213,16 @@ export default {
   border-radius: 5px;
   z-index: 1000;
 }
+
 .popup-content {
   text-align: center;
 }
+
 .popup-message {
   font-size: 18px;
   color: #FFFFFF;
 }
+
 .close-popup-button {
   margin: 30px 30px 30px 30px;
   border-radius: 10px;
@@ -222,114 +232,122 @@ export default {
   color: white;
   font-size: 20px;
 }
+
 .close-popup-button:hover {
   background-color: #2980b9;
 }
 
 
-.home{
+.home {
   width: 100%;
 }
-  .title {
-    color: rgb(255, 255, 255); 
-    font-size: 30px; 
-    font-weight: bold; 
-    margin-left: 25px;
-  }
-  .input-label {
-    color: #ffffff; 
-    font-size: 20px; 
-    margin-bottom: 8px; 
-    margin-left: 25px;
-  }
-  .custom-input {
-    text-transform: uppercase;
-    width: 90%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    outline: none;
-    transition: border-color 0.2s;
-    margin-left: 25px;
-    margin-right: 25px;
-    margin-top: 6px; 
-  }
-  .custom-input::placeholder{
-    text-transform:none ;
-  }
 
-  .custom-input:focus {
-    border-color: #007bff;
-  }
+.title {
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 25px;
+}
 
-  .nivel-container {
-    margin-left: 25px;
-    margin-top: 30px; 
-  }
+.input-label {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 8px;
+  margin-left: 25px;
+}
 
-  .span-nivel {
-    color: #ffffff; 
-    font-size: 20px; 
-    margin-bottom: 8px; 
-  }
+.custom-input {
+  text-transform: uppercase;
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 6px;
+}
 
-  .select-option {
-    width: 30%;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    outline: none;
-    transition: border-color 0.2s;
-    margin-top: 5px;
-  }
+.custom-input::placeholder {
+  text-transform: none;
+}
 
-  .select-option:focus {
-    border-color: #007bff;
-  }
+.custom-input:focus {
+  border-color: #007bff;
+}
 
-  /* Estilos dos botões */
-  .button-container {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 20px;
-    margin-right: 55px;
-  }
+.nivel-container {
+  margin-left: 25px;
+  margin-top: 30px;
+}
 
-  .custom-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 5px 10px rgb(0,0,0, 0.3);
-    margin-left: 10px;
-    transition: background-color 0.2s;
-  }
+.span-nivel {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
 
-  .clear-button {
-    background-color: #6666;
-    color: #fff;
-  }
+.select-option {
+  width: 30%;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-top: 5px;
+}
 
-  .save-button {
-    background-color: #5D5DFF;
-    color: #fff;
-  }
+.select-option:focus {
+  border-color: #007bff;
+}
 
-  .custom-button:hover {
-    filter: brightness(0.9); /* Escurece a cor ao passar o mouse */
-  }
+/* Estilos dos botões */
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 55px;
+}
 
-  .line {
+.custom-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 5px 10px rgb(0, 0, 0, 0.3);
+  margin-left: 10px;
+  transition: background-color 0.2s;
+}
+
+.clear-button {
+  background-color: #6666;
+  color: #fff;
+}
+
+.save-button {
+  background-color: #5D5DFF;
+  color: #fff;
+}
+
+.custom-button:hover {
+  filter: brightness(0.9);
+  /* Escurece a cor ao passar o mouse */
+}
+
+.line {
   border: none;
   border-top: 1px solid #999898;
-  margin-top: 10px; /* Espaçamento acima da linha */
-  margin-bottom: 10px; /* Espaçamento abaixo da linha */
+  margin-top: 10px;
+  /* Espaçamento acima da linha */
+  margin-bottom: 10px;
+  /* Espaçamento abaixo da linha */
 }
 
 /* Estilos para o título "CHA" */
 .cha-title {
   font-size: 22px;
-  margin-top: 35px; 
+  margin-top: 35px;
   color: #fff;
   margin-left: 25px;
 }
@@ -337,25 +355,25 @@ export default {
 /* Estilos para o campo de texto multilinear */
 .cha-textarea {
   width: 80%;
-  height: 100px; 
+  height: 100px;
   padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
-  margin-top: 5px; 
+  margin-top: 5px;
   margin-left: 25px;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
 }
 
 /* Estilos para os botões "Editar" e "Buscar" */
 .edit-button,
 .search-button {
-  background-color: #5D5DFF; 
-  color: #fff; 
-  border: 1px solid #5D5DFF; 
-  border-radius: 5px; 
-  padding: 10px 20px; 
-  margin-right: 15px; 
+  background-color: #5D5DFF;
+  color: #fff;
+  border: 1px solid #5D5DFF;
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-right: 15px;
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
@@ -365,8 +383,6 @@ export default {
 .edit-button:hover,
 .search-button:hover {
   background-color: #4455cc;
-  border-color: #4455cc; 
-}
-
-</style>
+  border-color: #4455cc;
+}</style>
   
