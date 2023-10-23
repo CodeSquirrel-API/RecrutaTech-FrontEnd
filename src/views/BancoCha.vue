@@ -1,4 +1,4 @@
-<script>
+<script lang = "ts">
 import axios from 'axios';
 import Sidebar from '../components/Sidebar.vue';
 
@@ -13,7 +13,6 @@ export default {
       conhecimento: '',
       habilidade: '',
       atitude: '',
-      cargo: '',
       nivel: '',
       buscaRealizada: false, // Variável para rastrear se uma busca foi realizada
       showPopup1: false,
@@ -59,6 +58,8 @@ export default {
       this.habilidade = '';
       this.atitude = '';
       this.buscaRealizada = false; // Marca que a busca foi limpa
+      this.cargo = '';
+      this.nivel = '';
     },
   showPopupcomAtraso1() {
     this.showPopup1=!true;
@@ -186,7 +187,7 @@ export default {
 
       <!-- Botões Editar e Buscar -->
       <div class="button-container">
-          <button class="custom-button search-button" @click="showPopupcomAtraso3()">Salvar</button>
+          <button class="custom-button search-button" @click="showPopupcomAtraso3();LimparCampos();">Salvar</button>
           <div class="custom-popup" v-if="showPopup3">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage3 }}</p>
