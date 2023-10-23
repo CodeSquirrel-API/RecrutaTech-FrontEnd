@@ -126,6 +126,7 @@ label {
   align-items: flex-start;
 }
 .center {
+  color: #FFFFFF;
   display: flex;
   flex-direction: column;
   align-items: center;

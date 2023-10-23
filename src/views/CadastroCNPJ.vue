@@ -130,6 +130,7 @@ input{
   box-shadow: 0 5px 10px rgb(0,0,0,0.3);
 }
 .center {
+  color: #FFFFFF;
   display: flex;
   flex-direction: column;
   align-items: center;
