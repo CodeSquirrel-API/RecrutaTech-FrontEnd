@@ -17,7 +17,7 @@
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button save-button" @click="getCargoGpt(), showPopupcomAtraso1()">Gerar CHA</button>
+      <button class="custom-button save-button" @click="gerarCHA" :disabled="!cargo || !experience">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
         <div>
           <p class="popup-message">{{ popupMessage1 }}</p>
@@ -87,6 +87,11 @@ export default {
   },
   methods: {
     async getCargoGpt() {
+      if (!this.cargo || !this.experience) {
+      this.showPopup1 = true;
+      return;
+      }
+
       const azureOpenAIAPI = {
         ResourceName: 'interactai',
         DeploymentId: 'modelgpt35t',
@@ -173,6 +178,10 @@ export default {
       this.cargo = '';
     },
 
+    gerarCHA() {
+    this.getCargoGpt();
+    this.showPopupcomAtraso1();
+    },
 
     showPopupcomAtraso1() {
       this.showPopup1 = !true;
@@ -180,15 +189,18 @@ export default {
         this.showPopup1 = !false;
       }, 500);
     },
+
     showPopupcomAtraso2() {
       this.showPopup2 = !true;
       setTimeout(() => {
         this.showPopup2 = !false;
       }, 500);
     },
+
     closePopup1() {
       this.showPopup1 = false;
     },
+
     closePopup2() {
       this.showPopup2 = false;
     },
@@ -394,5 +406,6 @@ export default {
 .search-button:hover {
   background-color: #4455cc;
   border-color: #4455cc;
-}</style>
+}
+</style>
   
