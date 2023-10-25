@@ -142,6 +142,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   border: none;
   margin-top: 10px;
 }

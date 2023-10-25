@@ -119,11 +119,16 @@ export default {
 
 <template>
     <Sidebar></Sidebar>
+    <div class="page-content">
     <div class="bancocha">
       <h1 class="title">Banco de CHA</h1>
-      <div>
-        <label for="descricao" class="input-label">Digite o título do cargo:</label>
-        <!-- <input class="custom-input" type="text" placeholder="Digite aqui..."> -->
+
+      
+      <div class="Cargo">
+        <div>
+          <label for="descricao" class="input-label">Selecione o cargo:</label>
+        </div>
+        
         <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
             <option
               v-for="(item, index) in positionsName" :key="index"
@@ -135,7 +140,10 @@ export default {
       </div>
       
       <div class="nivel-container">
-        <span  class="span-nivel">Selecione o nível de atuação profissional:</span> <br> 
+        <div>
+          <label class="span-nivel">Selecione o nível de atuação profissional:</label>
+        </div>
+        
         <select v-model="nivel" name="experience" class="select-option txt-select">
           <option v-for="(experience, index) in positionsExperience" :key="index" v-bind:value="experience">{{ experience }}</option>
         </select>
@@ -168,7 +176,6 @@ export default {
       <hr class="line" />
 
       <!-- Título "CHA" -->
-      <h2 class="title"> Digite o CHA </h2>
 
       <h2 class="cha-title"> Conhecimentos </h2>
 
@@ -193,12 +200,19 @@ export default {
                 <p class="popup-message">{{ popupMessage3 }}</p>
                 <button class="close-popup-button" @click="closePopup3">Fechar</button>
               </div>
-          </div>
-      </div>
-    </div>
+           </div>
+        </div>
+     </div>
+  </div>
 </template>
 
 <style scoped>
+
+.page-content {
+  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  width: 100%;
+  height: 100vh; 
+}
 
 .custom-popup {
   position: fixed;
@@ -240,12 +254,12 @@ export default {
     font-size: 30px; 
     font-weight: bold; 
     margin-left: 25px;
+    margin-top: 20px;
   }
   .input-label {
     color: #ffffff; 
     font-size: 20px; 
-    margin-bottom: 8px; 
-    margin-left: 25px;
+    margin-bottom: 8px;
   }
   .custom-input {
     width: 90%;
@@ -264,8 +278,8 @@ export default {
   }
 
   .nivel-container {
-    margin-left: 25px;
-    margin-top: 30px; 
+    margin-top: 5%;
+    margin-left: 1%;
   }
 
   .span-nivel {
@@ -281,6 +295,8 @@ export default {
     outline: none;
     transition: border-color 0.2s;
     margin-top: 5px;
+    height:35px ;
+    margin-left: 5px;
   }
 
   .select-option:focus {
@@ -369,5 +385,8 @@ export default {
   border-color: #4455cc; 
 }
 
+.Cargo{
+  margin-left: 1%;
+}
 </style>
   
