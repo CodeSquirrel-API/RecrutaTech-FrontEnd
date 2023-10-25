@@ -1,5 +1,6 @@
 <template>
   <Sidebar></Sidebar>
+  <div class="page-content">
   <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
@@ -17,7 +18,7 @@
 
     <!-- Botões Limpar e Salvar -->
     <div class="button-container">
-      <button class="custom-button save-button" @click="getCargoGpt(), showPopupcomAtraso1()">Gerar CHA</button>
+      <button class="custom-button save-button" @click="gerarCHA" :disabled="!cargo || !experience">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
         <div>
           <p class="popup-message">{{ popupMessage1 }}</p>
@@ -54,13 +55,13 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
 import axios from 'axios';
 import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue';
-
 
 const chaContent = ref({})
 
@@ -87,6 +88,11 @@ export default {
   },
   methods: {
     async getCargoGpt() {
+      if (!this.cargo || !this.experience) {
+      this.showPopup1 = true;
+      return;
+      }
+
       const azureOpenAIAPI = {
         ResourceName: 'interactai',
         DeploymentId: 'modelgpt35t',
@@ -173,6 +179,10 @@ export default {
       this.cargo = '';
     },
 
+    gerarCHA() {
+    this.getCargoGpt();
+    this.showPopupcomAtraso1();
+    },
 
     showPopupcomAtraso1() {
       this.showPopup1 = !true;
@@ -180,15 +190,18 @@ export default {
         this.showPopup1 = !false;
       }, 500);
     },
+
     showPopupcomAtraso2() {
       this.showPopup2 = !true;
       setTimeout(() => {
         this.showPopup2 = !false;
       }, 500);
     },
+
     closePopup1() {
       this.showPopup1 = false;
     },
+
     closePopup2() {
       this.showPopup2 = false;
     },
@@ -208,6 +221,12 @@ export default {
 </script>
   
 <style scoped>
+.page-content {
+  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  width: 100%;
+  height: 100vh; 
+}
+
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -244,7 +263,6 @@ export default {
   background-color: #2980b9;
 }
 
-
 .home {
   width: 100%;
 }
@@ -254,6 +272,7 @@ export default {
   font-size: 30px;
   font-weight: bold;
   margin-left: 25px;
+  margin-top: 20px; 
 }
 
 .input-label {
@@ -311,7 +330,6 @@ export default {
   border-color: #007bff;
 }
 
-/* Estilos dos botões */
 .button-container {
   display: flex;
   justify-content: flex-end;
@@ -394,5 +412,6 @@ export default {
 .search-button:hover {
   background-color: #4455cc;
   border-color: #4455cc;
-}</style>
+}
+</style>
   

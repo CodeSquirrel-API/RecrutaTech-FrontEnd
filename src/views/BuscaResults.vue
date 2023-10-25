@@ -1,10 +1,19 @@
 <template>
 	<Sidebar></Sidebar>
+<<<<<<< HEAD
 	<div class="container">
 		
 		<h1>Resultados</h1>
 		<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
 		<SelectMenu></SelectMenu>
+=======
+	<div class="page-content">
+		<div class="container">
+			<h1>Resultados</h1>
+			<p>Lista de buscas, clique em uma profissão para verificar os resultados.</p>
+			<SelectMenu></SelectMenu>
+		</div>
+>>>>>>> c795098ec0e7aa790465b2d257eb1fd3802f4296
 	</div>
 </template>
   
@@ -23,6 +32,12 @@ export default {
 
 * {
 	font-family: Poppins;
+}
+
+.page-content {
+  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  width: 100%;
+  height: 100vh; 
 }
 
 .container {

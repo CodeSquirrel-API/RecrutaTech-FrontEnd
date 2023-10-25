@@ -199,6 +199,7 @@ import axios from 'axios';
         if (responseCheck.data.valid) {
           this.$router.push('/home');
         } else {
+          this.$router.push('/login')
           alert("Codigo incorreto!!");
           }
         }
