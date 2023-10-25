@@ -3,7 +3,8 @@
   <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
-    <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo">
+    <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo" @input="updateCargoUppercase">
+    
 
     <div class="nivel-container">
       <span class="span-nivel">Selecione o nível de atuação profissional:</span><br>
@@ -81,6 +82,7 @@ export default {
       showPopup2: false,
       popupMessage1: ('Gerando CHA...'),
       popupMessage2: ('salvo com sucesso!'),
+      cargoUppercase: '',
     };
   },
   methods: {
@@ -190,6 +192,11 @@ export default {
     closePopup2() {
       this.showPopup2 = false;
     },
+
+    updateCargoUppercase() {
+    this.cargoUppercase = this.cargo.toUpperCase();
+  },
+
   },
 
   watch: {
@@ -286,6 +293,7 @@ export default {
   color: #ffffff;
   font-size: 20px;
   margin-bottom: 8px;
+  
 }
 
 .select-option {
@@ -295,6 +303,8 @@ export default {
   outline: none;
   transition: border-color 0.2s;
   margin-top: 5px;
+  height:35px ;
+  text-transform: uppercase;
 }
 
 .select-option:focus {
