@@ -1,5 +1,6 @@
 <template>
   <Sidebar></Sidebar>
+  <div class="page-content">
   <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
@@ -54,13 +55,13 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script lang="ts">
 import axios from 'axios';
 import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue';
-
 
 const chaContent = ref({})
 
@@ -220,6 +221,12 @@ export default {
 </script>
   
 <style scoped>
+.page-content {
+  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  width: 100%;
+  height: 100vh; 
+}
+
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -256,7 +263,6 @@ export default {
   background-color: #2980b9;
 }
 
-
 .home {
   width: 100%;
 }
@@ -266,6 +272,7 @@ export default {
   font-size: 30px;
   font-weight: bold;
   margin-left: 25px;
+  margin-top: 20px; 
 }
 
 .input-label {
@@ -323,7 +330,6 @@ export default {
   border-color: #007bff;
 }
 
-/* Estilos dos botões */
 .button-container {
   display: flex;
   justify-content: flex-end;

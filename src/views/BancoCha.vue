@@ -119,6 +119,7 @@ export default {
 
 <template>
     <Sidebar></Sidebar>
+    <div class="page-content">
     <div class="bancocha">
       <h1 class="title">Banco de CHA</h1>
 
@@ -199,12 +200,19 @@ export default {
                 <p class="popup-message">{{ popupMessage3 }}</p>
                 <button class="close-popup-button" @click="closePopup3">Fechar</button>
               </div>
-          </div>
-      </div>
-    </div>
+           </div>
+        </div>
+     </div>
+  </div>
 </template>
 
 <style scoped>
+
+.page-content {
+  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  width: 100%;
+  height: 100vh; 
+}
 
 .custom-popup {
   position: fixed;
@@ -246,6 +254,7 @@ export default {
     font-size: 30px; 
     font-weight: bold; 
     margin-left: 25px;
+    margin-top: 20px;
   }
   .input-label {
     color: #ffffff; 
