@@ -3,7 +3,7 @@
 	<div class="container">
 		
 		<h1>Resultados</h1>
-		<p>Lista de buscas, clique em uma profissão para verificar os resultados.</p>
+		<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
 		<SelectMenu></SelectMenu>
 	</div>
 </template>

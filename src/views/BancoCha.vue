@@ -160,7 +160,7 @@ export default {
           </div>
         </div>
         <div>
-            <button class="custom-button save-button" @click="BuscarCha, showPopupcomAtraso2()">Buscar</button>
+            <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
           <div class="custom-popup" v-if="showPopup2">
             <div class="popup-content">
               <p class="popup-message">{{ popupMessage2 }}</p>
@@ -201,6 +201,7 @@ export default {
               </div>
           </div>
       </div>
+      
     </div>
 </template>
 
