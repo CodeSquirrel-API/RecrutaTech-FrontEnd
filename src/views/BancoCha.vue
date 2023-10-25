@@ -123,8 +123,11 @@ export default {
       <h1 class="title">Banco de CHA</h1>
 
       
-      <div>
-        <label for="descricao" class="input-label">Selecione o cargo:</label>
+      <div class="Cargo">
+        <div>
+          <label for="descricao" class="input-label">Selecione o cargo:</label>
+        </div>
+        
         <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
             <option
               v-for="(item, index) in positionsName" :key="index"
@@ -136,7 +139,10 @@ export default {
       </div>
       
       <div class="nivel-container">
-        <span  class="span-nivel">Selecione o nível de atuação profissional:</span> 
+        <div>
+          <label class="span-nivel">Selecione o nível de atuação profissional:</label>
+        </div>
+        
         <select v-model="nivel" name="experience" class="select-option txt-select">
           <option v-for="(experience, index) in positionsExperience" :key="index" v-bind:value="experience">{{ experience }}</option>
         </select>
@@ -244,8 +250,7 @@ export default {
   .input-label {
     color: #ffffff; 
     font-size: 20px; 
-    margin-bottom: 8px; 
-    margin-left: 25px;
+    margin-bottom: 8px;
   }
   .custom-input {
     width: 90%;
@@ -264,8 +269,8 @@ export default {
   }
 
   .nivel-container {
-    margin-left: 25px;
-    margin-top: 30px; 
+    margin-top: 5%;
+    margin-left: 1%;
   }
 
   .span-nivel {
@@ -371,5 +376,8 @@ export default {
   border-color: #4455cc; 
 }
 
+.Cargo{
+  margin-left: 1%;
+}
 </style>
   
