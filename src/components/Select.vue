@@ -18,10 +18,23 @@
         </p>
       </ul>
     </div>
+    <button @click="skillGetAll()" class="btn-teste" >FUNCAO AQUI</button>
+
+
+    <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
+      <option
+        v-for="(item, index) in positionsName" :key="index"
+        v-bind:value="item"
+        class="select-option txt-select">
+        {{ item }}
+      </option>
+    </select>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -32,9 +45,13 @@ export default {
         "Desenvolvedor de Software","Engenheiro de Software", "Desenvolvedor Web", "Desenvolvedor de Aplicativos Móveis",
         "Analista de Dados", "Engenheiro de Software", "Engenheiro de DevOps", "Engenheiro de Segurança Cibernética","Desenvolvedor de Jogos",
         "Engenheiro de Inteligência Artificial",
-      ]
+      ],
+      candidates:[],
+      candidatesCurrentProfession:[],
+      skills: []
     };
   },
+
   computed: {
     filteredCargos() {
       const searchWord = this.search.toLowerCase();
@@ -42,6 +59,32 @@ export default {
     }
   },
   methods: {
+
+
+
+    async getCandidates() {
+      await axios.get('/candidates/getAll').then((response) => {
+        this.candidates = response.data;
+        this.candidatesCurrentProfession = [... new Set(this.candidates.map((cand) => cand.currentProfession))];
+        console.log(this.candidates);
+      });
+    },
+
+    getProfissao(cargo) {
+          this.candidatesCurrentProfession = [];
+          this.candidatesCurrentProfession = [
+            ...new Set(this.candidates.filter((cand) => cand.currentProfession == cargo).map((cand) => cand.currentProfession)),
+          ];
+          console.log(this.candidatesCurrentProfession);
+        },
+
+    async skillGetAll(){
+      await axios.get('/skill/getAll').then((response) => {
+        this.skills = response.data;
+        console.log(this.skills);
+      })
+    },
+
     toggleDropdown() {
       this.isActive = !this.isActive;
     },
@@ -51,7 +94,8 @@ export default {
       this.search = "";
       this.selectedCargo = cargo;
       this.isActive = false;
-    }
+    },
+
   }
 };
 </script>
@@ -65,6 +109,9 @@ export default {
   background: #4285f4;
 }
 
+.btn-teste{
+  background-color: aqua;
+}
 .wrapper {
   width: 500px;
   margin: 55px auto 0;

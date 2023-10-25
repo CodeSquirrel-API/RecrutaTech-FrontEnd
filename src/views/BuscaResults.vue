@@ -1,12 +1,13 @@
 <template>
 	<Sidebar></Sidebar>
-	<div class="page-content">
-		<div class="container">
-			<h1>Resultados</h1>
-			<p>Lista de buscas, clique em uma profissão para verificar os resultados.</p>
-			<SelectMenu></SelectMenu>
-		</div>
+	<div class="container">
+		
+		<h1>Resultados</h1>
+		<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
+		<SelectMenu></SelectMenu>
 	</div>
+
+		
 </template>
   
 <script>

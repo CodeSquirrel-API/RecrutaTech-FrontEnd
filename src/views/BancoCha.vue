@@ -120,56 +120,56 @@ export default {
 <template>
     <Sidebar></Sidebar>
     <div class="page-content">
-    <div class="bancocha">
-      <h1 class="title">Banco de CHA</h1>
+      <div class="bancocha">
+        <h1 class="title">Banco de CHA</h1>
 
-      
-      <div class="Cargo">
-        <div>
-          <label for="descricao" class="input-label">Selecione o cargo:</label>
+        
+        <div class="Cargo">
+          <div>
+            <label for="descricao" class="input-label">Selecione o cargo:</label>
+          </div>
+          
+          <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
+              <option
+                v-for="(item, index) in positionsName" :key="index"
+                v-bind:value="item"
+                class="select-option txt-select">
+                {{ item }}
+              </option>
+            </select>
         </div>
         
-        <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
-            <option
-              v-for="(item, index) in positionsName" :key="index"
-              v-bind:value="item"
-              class="select-option txt-select">
-              {{ item }}
-            </option>
+        <div class="nivel-container">
+          <div>
+            <label class="span-nivel">Selecione o nível de atuação profissional:</label>
+          </div>
+          
+          <select v-model="nivel" name="experience" class="select-option txt-select">
+            <option v-for="(experience, index) in positionsExperience" :key="index" v-bind:value="experience">{{ experience }}</option>
           </select>
-      </div>
-      
-      <div class="nivel-container">
-        <div>
-          <label class="span-nivel">Selecione o nível de atuação profissional:</label>
         </div>
-        
-        <select v-model="nivel" name="experience" class="select-option txt-select">
-          <option v-for="(experience, index) in positionsExperience" :key="index" v-bind:value="experience">{{ experience }}</option>
-        </select>
-      </div>
-  
-      <!-- Botões  -->
-      <div class="button-container">
-        <div>
-          <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1()">Limpar</button>
-          <div class="custom-popup" v-if="showPopup1">
-            <div>
-              <p class="popup-message">{{ popupMessage1 }}</p>
-              <button class="close-popup-button" @click="closePopup1">Fechar</button>
+    
+        <!-- Botões  -->
+        <div class="button-container">
+          <div>
+            <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1()">Limpar</button>
+            <div class="custom-popup" v-if="showPopup1">
+              <div>
+                <p class="popup-message">{{ popupMessage1 }}</p>
+                <button class="close-popup-button" @click="closePopup1">Fechar</button>
+              </div>
+            </div>
+          </div>
+          <div>
+              <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
+            <div class="custom-popup" v-if="showPopup2">
+              <div class="popup-content">
+                <p class="popup-message">{{ popupMessage2 }}</p>
+                <button class="close-popup-button" @click="closePopup2">Fechar</button>
+              </div>
             </div>
           </div>
         </div>
-        <div>
-            <button class="custom-button save-button" @click="BuscarCha, showPopupcomAtraso2()">Buscar</button>
-          <div class="custom-popup" v-if="showPopup2">
-            <div class="popup-content">
-              <p class="popup-message">{{ popupMessage2 }}</p>
-              <button class="close-popup-button" @click="closePopup2">Fechar</button>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <!-- Linha cinza abaixo dos botões -->
@@ -200,10 +200,10 @@ export default {
                 <p class="popup-message">{{ popupMessage3 }}</p>
                 <button class="close-popup-button" @click="closePopup3">Fechar</button>
               </div>
-           </div>
-        </div>
-     </div>
-  </div>
+          </div>
+      </div>
+    </div>
+   
 </template>
 
 <style scoped>
