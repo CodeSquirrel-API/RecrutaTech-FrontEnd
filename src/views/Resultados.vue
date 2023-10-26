@@ -1,6 +1,5 @@
 <template>
 	<Sidebar></Sidebar>
-	<div class="page-content">
 		<div class="resultados">
 			<div class="title">
 				<h1>Resultados</h1>
@@ -21,7 +20,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 </template>
 
 
@@ -55,13 +53,6 @@ export default {
 
 * {
 	font-family: Poppins;
-}
-
-.page-content {
-	margin-left: 18%;
-	/* Use o mesmo valor da largura do menu */
-	width: 100%;
-	height: 100vh;
 }
 
 .resultados {
