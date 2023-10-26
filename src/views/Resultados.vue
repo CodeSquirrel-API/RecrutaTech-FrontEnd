@@ -1,23 +1,23 @@
 <template>
 	<Sidebar></Sidebar>
 	<div class="page-content">
-	<div class="resultados">
-		<div class="title">
-			<h1>Resultados</h1>
-			<p>Lista de candidatos</p>
-		</div>
-		<div class="candidatos">
-			<div v-for="(candidato, index) in candidatos" :key="index" class="candidato-card">
-				<div class="info">
-					<span class="candidato">{{ candidato.nome }}</span>
-					<span class="match">{{ candidato.match }}%</span>
-				</div>
-				<div class="bar">
-					<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
-				</div>
-				<router-link :to="'/visualizar/' + candidato.id">
-					<button class="visualizar-button">Ver Candidato</button>
-				</router-link>
+		<div class="resultados">
+			<div class="title">
+				<h1>Resultados</h1>
+				<p>Lista de candidatos</p>
+			</div>
+			<div class="candidatos">
+				<div v-for="(candidato, index) in candidatos" :key="index" class="candidato-card">
+					<div class="info">
+						<span class="candidato">{{ candidato.nome }}</span>
+						<span class="match">{{ candidato.match }}%</span>
+						<router-link :to="'/visualizar/' + candidato.id">
+							<button class="visualizar-button">Visualizar</button>
+						</router-link>
+					</div>
+					<div class="bar">
+						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -53,20 +53,22 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-*{
+* {
 	font-family: Poppins;
 }
 
 .page-content {
-  margin-left: 18%; /* Use o mesmo valor da largura do menu */
-  width: 100%;
-  height: 100vh; 
+	margin-left: 18%;
+	/* Use o mesmo valor da largura do menu */
+	width: 100%;
+	height: 100vh;
 }
 
-.resultados{
+.resultados {
 	width: 100%;
 	margin-left: 10vh;
-}	
+}
+
 .title h1 {
 	color: #fff;
 	min-height: 10vh;
@@ -77,23 +79,26 @@ export default {
 	margin-top: 4vh;
 	margin-left: 40px;
 }
-.title p{
+
+.title p {
 	color: #fff;
 	font-size: 20px;
 	margin-left: 5vh;
 	margin-left: 10vh;
+	margin-bottom: 4vh;
 }
 
 .candidato-card {
 	background: #0e1011;
 	padding: 16px;
-	margin: 16px;
+	margin: 2px;
 	width: 100vh;
 	display: flex;
 	flex-direction: column;
-	border-radius: 20px;
+	/* border-radius: 5px; */
 	margin-left: 26vh;
 	align-items: center;
+	border-bottom: solid 1px #ffffff4d;
 }
 
 .info {
@@ -122,24 +127,22 @@ export default {
 	border-radius: 5px;
 }
 
-.match{
+.match {
 	color: #fff;
 }
 
 .visualizar-button {
-	margin-top: 5vh;
 	background-color: #5D5DFF;
-	border:1px solid #fff ;
 	color: white;
+	margin-bottom: 1vh;
 	padding: 8px 16px;
+	display: inline-block;
 	cursor: pointer;
-	border-radius: 20px;
-	box-shadow: 0 5px 15px rgb(0,0,0,0.5);
+	border-radius: 5px;
+	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
 	transition: all 0.5s ease;
 }
-
-.visualizar-button:hover{
+.visualizar-button:hover {
 	background-color: #5858ee;
 	transform: translateY(-3px);
-}
-</style>
+}</style>

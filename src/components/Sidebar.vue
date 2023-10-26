@@ -21,14 +21,18 @@
 		  <span class="material-icons">group</span>
 		  <span class="text">Banco CHA</span>
 		</router-link>
+		<router-link to="/settings" class="button">
+		  <span class="material-icons">settings</span>
+		  <span class="text">Configurações</span>
+		</router-link>
 	  </div>
   
 	  <div class="flex"></div>
   
 	  <div class="menu">
-		<router-link to="/settings" class="button">
-		  <span class="material-icons">settings</span>
-		  <span class="text">Configurações</span>
+		<router-link to="/quit" class="button">
+		  <span class="material-icons">logout</span>
+		  <span class="text">Sair</span>
 		</router-link>
 	  </div>
 	</aside>
@@ -56,12 +60,12 @@
   }
   
   .fixed-menu .logo img {
-  width: 75px; /* Defina a largura desejada */
-  height: auto; /* Isso manterá a proporção de aspecto do logo */
+  width: 50px; 
+  height: auto;
   display: flex;
   justify-content: center; 
   align-items: center; 
-  margin-bottom: 1rem;
+  margin-bottom: 5vh;
 }
 
   .fixed-menu h3 {
