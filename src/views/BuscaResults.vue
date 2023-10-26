@@ -1,10 +1,12 @@
 <template>
 	<Sidebar></Sidebar>
-	<div class="container">
-		
-		<h1>Resultados</h1>
-		<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
-		<SelectMenu></SelectMenu>
+	<div class="page-content">
+		<div class="container">
+			
+			<h1>Resultados</h1>
+			<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
+			<SelectMenu></SelectMenu>
+		</div>
 	</div>
 
 		
@@ -28,9 +30,10 @@ export default {
 }
 
 .page-content {
-  margin-left: 18%; /* Use o mesmo valor da largura do menu */
+  margin-left: 18%; 
   width: 100%;
   height: 100vh; 
+  overflow: hidden;
 }
 
 .container {
