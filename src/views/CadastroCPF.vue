@@ -6,11 +6,11 @@
       <div class="opcoes">
 
         <RouterLink to="/CadastroCPF">
-          <button @click="entrar" class="opcao1">CPF</button>
+          <button class="opcao1">CPF</button>
         </RouterLink>
         
         <RouterLink to="/CadastroCNPJ">
-          <button @click="entrar" class="opcao2">CNPJ</button>
+          <button class="opcao2">CNPJ</button>
         </RouterLink>
 
       </div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="">
-              <input type="text" class="" id="cpf" v-model="cpf" placeholder="000.000.000-00" />
+              <input type="text" maxlength="11" id="cpf" v-model="numero" @input="validarNumero"  placeholder="000.000.000-00" />
             </div>
 
             <div>
@@ -69,7 +69,7 @@ input{
   background-color: #33363a00;
   width: 400px;
   height: 38px;
-  color: #fff;
+  color: #707D86;
   font-size: 16px;
   margin: 5px 5px;
   border-style:solid;
@@ -138,6 +138,7 @@ label {
   export default {
     data() {
       return {
+        numero: null,
         username: '',
         cpf:'',
         email:'',
@@ -146,11 +147,10 @@ label {
       };
     },
     methods: {
-      login() {
-        // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-        // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
-        console.log('Senha:', this.password);
+      validarNumero(){
+        if (isNaN(this.numero)) {
+        this.numero = null;
+        }
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada

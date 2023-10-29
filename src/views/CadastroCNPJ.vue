@@ -20,7 +20,7 @@
             <label for="razaoSocial" class="font" >Nome da Empresa:</label>    
           </div>
 
-          <div class="">
+          <div>
             <input type="text" class="" id="razaoSocial" v-model="razaoSocial" placeholder="Razão Social" />
           </div>
 
@@ -29,7 +29,7 @@
           </div>
 
           <div class="">
-            <input type="text" class="" id="cnpj" v-model="cnpj" placeholder="XX.XXX.XXX/0001-XX" />
+            <input type="text" maxlength="14" id="cnpj" v-model="numero" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
           </div>
 
           <div>
@@ -135,6 +135,7 @@ input{
   align-items: center;
   border: none;
   margin-top: 10px;
+  color: #FFFFFF;
 }
 
 label {
@@ -151,6 +152,7 @@ label {
   export default {
     data() {
       return {
+        numero: null,
         razaoSocial: '',
         cnpj:'',
         email:'',
@@ -159,11 +161,10 @@ label {
       };
     },
     methods: {
-      login() {
-        // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-        // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.razaoSocial);
-        console.log('Senha:', this.password);
+      validarNumero(){
+        if (isNaN(this.numero)) {
+        this.numero = null;
+        }
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada

@@ -32,7 +32,7 @@
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
                 <br>
-                <input type="number" v-model="code">
+                <input v-model="numero" @input="validarNumero" maxlength="6">
                 <br>
                 <button class="close-popup-button" @click="VerificarCodigo">Login</button>
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
@@ -163,6 +163,7 @@ import axios from 'axios';
   export default {
     data() {
       return {
+        numero: null,
         code: '',
         showPopup: false,
         email:'',
@@ -207,6 +208,11 @@ import axios from 'axios';
           
         }
           
+      },
+      validarNumero(){
+        if (isNaN(this.numero)) {
+          this.numero = null;
+        }
       },
       showPopupNow() {
         this.showPopup = true;
