@@ -3,7 +3,7 @@
 
       <h2 class="titulo">Cadastre-se</h2>
 
-      <div class="opcoes">
+      <div class=" style">
 
         <RouterLink to="/CadastroCPF">
           <button class="opcao1">CPF</button>
@@ -15,7 +15,7 @@
 
       </div>
 
-      <div class="center">
+      <div class="style">
         <form @submit.prevent="CadastroCPF">
             <div>
               <label for="username" class="font" >Nome Completo:</label>    
@@ -50,7 +50,7 @@
             </div>
 
             <div class="center">
-              <button @click="entrar" class="btnCadastrar">Cadastrar</button>
+              <button @click="entrar" class="btnCadastrar entrar">Cadastrar</button>
             </div>
 
             <div class="center font">
@@ -76,6 +76,12 @@ input{
   border-color:#33363A;
 }
 
+.style{
+  margin-left: 30px;
+}
+
+
+
 .font{
   color: #FFFFFF;
 }
@@ -97,6 +103,11 @@ input{
   font-size: 20px;
   border: none;
 }
+
+.opcao1:hover {
+  background-color: #2980b9;
+}
+
 .opcao2{ 
   border-radius: 5px;
   margin-left: 10px;
@@ -109,16 +120,23 @@ input{
   border: none;
 }
 
+.opcao2:hover {
+  background-color: #2980b9;
+}
+
 .btnCadastrar{
-  background-color: #5D5DFF;
-  border: none;
+  margin-left: 10px;
   border-radius: 5px;
   width: 133px;
   height: 40px;
+  background-color: #5D5DFF;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
+  border: none;
 }
-
+.btnCadastrar:hover {
+  background-color: #2980b9;
+}
 label {
   display: block;
   margin-top: 15px;

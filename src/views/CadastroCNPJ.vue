@@ -4,17 +4,17 @@
 
       <h2 class="titulo">Cadastre-se</h2>
 
-      <div class="">
-      <RouterLink to="/CadastroCPF">
-        <button @click="entrar" class="opcao2">CPF</button>
-      </RouterLink>
+      <div class="style">
+        <RouterLink to="/CadastroCPF">
+          <button class="opcao2">CPF</button>
+        </RouterLink>
       
-      <RouterLink to="/CadastroCNPJ">
-        <button @click="entrar" class="opcao1">CNPJ</button>
-      </RouterLink>
+        <RouterLink to="/CadastroCNPJ">
+          <button class="opcao1">CNPJ</button>
+        </RouterLink>
       </div>
 
-      <div class="center">
+      <div class="style">
         <form @submit.prevent="CadastroCPF">
           <div>
             <label for="razaoSocial" class="font" >Nome da Empresa:</label>    
@@ -78,24 +78,22 @@ input{
   border-color:#33363A;
 
 }
-.background{
-  padding: 7px;
-  background-color: #33363A;
-  width: 400px;
-  height: 38px;
-  color: #fff;
-  border-radius: 10px;
-  font-size: 16px;
-  margin: 5px 5px;
+
+.style{
+  margin-left: 30px;
 }
 .btnCadastrar{
-  background-color: #5D5DFF;
-  border: none;
+  margin-left: 10px;
   border-radius: 5px;
   width: 133px;
   height: 40px;
+  background-color: #5D5DFF;
   color: white;
-  font-size: 16px;
+  font-size: 20px;
+  border: none;
+}
+.btnCadastrar:hover {
+  background-color: #2980b9;
 }
 .font{
   color: #FFFFFF;
@@ -116,6 +114,9 @@ input{
   font-size: 20px;
   border: none;
 }
+.opcao1:hover {
+  background-color: #2980b9;
+}
 .opcao2{
   margin-right: 10px;
   border-radius: 5px;
@@ -128,6 +129,9 @@ input{
   border: none;
   transition: all 0.5s ease;
   box-shadow: 0 5px 10px rgb(0,0,0,0.3);
+}
+.opcao2:hover {
+  background-color: #2980b9;
 }
 .center {
   display: flex;
