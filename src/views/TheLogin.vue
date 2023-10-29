@@ -10,29 +10,29 @@
       <h2 class="titulo ">Entrar</h2>
       <form @submit.prevent="Codigo">
 
-        <div class="">
+        <div class="style">
           <label for="email" class="font" >E-mail:</label>
-          <input type="text" class="campoInput" id="email" v-model="email" placeholder="exemplo@gmail.com"/>
+          <input type="text" maxlength="50" class="campoInput" id="email" v-model="email" placeholder="exemplo@gmail.com"/>
         </div>
 
-        <div class="">
+        <div class="style">
           <label for="password" class="font" >Senha:</label>
           <input type="password" class="campoInput" id="password" v-model="password" placeholder="********"/>
         </div>
 
-        <div class="checkbox font">
+        <div class="checkbox font style">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
           <label for="meuCheckbox" class="">Manter conectado </label>
           <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
         </div>       
         
         <div class="center">
-            <button class="open-popup-button entrar" @click="Codigo, showPopupNow()">Entrar</button>
+            <button class="close-popup-button entrar" @click="Codigo, showPopupNow()">Entrar</button>
             <div class="custom-popup" v-if="showPopup">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
                 <br>
-                <input type="number" v-model="code">
+                <input v-model="numero" @input="validarNumero" maxlength="6">
                 <br>
                 <button class="close-popup-button" @click="VerificarCodigo">Login</button>
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
@@ -84,6 +84,10 @@
   background-color: #2980b9;
 }
 
+.style{
+  margin: 30px 30px 30px 30px;
+}
+
 .checkbox{
   display:flex;
 }
@@ -110,20 +114,17 @@
   color: white;
 }
 .entrar{
-  margin-top: 50px;
+  margin-top:50px ;
   margin-bottom: 25px;
+  border-radius: 10px;
   width: 400px;
   height: 48px;
   background-color: #5D5DFF;
   color: white;
-  border: none;
   font-size: 20px;
-  box-shadow: 0, 5px, 15px rgb(0,0,0,0.4);
-  transition: all 0.4s ease;
 }
-
-.entrar:hover{
-  transform: translateY(-3px);
+.entrar:hover {
+  background-color: #2980b9;
 }
 .direita{
   margin-left: 80px;
@@ -164,6 +165,7 @@ import axios from 'axios';
   export default {
     data() {
       return {
+        numero: null,
         code: '',
         showPopup: false,
         email:'',
@@ -208,6 +210,11 @@ import axios from 'axios';
           
         }
           
+      },
+      validarNumero(){
+        if (isNaN(this.numero)) {
+          this.numero = null;
+        }
       },
       showPopupNow() {
         this.showPopup = true;
