@@ -22,7 +22,7 @@
             </div>
 
             <div class="">
-              <input type="text" class="" id="username" v-model="username" placeholder="Digite o seu nome" />
+              <input type="text" maxlength="50" id="username" v-model="username" placeholder="Digite o seu nome" />
             </div>
 
             <div>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="">
-              <input type="text" class="" id="email" v-model="email" placeholder="email@exemplo.com"/>
+              <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com"/>
             </div>
 
             <div>
@@ -46,12 +46,18 @@
             </div>
 
             <div class="">
-              <input type="password" class="" id="password" v-model="password" placeholder="********"/>
+              <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
             </div>
 
             <div class="center">
-              <button @click="entrar" class="btnCadastrar entrar">Cadastrar</button>
+            <button class="open-popup-button btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
+            <div class="custom-popup" v-if="isPopupVisible">
+              <div class="popup-content">
+                <p class="popup-message">{{ popupMessage }}</p>
+                <button class="close-popup-button" @click="closePopup">Fechar</button>
+              </div>
             </div>
+          </div>
 
             <div class="center font">
               <label for="text">Já tem uma conta?
@@ -74,6 +80,39 @@ input{
   margin: 5px 5px;
   border-style:solid;
   border-color:#33363A;
+}
+
+
+.custom-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #33363A;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 5px;
+  z-index: 1000;
+}
+.popup-content {
+  text-align: center;
+}
+.popup-message {
+  font-size: 18px;
+  color: #FFFFFF;
+}
+.close-popup-button {
+  margin: 30px 30px 30px 30px;
+  border-radius: 10px;
+  width: 133px;
+  height: 40px;
+  background-color: #5D5DFF;
+  color: white;
+  font-size: 20px;
+}
+.close-popup-button:hover {
+  background-color: #2980b9;
 }
 
 .style{
@@ -151,9 +190,11 @@ label {
   margin-top: 10px;
 }
 </style>
-  
+
   <script lang="ts">
+  import api2 from '../service/api';
   export default {
+
     data() {
       return {
         numero: null,
@@ -161,10 +202,37 @@ label {
         cpf:'',
         email:'',
         password: '',
-        aceitarTermos: false,
+        isPopupVisible: false,
+        popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
     },
     methods: {
+      async cadastrar() {
+        await api2.post('user/create', {
+          "name": this.username,
+          "password": this.password,
+          "email": this.email,
+          "cpf_cnpj": this.cpf,
+          "userType": 0
+        }).then((response)=>{
+          alert("Usuário Cadastrado")
+          console.log(response.data)
+        })
+      },
+      showPopup() {
+        this.isPopupVisible = true;
+      },
+      closePopup() {
+        this.isPopupVisible = false;
+      },
+      login() {
+        // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
+        // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
+        console.log('name:', this.username);
+        console.log('Senha:', this.password);
+        console.log('cpf', this.cpf);
+        console.log('Email:', this.email);
+      },
       validarNumero(){
         if (isNaN(this.numero)) {
         this.numero = null;
@@ -172,7 +240,7 @@ label {
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-      this.$router.push('/')
+      this.$router.push('/login')
       },
     },
   };
