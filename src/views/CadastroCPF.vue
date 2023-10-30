@@ -117,6 +117,7 @@ input{
 
 .style{
   margin-left: 30px;
+  
 }
 
 
@@ -189,6 +190,7 @@ label {
   align-items: center;
   border: none;
   margin-top: 10px;
+  width: 100%;
 }
 </style>
 

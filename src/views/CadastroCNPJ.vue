@@ -178,6 +178,7 @@ input{
   border: none;
   margin-top: 10px;
   color: #FFFFFF;
+  width: 100%;
 }
 
 label {

@@ -6,22 +6,34 @@
 			<h1>Resultados</h1>
 			<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
 			<SelectMenu></SelectMenu>
+		</div>	
+		<div class="teste">
+			<div class="resultado">
+				<Resultados></Resultados>
+			</div>
+		
+			<div class="candidatos">
+				<Candidatos></Candidatos>
+			</div>
 		</div>
-	</div>
 
 		
+	</div>		
 </template>
   
 <script>
 import SelectMenu from "../components/Select.vue";
 import Sidebar from '../components/Sidebar.vue';
+import Resultados from '../components/Resultados.vue';
+import Candidatos from '../components/Candidatos.vue';
 
 export default {
 	components: {
-		SelectMenu, Sidebar
+		SelectMenu, Sidebar, Resultados, Candidatos,
 	},
 };
 </script>
+
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -29,18 +41,36 @@ export default {
 	font-family: Poppins;
 }
 
+.candidatos{
+	background-color: chocolate;
+	width: 50%;
+	float: right;
+	
+}
+.teste{
+	display: flex;
+	background-color: blueviolet;
+	justify-content: space-between;
+}
+
 .page-content {
-  margin-left: 18%; 
-  width: 100%;
-  height: 100vh; 
-  overflow: hidden;
+	justify-content: space-between;
+	margin-left: 18%; 
+	width: 100%;
+	height: 100vh; 
+	/* overflow: hidden; */
+}
+.resultado{
+	width: 50%;
 }
 
 .container {
+	/* display: flex; */
 	width: 100%;
 }
 
 .container h1 {
+	
 	color: #fff;
 	min-height: 10vh;
 	text-transform: uppercase;

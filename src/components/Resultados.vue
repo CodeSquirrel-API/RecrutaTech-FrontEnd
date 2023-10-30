@@ -1,10 +1,10 @@
 <template>
 	<Sidebar></Sidebar>
 		<div class="resultados">
-			<div class="title">
+			<!-- <div class="title">
 				<h1>Resultados</h1>
 				<p>Lista de candidatos</p>
-			</div>
+			</div> -->
 			<div class="candidatos">
 				<div v-for="(candidato, index) in candidatos" :key="index" class="candidato-card">
 					<div class="info">
@@ -58,6 +58,7 @@ export default {
 .resultados {
 	width: 100%;
 	margin-left: 10vh;
+	background-color: rgb(237, 18, 18);
 }
 
 .title h1 {
@@ -82,12 +83,12 @@ export default {
 .candidato-card {
 	background: #0e1011;
 	padding: 16px;
-	margin: 2px;
-	width: 100vh;
+	margin: 5px 2px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	/* border-radius: 5px; */
-	margin-left: 26vh;
+	border-radius: 5px;
+	/* border: none; */
 	align-items: center;
 	border-bottom: solid 1px #ffffff4d;
 }

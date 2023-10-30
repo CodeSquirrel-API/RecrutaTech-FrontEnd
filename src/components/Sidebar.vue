@@ -13,10 +13,10 @@
 		  <span class="material-icons">search</span>
 		  <span class="text">Buscar</span>
 		</router-link>
-		<router-link to="/resultados" class="button">
+		<!-- <router-link to="/resultados" class="button">
 		  <span class="material-icons">timeline</span>
 		  <span class="text">Resultados</span>
-		</router-link>
+		</router-link> -->
 		<router-link to="/bancocha" class="button">
 		  <span class="material-icons">group</span>
 		  <span class="text">Banco CHA</span>

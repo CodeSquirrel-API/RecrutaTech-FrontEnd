@@ -4,14 +4,17 @@
       <span>{{ selectedCargo }}</span>
       <i class="uil uil-angle-down" style="color: #5D5DFF;"></i>
     </div>
+
     <div class="content">
       <div class="search">
         <i class="uil uil-search"></i>
         <input v-model="search" type="text" placeholder="Search" @input="filterCargos" />
       </div>
+      
+      <!-- logica para selecionar o cargo e chamar componente; -->
       <ul class="options">
         <li v-for="(cargo, index) in filteredCargos" :key="index" @click="updateCargo(cargo)"
-          :class="{ selected: cargo === selectedCargo }">
+          :class="{ selected: cargo === selectedCargo }" @change="">
           {{ cargo }}
         </li>
         <p v-if="filteredCargos.length === 0" style="margin-top: 10px; color: #fff; font-size: 20px;">Cargo não encontrado
@@ -49,6 +52,7 @@ export default {
       candidates:[],
       candidatesCurrentProfession:[],
       skills: []
+
     };
   },
 
@@ -58,6 +62,8 @@ export default {
       return this.cargos.filter(cargo => cargo.toLowerCase().startsWith(searchWord));
     }
   },
+
+
   methods: {
 
 
@@ -94,6 +100,7 @@ export default {
       this.search = "";
       this.selectedCargo = cargo;
       this.isActive = false;
+
     },
 
   }
@@ -110,11 +117,12 @@ export default {
 }
 
 .btn-teste{
-  background-color: aqua;
+  background-color: rgb(0, 247, 255);
 }
 .wrapper {
-  width: 500px;
-  margin: 55px auto 0;
+  width: 40%;
+  margin: 5vh 10vh;
+
 }
 
 .select-btn,
