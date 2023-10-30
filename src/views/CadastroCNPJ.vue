@@ -29,7 +29,7 @@
           </div>
 
           <div class="">
-            <input type="text" maxlength="14" id="cnpj" v-model="numero" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
+            <input type="text" maxlength="14" id="cnpj" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
           </div>
 
           <div>
@@ -49,7 +49,7 @@
           </div>
 
           <div class="center">
-            <button class="open-popup-button btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
+            <button class="btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
@@ -58,7 +58,7 @@
             </div>
           </div>
 
-          <div class="center">
+          <div class="center font">
             <label for="text" >Já tem uma conta?
               <RouterLink to="/login">Entre</RouterLink>
             </label>
@@ -70,8 +70,6 @@
   </template>
 
 <style scoped>
-
-
 input{
   padding: 7px;
   background-color: #33363a00;
@@ -82,8 +80,9 @@ input{
   margin: 5px 5px;
   border-style:solid;
   border-color:#33363A;
-
 }
+
+
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -119,6 +118,50 @@ input{
 .style{
   margin-left: 30px;
 }
+
+
+
+.font{
+  color: #FFFFFF;
+}
+
+.titulo{
+  text-align: center;
+  color: #fff;
+  font-size: 35px;
+  font-weight: bolder;
+}
+
+.opcao1{
+  border-radius: 5px;
+  margin-left: 10px;
+  width: 133px;
+  height: 40px;
+  background-color: #5D5DFF;
+  color: white;
+  font-size: 20px;
+  border: none;
+}
+
+.opcao1:hover {
+  background-color: #2980b9;
+}
+
+.opcao2{ 
+  border-radius: 5px;
+  margin-right: 10px;
+  width: 133px;
+  height: 40px;
+  background-color: #666666;
+  color: white;
+  font-size: 20px;
+  border: none;
+}
+
+.opcao2:hover {
+  background-color: #2980b9;
+}
+
 .btnCadastrar{
   margin-left: 10px;
   border-radius: 5px;
@@ -132,43 +175,11 @@ input{
 .btnCadastrar:hover {
   background-color: #2980b9;
 }
-.font{
-  color: #FFFFFF;
-}
-.titulo{
-  text-align: center;
-  font-size: 35px;
-  color: #fff;
-  font-weight: bolder;
-}
-.opcao1{
- margin-left: 10px;
-  border-radius: 5px;
-  width: 133px;
-  height: 40px;
-  background-color: #5D5DFF;
-  color: white;
-  font-size: 20px;
-  border: none;
-}
-.opcao1:hover {
-  background-color: #2980b9;
-}
-.opcao2{
-  margin-right: 10px;
-  border-radius: 5px;
-
-  width: 133px;
-  height: 40px;
-  background-color: #666666;
-  color: white;
-  font-size: 20px;
-  border: none;
-  transition: all 0.5s ease;
-  box-shadow: 0 5px 10px rgb(0,0,0,0.3);
-}
-.opcao2:hover {
-  background-color: #2980b9;
+label {
+  display: block;
+  margin-top: 15px;
+  margin-left: 5px; 
+  align-items: flex-start;
 }
 .center {
   color: #FFFFFF;
@@ -181,14 +192,9 @@ input{
   width: 100%;
 }
 
-label {
-  display: block;
-  margin-top: 15px;
-  margin-left: 5px; 
-  align-items: flex-start;
+.campo-vazio{
+  border: 1px solid red;
 }
-
-
 </style>
   
   <script lang="ts">
@@ -197,7 +203,6 @@ import api2 from "../service/api"
   export default {
     data() {
       return {
-        numero: null,
         empresa: '',
         cnpj:'',
         email:'',
@@ -205,6 +210,15 @@ import api2 from "../service/api"
         isPopupVisible: false,
         popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
       };
+    },
+    computed: {
+      camposPreenchidos() {
+    if (this.empresa && this.cnpj && this.email && this.password) {
+      return true; // Retorna false se pelo menos um campo estiver vazio.
+    } else {
+      return false; // Retorna true quando todos os campos estão preenchidos.
+        }
+      }
     },
     methods: {
       async cadastrar() {
@@ -220,14 +234,20 @@ import api2 from "../service/api"
         })
       },
       showPopup() {
-        this.isPopupVisible = true;
+        if (this.camposPreenchidos){
+          this.isPopupVisible = true;
+        }
+        else{
+          alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+          
+        }
       },
       closePopup() {
         this.isPopupVisible = false;
       },
       validarNumero(){
-        if (isNaN(this.numero)) {
-        this.numero = null;
+        if (isNaN(this.cnpj)) {
+        this.cnpj = null;
         }
       },
       login() {

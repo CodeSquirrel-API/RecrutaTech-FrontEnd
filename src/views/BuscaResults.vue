@@ -7,7 +7,7 @@
 			<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
 			<SelectMenu></SelectMenu>
 		</div>	
-		<div class="teste">
+		<div class="container-candidato">
 			<div class="resultado">
 				<Resultados></Resultados>
 			</div>
@@ -42,14 +42,12 @@ export default {
 }
 
 .candidatos{
-	background-color: chocolate;
 	width: 50%;
 	float: right;
 	
 }
-.teste{
+.container-candidato{
 	display: flex;
-	background-color: blueviolet;
 	justify-content: space-between;
 }
 
@@ -61,7 +59,7 @@ export default {
 	/* overflow: hidden; */
 }
 .resultado{
-	width: 50%;
+	width: 40%;
 }
 
 .container {

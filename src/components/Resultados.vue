@@ -58,7 +58,6 @@ export default {
 .resultados {
 	width: 100%;
 	margin-left: 10vh;
-	background-color: rgb(237, 18, 18);
 }
 
 .title h1 {
