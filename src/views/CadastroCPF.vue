@@ -22,7 +22,7 @@
             </div>
 
             <div class="">
-              <input type="text" maxlength="50" id="username" v-model="username" placeholder="Digite o seu nome" />
+              <input type="text" maxlength="50" id="username" v-model="username" placeholder="Digite o seu nome"  />
             </div>
 
             <div>
@@ -30,7 +30,7 @@
             </div>
 
             <div class="">
-              <input type="text" maxlength="11" id="cpf" v-model="numero" @input="validarNumero"  placeholder="000.000.000-00" />
+              <input type="text" maxlength="11" id="cpf" v-model="cpf" @input="validarNumero"  placeholder="000.000.000-00"  />
             </div>
 
             <div>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="">
-              <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com"/>
+              <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com" />
             </div>
 
             <div>
@@ -46,11 +46,11 @@
             </div>
 
             <div class="">
-              <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
+              <input type="password" maxlength="20" id="password" v-model="password" placeholder="********" />
             </div>
 
             <div class="center">
-            <button class="open-popup-button btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
+            <button class="btnCadastrar" @click="showPopup()">Cadastrar</button>
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
@@ -155,7 +155,6 @@ input{
   background-color: #666666;
   color: white;
   font-size: 20px;
-
   border: none;
 }
 
@@ -197,7 +196,6 @@ label {
 
     data() {
       return {
-        numero: null,
         username: '',
         cpf:'',
         email:'',
@@ -205,6 +203,15 @@ label {
         isPopupVisible: false,
         popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
+    },
+    computed: {
+      camposPreenchidos() {
+    if (this.username && this.cpf && this.email && this.password) {
+      return true; // Retorna false se pelo menos um campo estiver vazio.
+    } else {
+      return false; // Retorna true quando todos os campos estão preenchidos.
+        }
+      }
     },
     methods: {
       async cadastrar() {
@@ -220,9 +227,16 @@ label {
         })
       },
       showPopup() {
-        this.isPopupVisible = true;
+        if (this.camposPreenchidos){
+          this.isPopupVisible = true;
+        }
+        else{
+          alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+          
+        }
       },
       closePopup() {
+
         this.isPopupVisible = false;
       },
       login() {
@@ -234,8 +248,8 @@ label {
         console.log('Email:', this.email);
       },
       validarNumero(){
-        if (isNaN(this.numero)) {
-        this.numero = null;
+        if (isNaN(this.cpf)) {
+        this.cpf = null;
         }
       },
       entrar() {

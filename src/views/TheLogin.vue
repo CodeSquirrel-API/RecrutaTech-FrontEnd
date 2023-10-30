@@ -12,7 +12,7 @@
 
         <div class="style">
           <label for="email" class="font" >E-mail:</label>
-          <input type="text" maxlength="50" class="campoInput" id="email" v-model="email" placeholder="exemplo@gmail.com"/>
+          <input type="text" maxlength="50" class="campoInput" id="email" v-model="username" placeholder="exemplo@gmail.com"/>
         </div>
 
         <div class="style">
@@ -27,12 +27,12 @@
         </div>       
         
         <div class="center">
-            <button class="close-popup-button entrar" @click="Codigo, showPopupNow()">Entrar</button>
-            <div class="custom-popup" v-if="showPopup">
+            <button class="close-popup-button entrar" @click="Codigo, showPopup()">Entrar</button>
+            <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
                 <br>
-                <input v-model="numero" @input="validarNumero" maxlength="6">
+                <input v-model="numero" @input="validarNumero" maxlength="6" :class="{ 'campo-vazio': numero === '' }"/>
                 <br>
                 <button class="close-popup-button" @click="VerificarCodigo">Login</button>
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
@@ -146,7 +146,9 @@
   border: none;
   margin-top: 10px;
 }
-
+.campo-vazio{
+  border: 1px solid red;
+}
 label {
   display: block;
   margin-top: 5px;
@@ -166,13 +168,22 @@ import axios from 'axios';
       return {
         numero: null,
         code: '',
-        showPopup: false,
+        isPopupVisible: false,
         email:'',
         username: '',
         password: '',
         manterConectado: false,
         popupMessage:'seu codigo será enviado em 5 minutos para o seu e-mail: ***@***.com, verifique o seu codigo para prosseguir com o seu login!'
       };
+    },
+    computed: {
+      camposPreenchidos() {
+    if (this.username && this.password) {
+      return true; // Retorna false se pelo menos um campo estiver vazio.
+    } else {
+      return false; // Retorna true quando todos os campos estão preenchidos.
+        }
+      }
     },
     methods: {
       async Codigo () {
@@ -215,11 +226,17 @@ import axios from 'axios';
           this.numero = null;
         }
       },
-      showPopupNow() {
-        this.showPopup = true;
+      showPopup() {
+        if (this.camposPreenchidos){
+          this.isPopupVisible = true;
+        }
+        else{
+          alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+          
+        }
       },
       closePopup() {
-        this.showPopup = false;
+        this.isPopupVisible = false;
       },
 
       login() {
