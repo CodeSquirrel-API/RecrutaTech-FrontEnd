@@ -21,17 +21,23 @@
         </p>
       </ul>
     </div>
-    <button @click="skillGetAll()" class="btn-teste" >FUNCAO AQUI</button>
+    
 
 
-    <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
+    <button @click="skillGetAll()" class="btn-teste">FUNCAO AQUI</button>
+    <select v-model="selectedSkillExperience" class="select-option txt-select">
       <option
-        v-for="(item, index) in positionsName" :key="index"
-        v-bind:value="item"
+        v-for="(experience, index) in skillExperience"
+        :key="index"
+        :value="experience"
         class="select-option txt-select">
-        {{ item }}
+        {{ experience }}
       </option>
-    </select>
+</select>
+
+
+
+
   </div>
 </template>
 
@@ -51,7 +57,10 @@ export default {
       ],
       candidates:[],
       candidatesCurrentProfession:[],
-      skills: []
+      skills: [],
+      skillExperience:[],
+      selectedSkillExperience: null,
+
 
     };
   },
@@ -84,12 +93,19 @@ export default {
           console.log(this.candidatesCurrentProfession);
         },
 
-    async skillGetAll(){
-      await axios.get('/skill/getAll').then((response) => {
-        this.skills = response.data;
-        console.log(this.skills);
-      })
-    },
+
+        async skillGetAll() {
+          await axios.get('/skill/getAll').then((response) => {
+            this.skills = response.data;
+            this.skillExperience = this.extractSkillExperience(this.skills);
+            console.log(this.skillExperience);
+          });
+        },
+
+      extractSkillExperience(skills) {
+        const experience = skills.map((skill) => skill.experience);
+        return [...new Set(experience)]; 
+      },
 
     toggleDropdown() {
       this.isActive = !this.isActive;
@@ -102,6 +118,10 @@ export default {
       this.isActive = false;
 
     },
+
+    beforeMount() {
+    this.skillGetAll();
+  },
 
   }
 };
