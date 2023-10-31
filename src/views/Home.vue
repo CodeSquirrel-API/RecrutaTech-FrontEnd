@@ -84,6 +84,7 @@ export default {
       popupMessage1: ('Gerando CHA...'),
       popupMessage2: ('salvo com sucesso!'),
       cargoUppercase: '',
+
     };
   },
   methods: {

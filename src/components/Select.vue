@@ -23,17 +23,18 @@
     </div>
     
 
-
-    <button @click="skillGetAll()" class="btn-teste">FUNCAO AQUI</button>
-    <select v-model="selectedSkillExperience" class="select-option txt-select">
-      <option
-        v-for="(experience, index) in skillExperience"
-        :key="index"
-        :value="experience"
-        class="select-option txt-select">
-        {{ experience }}
-      </option>
+   <p style="color:antiquewhite">COLOCAR UMA OPCAO PARA NIVEL TAMBÉM -.-</p>
+    <button @click="getCandidates()" class="btn-teste">FUNCAO AQUI</button>
+    <select v-model="selectedCandidatesCurrentProfession" class="select-option txt-select">
+  <option
+    v-for="(profession, index) in candidatesCurrentProfession"
+    :key="index"
+    :value="profession"
+    class="select-option txt-select">
+    {{ profession }}
+  </option>
 </select>
+
 
 
 
@@ -57,9 +58,11 @@ export default {
       ],
       candidates:[],
       candidatesCurrentProfession:[],
+      selectedCandidatesCurrentProfession: null,
       skills: [],
       skillExperience:[],
       selectedSkillExperience: null,
+      
 
 
     };
@@ -75,43 +78,42 @@ export default {
 
   methods: {
 
-
-
     async getCandidates() {
       await axios.get('/candidates/getAll').then((response) => {
         this.candidates = response.data;
-        this.candidatesCurrentProfession = [... new Set(this.candidates.map((cand) => cand.currentProfession))];
-        console.log(this.candidates);
+        this.candidatesCurrentProfession = this.extractCandidatesProfession(this.candidates);
+        console.log(this.candidatesCurrentProfession);
+      });
+    },
+    
+    extractCandidatesProfession(candidates){
+      const currentProfession = candidates.map((candidates) => candidates.currentProfession);
+        return [...new Set(currentProfession)]; 
+    },
+
+
+
+    async skillGetAll() {
+      await axios.get('/skill/getAll').then((response) => {
+        this.skills = response.data;
+        this.skillExperience = this.extractSkillExperience(this.skills);
+        console.log(this.skillExperience);
       });
     },
 
-    getProfissao(cargo) {
-          this.candidatesCurrentProfession = [];
-          this.candidatesCurrentProfession = [
-            ...new Set(this.candidates.filter((cand) => cand.currentProfession == cargo).map((cand) => cand.currentProfession)),
-          ];
-          console.log(this.candidatesCurrentProfession);
-        },
+    extractSkillExperience(skills) {
+      const experience = skills.map((skill) => skill.experience);
+      return [...new Set(experience)]; 
+    },
 
 
-        async skillGetAll() {
-          await axios.get('/skill/getAll').then((response) => {
-            this.skills = response.data;
-            this.skillExperience = this.extractSkillExperience(this.skills);
-            console.log(this.skillExperience);
-          });
-        },
-
-      extractSkillExperience(skills) {
-        const experience = skills.map((skill) => skill.experience);
-        return [...new Set(experience)]; 
-      },
 
     toggleDropdown() {
       this.isActive = !this.isActive;
     },
     filterCargos() {
     },
+    
     updateCargo(cargo) {
       this.search = "";
       this.selectedCargo = cargo;

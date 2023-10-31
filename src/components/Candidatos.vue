@@ -1,7 +1,9 @@
 <template>
     <div class="container">
         <div class="curriculo">
+            
             <p>
+                <img src="../assets/logo.png" width="30" height="30"> <br>
                 [Nome Candidato] <br>
 
                 Informações de Contato:<br>
