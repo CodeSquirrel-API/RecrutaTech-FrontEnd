@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <Sidebar></Sidebar>
   <div class="page-content">
   <div class="home">
@@ -62,12 +63,13 @@
 import axios from 'axios';
 import { ref } from 'vue'
 import Sidebar from '../components/Sidebar.vue';
+import Header from '../components/Header.vue';
 
 const chaContent = ref({})
 
 export default {
   components: {
-    Sidebar,
+    Sidebar, Header,
 
 
   },

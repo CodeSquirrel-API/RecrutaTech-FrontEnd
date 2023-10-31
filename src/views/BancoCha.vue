@@ -1,6 +1,7 @@
 <script lang = "ts">
 import axios from 'axios';
 import Sidebar from '../components/Sidebar.vue';
+import Header from '../components/Header.vue';
 
 export default {
   data() {
@@ -97,7 +98,7 @@ export default {
 
 
   components: {
-    Sidebar,
+    Sidebar, Header,
   },
 
   watch: {
@@ -119,6 +120,7 @@ export default {
 
 <template>
     <Sidebar></Sidebar>
+    <Header></Header>
     <div class="page-content">
       <div class="bancocha">
         <h1 class="title">Banco de CHA</h1>
