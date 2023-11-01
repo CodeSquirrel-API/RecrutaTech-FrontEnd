@@ -10,12 +10,15 @@
 					<div class="info">
 						<span class="candidato">{{ candidato.nome }}</span>
 						<span class="match">{{ candidato.match }}%</span>
-						<router-link :to="'/visualizar/' + candidato.id">
-							<button class="visualizar-button">Visualizar</button>
-						</router-link>
+							<button class="visualizar-button" @click="Visualizar =! Visualizar">Visualizar</button>
 					</div>
 					<div class="bar">
 						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
+					</div>
+
+
+					<div v-if="Visualizar">
+						<Candidatos />
 					</div>
 				</div>
 			</div>
@@ -26,6 +29,7 @@
 <script>
 
 import Sidebar from '../components/Sidebar.vue'
+import Candidatos from '../components/Candidatos.vue'
 
 export default {
 	data() {
@@ -40,10 +44,16 @@ export default {
 				{ id: 7, nome: 'Candidato 7', match: 95 },
 				{ id: 8, nome: 'Candidato 8', match: 65 },
 			],
+
+			Visualizar: false
+
 		};
+		
 	},
-	components: {
+	components: 
+	{
 		Sidebar,
+		Candidatos,
 	},
 };
 </script>

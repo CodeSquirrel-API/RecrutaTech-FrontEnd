@@ -12,9 +12,7 @@
 				<Resultados></Resultados>
 			</div>
 		
-			<div class="candidatos">
-				<Candidatos></Candidatos>
-			</div>
+			
 		</div>
 
 		
