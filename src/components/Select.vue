@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper" :class="{ active: isActive }">
-    <div class="select-btn" @click="toggleDropdown">
+    <div class="select-btn" @click="toggleDropdown(), getCandidates()">
       <span>{{ selectedCargo }}</span>
       <i class="uil uil-angle-down" style="color: #5D5DFF;"></i>
     </div>
@@ -10,7 +10,7 @@
         <i class="uil uil-search"></i>
         <input v-model="search" type="text" placeholder="Search" @input="filterCargos" />
       </div>
-      
+
       <!-- logica para selecionar o cargo e chamar componente; -->
       <ul class="options">
         <li v-for="(cargo, index) in filteredCargos" :key="index" @click="updateCargo(cargo)"
@@ -21,25 +21,10 @@
         </p>
       </ul>
     </div>
-    
-
-   <p style="color:antiquewhite">COLOCAR UMA OPCAO PARA NIVEL TAMBÉM -.-</p>
-    <button @click="getCandidates()" class="btn-teste">FUNCAO AQUI</button>
-    <select v-model="selectedCandidatesCurrentProfession" class="select-option txt-select">
-  <option
-    v-for="(profession, index) in candidatesCurrentProfession"
-    :key="index"
-    :value="profession"
-    class="select-option txt-select">
-    {{ profession }}
-  </option>
-</select>
-
-
-
-
 
   </div>
+
+  <!-- SELECT PRA NIVEL -->
 </template>
 
 <script lang="ts">
@@ -51,18 +36,16 @@ export default {
       selectedCargo: "Selecione o cargo",
       search: "",
       isActive: false,
-      cargos: [
-        "Desenvolvedor de Software","Engenheiro de Software", "Desenvolvedor Web", "Desenvolvedor de Aplicativos Móveis",
-        "Analista de Dados", "Engenheiro de Software", "Engenheiro de DevOps", "Engenheiro de Segurança Cibernética","Desenvolvedor de Jogos",
-        "Engenheiro de Inteligência Artificial",
-      ],
-      candidates:[],
-      candidatesCurrentProfession:[],
+      cargos: [],
+      candidates: [],
+      candidatesCurrentProfession: [],
       selectedCandidatesCurrentProfession: null,
       skills: [],
-      skillExperience:[],
+      skillExperience: [],
       selectedSkillExperience: null,
-      
+      experience: null,
+
+
 
 
     };
@@ -81,31 +64,17 @@ export default {
     async getCandidates() {
       await axios.get('/candidates/getAll').then((response) => {
         this.candidates = response.data;
-        this.candidatesCurrentProfession = this.extractCandidatesProfession(this.candidates);
-        console.log(this.candidatesCurrentProfession);
+        this.cargos = this.extractCandidatesProfession(this.candidates);
+        this.experience = this.extractExperienceLevels(this.candidates, this.cargos);
+        console.log(this.cargos);
+        console.log(this.experience);
       });
     },
-    
-    extractCandidatesProfession(candidates){
+
+    extractCandidatesProfession(candidates) {
       const currentProfession = candidates.map((candidates) => candidates.currentProfession);
-        return [...new Set(currentProfession)]; 
+      return [...new Set(currentProfession)];
     },
-
-
-
-    async skillGetAll() {
-      await axios.get('/skill/getAll').then((response) => {
-        this.skills = response.data;
-        this.skillExperience = this.extractSkillExperience(this.skills);
-        console.log(this.skillExperience);
-      });
-    },
-
-    extractSkillExperience(skills) {
-      const experience = skills.map((skill) => skill.experience);
-      return [...new Set(experience)]; 
-    },
-
 
 
     toggleDropdown() {
@@ -113,17 +82,18 @@ export default {
     },
     filterCargos() {
     },
-    
-    updateCargo(cargo) {
+
+    updateCargo(cargo, experience) {
       this.search = "";
       this.selectedCargo = cargo;
       this.isActive = false;
+      this.selectedExperience = this.experience;
 
     },
 
     beforeMount() {
-    this.skillGetAll();
-  },
+      this.getCandidates();
+    },
 
   }
 };
@@ -138,9 +108,10 @@ export default {
   background: #4285f4;
 }
 
-.btn-teste{
+.btn-teste {
   background-color: rgb(0, 247, 255);
 }
+
 .wrapper {
   width: 40%;
   margin: 5vh 10vh;
