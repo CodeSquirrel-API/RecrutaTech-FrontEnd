@@ -19,9 +19,8 @@ export default {
       showPopup2: false,
       showPopup3: false,
       loading: true,
-      popupMessage1:('CHA foi limpado!'),
       popupMessage2:('Busca feita com sucesso'),
-      popupMessage3:('CHA Salvo com sucesso!'),
+      popupMessage3:('Salvo com sucesso!'),
     };
   },
 
@@ -53,6 +52,25 @@ export default {
       this.buscaRealizada = true; // Marca que uma busca foi realizada
     },
 
+    async salvarCha() {
+    const position = {
+      name: this.cargo,
+      knowledge: this.conhecimento,
+      skill: this.habilidade,
+      attitude: this.atitude,
+      experience: this.nivel,
+    };
+
+    try {
+      const response = await axios.post('/position/create', position);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+    this.showPopupcomAtraso3();
+    this.LimparCampos();
+  },
+
     LimparCampos() {
       this.conhecimento = '';
       this.habilidade = '';
@@ -61,40 +79,38 @@ export default {
       this.cargo = '';
       this.nivel = '';
     },
-  showPopupcomAtraso1() {
-    this.showPopup1=!true;
-    setTimeout(()=>{
-      this.showPopup1=!false;
-    }, 500);
-  },
-  showPopupcomAtraso2() {
-    this.showPopup2=!true;
-    setTimeout(()=>{
-      this.showPopup2=!false;
-    }, 500);
-  },
-  showPopupcomAtraso3() {
-    this.showPopup3=!true;
-    setTimeout(()=>{
-      this.showPopup3=!false;
-    }, 500);
-  },
-  closePopup1() {
-    this.showPopup1 = false;
-  },
-  closePopup2() {
-    this.showPopup2 = false;
-  },
-  closePopup3() {
-    this.showPopup3 = false;
-  },
+
+    showPopupcomAtraso2() {
+      this.showPopup2=!true;
+      setTimeout(()=>{
+        this.showPopup2=!false;
+      }, 500);
+    },
+
+    showPopupcomAtraso3() {
+      this.showPopup3=!true;
+      setTimeout(()=>{
+        this.showPopup3=!false;
+      }, 500);
+    },
+
+    closePopup1() {
+      this.showPopup1 = false;
+    },
+
+    closePopup2() {
+      this.showPopup2 = false;
+    },
+    
+    closePopup3() {
+      this.showPopup3 = false;
+    },
 
   },
 
   beforeMount() {
     this.getPositions();
   },
-
 
   components: {
     Sidebar,
@@ -152,13 +168,7 @@ export default {
         <!-- Botões  -->
         <div class="button-container">
           <div>
-            <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1()">Limpar</button>
-            <div class="custom-popup" v-if="showPopup1">
-              <div>
-                <p class="popup-message">{{ popupMessage1 }}</p>
-                <button class="close-popup-button" @click="closePopup1">Fechar</button>
-              </div>
-            </div>
+            <button class="custom-button clear-button" @click="LimparCampos">Limpar</button>
           </div>
           <div>
               <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
@@ -177,24 +187,17 @@ export default {
 
       <!-- Título "CHA" -->
 
-      <h2 class="cha-title"> Conhecimentos </h2>
-
-      <!-- Campo de texto multilinea -->
+      <h2 class="cha-title"> Conhecimento </h2>
       <textarea v-model="conhecimento" class="cha-textarea"></textarea>
 
-      <h2 class="cha-title"> Habilidades </h2>
+      <h2 class="cha-title"> Habilidade </h2>
+      <textarea v-model="habilidade" class="cha-textarea"></textarea>
 
-      <!-- Campo de texto multilinea -->
-      <textarea v-model="habilidade" class="cha-textarea"> {{ skill }}</textarea>
-
-      <h2 class="cha-title"> Atitudes </h2>
-<!--  -->
-      <!-- Campo de texto multilinea -->
+      <h2 class="cha-title"> Atitude </h2>
       <textarea v-model="atitude" class="cha-textarea"></textarea>
 
-      <!-- Botões Editar e Buscar -->
       <div class="button-container">
-          <button class="custom-button search-button" @click="showPopupcomAtraso3();LimparCampos();">Salvar</button>
+        <button class="custom-button search-button" @click="salvarCha">Salvar</button>
           <div class="custom-popup" v-if="showPopup3">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage3 }}</p>
@@ -253,7 +256,7 @@ export default {
     color: rgb(255, 255, 255); 
     font-size: 30px; 
     font-weight: bold; 
-    margin-left: 25px;
+    margin-left: 14px;
     margin-top: 20px;
   }
   .input-label {

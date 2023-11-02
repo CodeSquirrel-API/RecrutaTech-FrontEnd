@@ -16,7 +16,6 @@
       </select>
     </div>
 
-    <!-- Botões Limpar e Salvar -->
     <div class="button-container">
       <button class="custom-button save-button" @click="gerarCHA" :disabled="!cargo || !experience">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
@@ -42,7 +41,6 @@
     <h2 class="cha-title">Atitude</h2>
     <textarea v-model="atitudes" class="cha-textarea"></textarea>
 
-    <!-- Botões Editar e Buscar -->
     <div class="button-container">
       <button class="custom-button search-button"
         @click="salvarCha(); showPopupcomAtraso2(); limparCHA();limparDescricao();">Salvar</button>
@@ -82,7 +80,7 @@ export default {
       showPopup1: false,
       showPopup2: false,
       popupMessage1: ('Gerando CHA...'),
-      popupMessage2: ('salvo com sucesso!'),
+      popupMessage2: ('Salvo com sucesso!'),
       cargoUppercase: '',
 
     };
@@ -149,76 +147,94 @@ export default {
     },
 
     async salvarCha() {
-      const payload = chaContent.value
+    const payload = chaContent.value;
 
       let position = {
         name: payload.name,
-        knowledge: payload.knowledge.join(""),
-        skill: payload.skill.join(""),
-        attitude: payload.attitude.join(""),
-        experience: payload.experience.join(""),
-      }
+        knowledge: Array.isArray(payload.knowledge) ? payload.knowledge.join("") : payload.knowledge,
+        skill: Array.isArray(payload.skill) ? payload.skill.join("") : payload.skill,
+        attitude: Array.isArray(payload.attitude) ? payload.attitude.join("") : payload.attitude,
+        experience: Array.isArray(payload.experience) ? payload.experience.join("") : payload.experience,
+      };
+
       try {
-        // console.log (payload)
-        // console.log( payload.skill.join(""))
-        // payload.skill = payload.skill.join("")
         const response = await axios.post('/position/create', position);
-        console.log(response)
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
     },
 
-    limparCHA() {
-      this.conhecimentos = '';
-      this.habilidades = '';
-      this.atitudes = '';
+    atualizarCHA() {
+      chaContent.value = {
+        name: this.cargo,
+        knowledge: this.conhecimentos,
+        skill: this.habilidades,
+        attitude: this.atitudes,
+        experience: this.experience
+      };
     },
 
-    limparDescricao(){
-      this.experience = '';
-      this.cargo = '';
+      limparCHA() {
+        this.conhecimentos = '';
+        this.habilidades = '';
+        this.atitudes = '';
+      },
+
+      limparDescricao(){
+        this.experience = '';
+        this.cargo = '';
+      },
+
+      gerarCHA() {
+      this.getCargoGpt();
+      this.showPopupcomAtraso1();
+      },
+
+      showPopupcomAtraso1() {
+        this.showPopup1 = !true;
+        setTimeout(() => {
+          this.showPopup1 = !false;
+        }, 500);
+      },
+
+      showPopupcomAtraso2() {
+        this.showPopup2 = !true;
+        setTimeout(() => {
+          this.showPopup2 = !false;
+        }, 500);
+      },
+
+      closePopup1() {
+        this.showPopup1 = false;
+      },
+
+      closePopup2() {
+        this.showPopup2 = false;
+      },
+
+      updateCargoUppercase() {
+      this.cargoUppercase = this.cargo.toUpperCase();
     },
 
-    gerarCHA() {
-    this.getCargoGpt();
-    this.showPopupcomAtraso1();
-    },
-
-    showPopupcomAtraso1() {
-      this.showPopup1 = !true;
-      setTimeout(() => {
-        this.showPopup1 = !false;
-      }, 500);
-    },
-
-    showPopupcomAtraso2() {
-      this.showPopup2 = !true;
-      setTimeout(() => {
-        this.showPopup2 = !false;
-      }, 500);
-    },
-
-    closePopup1() {
-      this.showPopup1 = false;
-    },
-
-    closePopup2() {
-      this.showPopup2 = false;
-    },
-
-    updateCargoUppercase() {
-    this.cargoUppercase = this.cargo.toUpperCase();
   },
 
-  },
-
-  watch: {
-    cargo: 'limparCHA',
-    experience: 'limparCHA',
+    watch: {
+    cargo: {
+      handler: 'limparCHA',
+      deep: true,
+    },
+    experience: {
+      handler: 'limparCHA',
+      deep: true,
+    },
+    conhecimentos: 'atualizarCHA',
+    habilidades: 'atualizarCHA',
+    atitudes: 'atualizarCHA',
   },
 
 };
+
 </script>
   
 <style scoped>
