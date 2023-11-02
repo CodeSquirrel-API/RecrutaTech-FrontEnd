@@ -16,7 +16,6 @@
       </select>
     </div>
 
-    <!-- Botões Limpar e Salvar -->
     <div class="button-container">
       <button class="custom-button save-button" @click="gerarCHA" :disabled="!cargo || !experience">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
@@ -42,7 +41,6 @@
     <h2 class="cha-title">Atitude</h2>
     <textarea v-model="atitudes" class="cha-textarea"></textarea>
 
-    <!-- Botões Editar e Buscar -->
     <div class="button-container">
       <button class="custom-button search-button"
         @click="salvarCha(); showPopupcomAtraso2(); limparCHA();limparDescricao();">Salvar</button>
@@ -82,7 +80,7 @@ export default {
       showPopup1: false,
       showPopup2: false,
       popupMessage1: ('Gerando CHA...'),
-      popupMessage2: ('salvo com sucesso!'),
+      popupMessage2: ('Salvo com sucesso!'),
       cargoUppercase: '',
     };
   },

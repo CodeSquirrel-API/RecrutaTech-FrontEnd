@@ -187,16 +187,15 @@ export default {
 
       <!-- Título "CHA" -->
 
-      <h2 class="cha-title"> Conhecimentos </h2>
+      <h2 class="cha-title"> Conhecimento </h2>
       <textarea v-model="conhecimento" class="cha-textarea"></textarea>
 
-      <h2 class="cha-title"> Habilidades </h2>
+      <h2 class="cha-title"> Habilidade </h2>
       <textarea v-model="habilidade" class="cha-textarea"></textarea>
 
-      <h2 class="cha-title"> Atitudes </h2>
+      <h2 class="cha-title"> Atitude </h2>
       <textarea v-model="atitude" class="cha-textarea"></textarea>
 
-      <!-- Botões Editar e Buscar -->
       <div class="button-container">
         <button class="custom-button search-button" @click="salvarCha">Salvar</button>
           <div class="custom-popup" v-if="showPopup3">
@@ -257,7 +256,7 @@ export default {
     color: rgb(255, 255, 255); 
     font-size: 30px; 
     font-weight: bold; 
-    margin-left: 25px;
+    margin-left: 14px;
     margin-top: 20px;
   }
   .input-label {
