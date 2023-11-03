@@ -1,4 +1,4 @@
-<script lang = "ts">
+<script lang="ts">
 import axios from 'axios';
 import Sidebar from '../components/Sidebar.vue';
 
@@ -19,8 +19,8 @@ export default {
       showPopup2: false,
       showPopup3: false,
       loading: true,
-      popupMessage2:('Busca feita com sucesso'),
-      popupMessage3:('Salvo com sucesso!'),
+      popupMessage2: ('Busca feita com sucesso'),
+      popupMessage3: ('Salvo com sucesso!'),
     };
   },
 
@@ -40,10 +40,10 @@ export default {
       console.log(this.positionsExperience);
     },
 
-    BuscarCha() {
+    async BuscarCha() {
       if (this.buscaRealizada) {
         // Verifica se uma busca anterior foi realizada
-        this.LimparCampos(); // Limpa os campos do CHA
+        this.LimparCampos(false); // Limpa apenas os campos do CHA, mantém o "cargo"
       }
       const CHA = this.positions.find((cha) => cha.name == this.cargo && cha.experience == this.nivel);
       this.conhecimento = CHA.knowledge;
@@ -53,44 +53,52 @@ export default {
     },
 
     async salvarCha() {
-    const position = {
-      name: this.cargo,
-      knowledge: this.conhecimento,
-      skill: this.habilidade,
-      attitude: this.atitude,
-      experience: this.nivel,
-    };
+      if (this.cargo && this.nivel) {
+        const position = {
+          name: this.cargo,
+          knowledge: this.conhecimento,
+          skill: this.habilidade,
+          attitude: this.atitude,
+          experience: this.nivel,
+        };
 
-    try {
-      const response = await axios.post('/position/create', position);
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-    this.showPopupcomAtraso3();
-    this.LimparCampos();
-  },
+        try {
+          const response = await axios.post('/position/create', position);
+          console.log(response);
+          this.showPopupcomAtraso3();
+          this.LimparCampos(); // Limpa todos os campos, incluindo o "cargo", após o salvamento
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        // Exiba uma mensagem ou tome a ação apropriada para lidar com campos vazios.
+        console.error('Por favor, preencha todos os campos antes de salvar.');
+      }
+    },
 
-    LimparCampos() {
+    LimparCampos(clearCargo = true) {
       this.conhecimento = '';
       this.habilidade = '';
       this.atitude = '';
-      this.buscaRealizada = false; // Marca que a busca foi limpa
-      this.cargo = '';
       this.nivel = '';
+
+      if (clearCargo) {
+        this.cargo = '';
+      }
+      this.buscaRealizada = false;
     },
 
     showPopupcomAtraso2() {
-      this.showPopup2=!true;
-      setTimeout(()=>{
-        this.showPopup2=!false;
+      this.showPopup2 = !true;
+      setTimeout(() => {
+        this.showPopup2 = !false;
       }, 500);
     },
 
     showPopupcomAtraso3() {
-      this.showPopup3=!true;
-      setTimeout(()=>{
-        this.showPopup3=!false;
+      this.showPopup3 = !true;
+      setTimeout(() => {
+        this.showPopup3 = !false;
       }, 500);
     },
 
@@ -101,11 +109,10 @@ export default {
     closePopup2() {
       this.showPopup2 = false;
     },
-    
+
     closePopup3() {
       this.showPopup3 = false;
     },
-
   },
 
   beforeMount() {
@@ -120,18 +127,19 @@ export default {
     cargo(newValue, oldValue) {
       if (this.buscaRealizada && newValue !== oldValue) {
         // Se uma busca foi realizada e o cargo mudou, limpe os campos do CHA
-        this.LimparCampos();
+        this.LimparCampos(true);
       }
     },
     nivel(newValue, oldValue) {
       if (this.buscaRealizada && newValue !== oldValue) {
         // Se uma busca foi realizada e o nível mudou, limpe os campos do CHA
-        this.LimparCampos();
+        this.LimparCampos(false);
       }
     },
   },
 };
 </script>
+
 
 <template>
     <Sidebar></Sidebar>
@@ -168,7 +176,7 @@ export default {
         <!-- Botões  -->
         <div class="button-container">
           <div>
-            <button class="custom-button clear-button" @click="LimparCampos">Limpar</button>
+            <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
           </div>
           <div>
               <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
