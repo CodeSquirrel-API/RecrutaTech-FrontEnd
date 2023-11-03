@@ -1,10 +1,7 @@
 <template>
 	<Sidebar></Sidebar>
 		<div class="resultados">
-			<!-- <div class="title">
-				<h1>Resultados</h1>
-				<p>Lista de candidatos</p>
-			</div> -->
+			
 			<div class="candidatos">
 				<div v-for="(candidato, index) in candidatos" :key="index" class="candidato-card">
 					<div class="info">
@@ -23,6 +20,7 @@
 				</div>
 			</div>
 		</div>
+		
 </template>
 
 

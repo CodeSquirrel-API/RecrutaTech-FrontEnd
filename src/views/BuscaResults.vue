@@ -5,11 +5,12 @@
 			
 			<h1>Resultados</h1>
 			<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
-			<SelectMenu></SelectMenu>
+			<!-- <SelectMenu></SelectMenu> -->
 		</div>	
 		<div class="container-candidato">
 			<div class="resultado">
-				<Resultados></Resultados>
+				<!-- <Resultados></Resultados> -->
+				<Candidatos />
 			</div>
 		
 			
