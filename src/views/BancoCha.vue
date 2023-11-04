@@ -54,19 +54,33 @@ export default {
 
     async salvarCha() {
       if (this.cargo && this.nivel) {
-        const position = {
-          name: this.cargo,
-          knowledge: this.conhecimento,
-          skill: this.habilidade,
-          attitude: this.atitude,
-          experience: this.nivel,
-        };
+        // Buscar o objeto correspondente com base em "cargo" e "nivel"
+        const chaIndex = this.positions.findIndex(
+          (cha) => cha.name == this.cargo && cha.experience == this.nivel
+        );
+
+        if (chaIndex !== -1) {
+          // Atualizar os campos do CHA no objeto existente
+          this.positions[chaIndex].knowledge = this.conhecimento;
+          this.positions[chaIndex].skill = this.habilidade;
+          this.positions[chaIndex].attitude = this.atitude;
+        } else {
+          // Se não encontrou um objeto correspondente, criar um novo objeto
+          const position = {
+            name: this.cargo,
+            knowledge: this.conhecimento,
+            skill: this.habilidade,
+            attitude: this.atitude,
+            experience: this.nivel,
+          };
+          this.positions.push(position);
+        }
 
         try {
-          const response = await axios.post('/position/create', position);
+          const response = await axios.post('/position/create', this.positions[chaIndex]);
           console.log(response);
           this.showPopupcomAtraso3();
-          this.LimparCampos(); // Limpa todos os campos, incluindo o "cargo", após o salvamento
+          this.LimparCampos();
         } catch (error) {
           console.error(error);
         }
