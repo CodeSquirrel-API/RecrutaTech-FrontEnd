@@ -27,7 +27,7 @@
         <span class="match">{{ candidato.match }}%</span>
 
     
-        <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar = visualizar">Visualizar</button>
+        <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar =! visualizar">Visualizar</button>
       </div>
       <div class="bar">
 						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
