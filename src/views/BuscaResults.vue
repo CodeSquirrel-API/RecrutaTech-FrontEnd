@@ -3,8 +3,8 @@
 	<div class="page-content">
 		<div class="container">
 			
-			<h1>Resultados</h1>
-			<p>Lista de buscas, Selecione uma profissão para verificar os candidatos</p>
+			<h1>BUSCAR CANDIDATOS</h1>
+        	<p>Para encontrar um candidato, selecione o cargo e nível de atuação profissional:</p>
 			<!-- <SelectMenu></SelectMenu> -->
 		</div>	
 		<div class="container-candidato">

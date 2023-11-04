@@ -1,11 +1,7 @@
 <template>
-  <div class="container" style="color: white">
-    <div>
-      <h1>Buscar candidatos</h1>
-      <p>Para encontrar um candidato, selecione o cargo e nível de atuação profissional:</p>
-    </div>
+  <div class="container" style="color: rgb(255, 255, 255);">
 
-    <div class="select select-btn">
+    <div class="select-btn">
       <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
         <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item" class="select-option txt-select">
           {{ item }}
@@ -17,8 +13,10 @@
           {{ experience }}
         </option>
       </select>
-      <button @click="buscarCandidatosPorFiltro" class="btn-buscar" >Buscar</button>
+      <button @click="buscarCandidatosPorFiltro" style="display: block;" class="btn-buscar" >Buscar</button>
     </div>
+
+    
 
     
 
@@ -26,8 +24,16 @@
 
       <div class="info">
         <span class="candidato">{{ candidato.name }}</span>
+        <span class="match">{{ candidato.match }}%</span>
+
+    
         <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar =! visualizar">Visualizar</button>
       </div>
+      <div class="bar">
+						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
+			</div>
+
+
 
       
       <div v-if="visualizar">
@@ -136,6 +142,27 @@ export default {
 </script>
 
 <style scoped>
+
+
+.container{
+  display: block;
+  
+}
+
+.bar {
+	width: 100%;
+	background-color: #eee;
+	height: 10px;
+	margin-top: 8px;
+	border-radius: 5px;
+}
+
+.ranked-bar {
+	height: 100%;
+  display: flex;
+	background-color: #5D5DFF;
+	border-radius: 5px;
+}
 .select-option {
   width: 30%;
   border: 1px solid #ccc;
@@ -178,7 +205,8 @@ export default {
 	background: #0e1011;
 	padding: 16px;
 	margin: 5px 2px;
-	width: 100%;
+  margin-left: 27vh;
+	width: 170%;
 	display: flex;
 	flex-direction: column;
 	border-radius: 5px;
@@ -197,19 +225,46 @@ export default {
 .btn-buscar{
   background-color: #5D5DFF;
 	color: white;
-  margin-left:3vh;
-	margin-bottom: 1vh;
-	padding: 8px 16px;
-	display: inline-block;
+  margin-left: 18vh;
+	margin-top: 2vh;
+  font-size: 20px;
+	padding: 8px 56px;
 	cursor: pointer;
 	border-radius: 5px;
 	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
 	transition: all 0.5s ease;
 }
 
+
+.btn-buscar:hover{
+  background-color: #5D5DFF;
+	color: white;
+  margin-left:18vh;
+	margin-bottom: 1vh;
+	padding: 8px 56px;
+  opacity: 0.8;
+	cursor: pointer;
+	border-radius: 5px;
+	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
+	transform: translateY(-3px);
+}
+
 .select-btn {
-  height: 65px;
-  padding: 0 20px;
+  display: block;
+  padding: 20px 20px;
+  color: #fff;
+  margin-left: 10vh;
+  font-size: 22px;
+  border-radius: 7px;
+  justify-content: space-between;
+}
+
+.select-btn select{
+  display: block;
+  cursor: pointer;
+  width: 400px;
+  height: 50px;
+  margin: 8px;
   color: #fff;
   font-size: 22px;
   background: #0e1011;
@@ -217,4 +272,6 @@ export default {
   justify-content: space-between;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
+
+
 </style>
