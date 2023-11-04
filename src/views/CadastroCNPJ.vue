@@ -188,7 +188,10 @@ label {
   align-items: center;
   border: none;
   margin-top: 10px;
+  color: #FFFFFF;
+  width: 100%;
 }
+
 .campo-vazio{
   border: 1px solid red;
 }
