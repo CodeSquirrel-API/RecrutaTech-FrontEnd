@@ -1,63 +1,104 @@
 <template>
-    <div >
-      <h2 class="titulo">Cadastre-se</h2>
+  <div>
+    <h2 class="titulo">Cadastre-se</h2>
 
-      <div class="center">
-
+    <div class="center">
       <RouterLink to="/CadastroCPF">
-        <button @click="entrar" class="entrar1">CPF</button>
+        <button class="entrar1">CPF</button>
       </RouterLink>
-      
+
       <RouterLink to="/CadastroCNPJ">
-        <button @click="entrar" class="entrar2">CNPJ</button>
+        <button class="entrar2">CNPJ</button>
       </RouterLink>
+    </div>
 
+    <form ref="form" @submit.prevent="CadastroCPF">
+      <div>
+        <label for="username" class="font">Nome Completo:</label>
       </div>
+      <div class="center">
+        <input type="text" class="background" id="username" v-model="username" placeholder="Digite o seu nome" />
+      </div>
+      <div>
+        <label for="username" class="font">CPF:</label>
+      </div>
+      <div class="center">
+        <input type="text" class="background" id="cpf" v-model="cpf" placeholder="000.000.000-00" />
+      </div>
+      <div>
+        <label for="username" class="font">E-mail:</label>
+      </div>
+      <div class="center">
+        <input type="text" class="background" id="email" v-model="email" placeholder="email@exemplo.com" />
+      </div>
+      <div>
+        <label for="password" class="font">Senha:</label>
+      </div>
+      <div class="center">
+        <input type="password" class="background" id="password" v-model="password" placeholder="senha" />
+      </div>
+      <div class="center">
+        <button class="open-popup-button entrar1" @click="cadastrar">Cadastrar</button>
 
-      <form @submit.prevent="CadastroCPF">
-          <div>
-            <label for="username" class="font" >Nome Completo:</label>    
+        <div class="custom-popup" v-if="isPopupVisible">
+          <div class="popup-content">
+            <p class="popup-message">{{ popupMessage }}</p>
+            <button class="close-popup-button" @click="closePopup">Fechar</button>
           </div>
-          <div class="center">
-            <input type="text" class="background" id="username" v-model="username" placeholder="Digite o seu nome" />
-          </div>
-          <div>
-            <label for="username" class="font" >CPF:</label>
-          </div>
-          <div class="center">
-            <input type="text" class="background" id="cpf" v-model="cpf" placeholder="000.000.000-00" />
-          </div>
-          <div>
-            <label for="username" class="font" >E-mail:</label>
-          </div>
-          <div class="center">
-            <input type="text" class="background" id="email" v-model="email" placeholder="email@exemplo.com"/>
-          </div>
-          <div>
-            <label for="password" class="font" >Senha:</label>
-          </div>
-          <div class="center">
-            <input type="password" class="background" id="password" v-model="password" placeholder="senha"/>
-          </div>
-          <div class="center">
-            <button class="open-popup-button entrar1" @click="cadastrar">Cadastrar</button>
+        </div>
+      </div>
+      <div class="center">
+        <label for="text">Já tem uma conta?</label>
+        <RouterLink to="/login">Entre</RouterLink>
+      </div>
+    </form>
+  </div>
+</template>
 
-            <div class="custom-popup" v-if="isPopupVisible">
-              <div class="popup-content">
-                <p class="popup-message">{{ popupMessage }}</p>
-                <button class="close-popup-button" @click="closePopup">Fechar</button>
-              </div>
-            </div>
-          </div>
-          <div class="center">
-            <label for="text">Já tem uma conta?</label>
-            <RouterLink to="/login">Entre</RouterLink>
-          </div>
-      </form>
-    </div>  
-  </template>
+<script>
+import axios from 'axios';
 
-<style scoped>  
+const api = axios.create({
+  baseURL: 'https://api-recrutatech.onrender.com/',
+  // Outras configurações, se necessário
+});
+
+export default {
+  data() {
+    return {
+      email: '',
+      username: '',
+      password: '',
+      cpf: '',
+      isPopupVisible: false,
+      popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
+    };
+  },
+  methods: {
+    async cadastrar() {
+      await api.post('/user/create', {
+        name: this.username,
+        password: this.password,
+        email: this.email,
+        cpf_cnpj: this.cpf,
+        userType: 0,
+      }).then((response) => {
+        alert('Usuário Cadastrado');
+        console.log(response.data);
+      });
+    },
+    showPopup() {
+      this.isPopupVisible = true;
+    },
+    closePopup() {
+      this.isPopupVisible = false;
+    },
+  },
+};
+
+</script>
+
+<style scoped>
 .custom-popup {
   position: fixed;
   top: 50%;
@@ -89,7 +130,7 @@
 .close-popup-button:hover {
   background-color: #2980b9;
 }
-.background{
+.background {
   padding: 7px;
   background-color: #33363A;
   width: 400px;
@@ -98,16 +139,16 @@
   font-size: 16px;
   margin: 5px 5px;
 }
-.font{
+.font {
   color: #FFFFFF;
   margin-left: 475px;
 }
-.titulo{
+.titulo {
   text-align: center;
   font-size: 35px;
   font-weight: bolder;
 }
-.entrar1{
+.entrar1 {
   margin: 30px 30px 30px 30px;
   border-radius: 10px;
   width: 133px;
@@ -116,7 +157,7 @@
   color: white;
   font-size: 20px;
 }
-.entrar2{
+.entrar2 {
   margin: 30px 30px 30px 30px;
   border-radius: 10px;
   width: 133px;
@@ -125,63 +166,12 @@
   color: white;
   font-size: 20px;
 }
-.direita{
+.direita {
   margin-left: 280px;
 }
-.center{
+.center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 </style>
-  
-<script lang="ts">
-import api from '../service/api'
-
-  export default {
-
-    data() {
-      return {
-        email: '',
-        username: '',
-        password: '',
-        cpf: '',
-        isPopupVisible: false,
-        popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
-      };
-    },
-    methods: {
-      async cadastrar() {
-        await api.post('user/create', {
-          "name": this.username,
-          "password": this.password,
-          "email": this.email,
-          "cpf_cnpj": this.cpf,
-          "userType": 0
-        }).then((response)=>{
-          alert("Usuário Cadastrado")
-          console.log(response.data)
-        })
-      },
-      showPopup() {
-        this.isPopupVisible = true;
-      },
-      closePopup() {
-        this.isPopupVisible = false;
-      },
-      login() {
-        // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-        // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
-        console.log('Senha:', this.password);
-        console.log('Email:', this.email);
-        console.log('CPF:', this.cpf);
-        
-      },
-      entrar() {
-      // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-      this.$router.push('/')
-      },
-    },
-  };
-  </script>
