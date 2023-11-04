@@ -2,13 +2,13 @@
   <div class="container" style="color: rgb(255, 255, 255);">
 
     <div class="select-btn">
-      <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
+      <select v-model="selectedCargo" class="select-option txt-select" placeholder="Selecione o cargo." @change="getNivel(selectedCargo)">
         <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item" class="select-option txt-select">
           {{ item }}
         </option>
       </select>
 
-      <select v-model="nivel" name="experience" class="select-option txt-select">
+      <select v-model="nivel" name="experience" placeholder="Selecione o nível de experiência." class="select-option txt-select">
         <option v-for="(experience, index) in positionsExperience" :key="index" :value="experience">
           {{ experience }}
         </option>
@@ -27,7 +27,7 @@
         <span class="match">{{ candidato.match }}%</span>
 
     
-        <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar =! visualizar">Visualizar</button>
+        <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar = visualizar">Visualizar</button>
       </div>
       <div class="bar">
 						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
@@ -38,16 +38,16 @@
       
       <div v-if="visualizar">
         <div class="candidato-info" v-if="candidatoSelecionado === candidato">
-          <p class="">Informações do Candidato</p>
-          <p><strong>Nome:</strong> {{ candidato.name }}</p>
-          <p><strong>E-mail:</strong> {{ candidato.email }}</p>
+          <p class=""><strong>Informações do Candidato</strong></p>
+          <p style="margin-left: 20px;">Nome: {{ candidato.name }}</p>
+          <p style="margin-left: 20px;">E-mail: {{ candidato.email }}</p>
 
           <hr>
 
-          <p style="color:rgb(231, 0, 0);">Conhecimentos</p>
+          <p><strong>Conhecimentos</strong></p>
           <ul>
             <li v-for="(conhecimento, index) in candidato.knowledgeList" :key="index">
-              <p> {{ conhecimento.name }}</p>
+              <p style="margin-left: 20px;"> {{ conhecimento.name }}</p>
               <!-- <p><strong>Descrição:</strong> {{ conhecimento.description }}</p> -->
 
             </li>
@@ -55,20 +55,20 @@
 
           <hr>
 
-          <p style="color:rgb(231, 0, 0);">Habilidades</p>
+          <p><strong>Habilidades</strong></p>
           <ul>
             <li v-for="(habilidade, index) in candidato.skillsList" :key="index">
-              <p><strong></strong> {{ habilidade.name }}</p>
-              <p><strong></strong> {{ habilidade.description }}</p>
+              <p style="margin-left: 20px;"><strong></strong> {{ habilidade.name }}</p>
+              <p style="margin-left: 20px;"><strong></strong> {{ habilidade.description }}</p>
             </li>
           </ul>
 
           <hr>
 
-          <p style="color:rgb(231, 0, 0);">Atitudes</p>
+          <p><strong>Atitudes</strong></p>
           <ul>
             <li v-for="(atitude, index) in candidato.attitudeList" :key="index">
-              <p> {{ atitude.name }}</p>
+              <p style="margin-left: 20px;"> {{ atitude.name }}</p>
               <!-- <p><strong>Descrição:</strong> {{ atitude.description }}</p> -->
 
             </li>
@@ -148,6 +148,11 @@ export default {
   display: block;
   
 }
+
+.select-option::placeholder {
+  color: #fff;
+}
+
 
 .bar {
 	width: 100%;
