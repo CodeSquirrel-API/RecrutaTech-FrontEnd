@@ -139,7 +139,7 @@ export default {
     
     async salvarCha() {
       const payload = chaContent.value
-
+      console.log(payload)
       let position = {
           name: payload.name,
           knowledge: payload.knowledge.join(""),
