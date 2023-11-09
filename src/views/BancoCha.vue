@@ -161,6 +161,8 @@ export default {
       <div class="bancocha">
         <h1 class="title">Banco de CHA</h1>
 
+        <p class="descricao">Selecione o Cargo e Nível abaixo para obter os CHA's que foram salvos.</p>
+
         
         <div class="Cargo">
           <div>
@@ -206,7 +208,7 @@ export default {
 
       <!-- Linha cinza abaixo dos botões -->
       <hr class="line" />
-
+      <p class="descricao">Fique a vontade para editar os campos, a edição só sera salvar quando clicar em salvar.</p>
       <!-- Título "CHA" -->
 
       <h2 class="cha-title"> Conhecimento </h2>
@@ -232,6 +234,12 @@ export default {
 </template>
 
 <style scoped>
+
+.descricao{
+  color: #999898;
+  margin: 1vh 0vh 4vh 4vh;
+  font-size: 17px;
+}
 
 .page-content {
   margin-left: 18%; /* Use o mesmo valor da largura do menu */
