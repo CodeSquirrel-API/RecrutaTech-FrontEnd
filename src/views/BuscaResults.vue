@@ -4,7 +4,7 @@
 		<div class="container">
 			
 			<h1>BUSCAR CANDIDATOS</h1>
-        	<p>Para encontrar um candidato, selecione o cargo e nível de atuação profissional:</p>
+        	<p>Para encontrar um candidato, selecione o cargo e nível de atuação profissional. Ao realizar a busca clique em visualizar para ver o currículo do candidato</p>
 			<!-- <SelectMenu></SelectMenu> -->
 		</div>	
 		<div class="container-candidato">
@@ -42,14 +42,14 @@ export default {
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');*/
 
 
-
+/* 
 
 * {
 	font-family: Poppins;
-}
+} */
 
 .candidatos{
 	width: 50%;
@@ -90,9 +90,9 @@ export default {
 }
 
 .container p {
-	color: #fff;
-	font-size: 20px;
-	margin-left: 10vh;
+	color: #999898;
+	margin: 0vh 0vh 1vh 6vh;
+	font-size: 17px;	
 }
 </style>
   

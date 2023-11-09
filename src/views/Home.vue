@@ -3,6 +3,11 @@
   <div class="page-content">
   <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
+    
+    <p class="descricao">Preencha os campos abaixo para gerar o CHA (Conhecimento, Habilidades e Atitudes) que um profissional de determinada área deve ter para exercer
+      o cargo desejado. 
+    </p>
+
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo" @input="updateCargoUppercase">
     
@@ -31,6 +36,9 @@
 
     <!-- Título "CHA" -->
     <h2 class="title">CHA - Conhecimento, Habilidade e Atitude</h2>
+    <p class="descricao">Este é o CHA da profissão desejada. Fique a vontade para editar os campos. Clique em salvar para que o CHA
+      seja salvo para pesquisas futuras de candidatos ideais.
+    </p>
 
     <h2 class="cha-title">Conhecimento</h2>
     <textarea v-model="conhecimentos" class="cha-textarea"></textarea>
@@ -429,6 +437,12 @@ export default {
 .search-button:hover {
   background-color: #4455cc;
   border-color: #4455cc;
+}
+
+.descricao{
+  color: #999898;
+  margin: 1vh 0vh 4vh 4vh;
+  font-size: 17px;
 }
 </style>
   
