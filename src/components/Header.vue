@@ -82,7 +82,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 200px;
+    padding: 15px 0;
     transition: 0.5s ease;
 
 }
@@ -99,7 +99,7 @@ header.sticky {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 200px;
+    padding: 10px 200px;
     transition: 0.5s ease;
 }
 
@@ -121,7 +121,7 @@ header .navigation .navigation-items a {
     text-decoration: none;
     padding: 20px 20px;
     background: #121415;
-    border-radius: 0 0 10px 10px;
+    border-radius: 10px 0px 0px 10px;
     box-shadow: 0 5px 5px rgb(0,0,0, 0.3);
     margin-left: 30px;
     transition: 0.3s ease;
@@ -131,7 +131,6 @@ header .navigation .navigation-items a:hover {
     position: relative;
     color: #fff;
     font-size: 1.25em;
-    font-weight: 700;
     text-decoration: none;
     margin-left: 30px;
     transition: 0.3s ease;

@@ -25,10 +25,11 @@
 import SelectMenu from "../components/Select.vue";
 import Sidebar from '../components/Sidebar.vue';
 import Header from '../components/Header.vue';
+import Candidatos from '../components/Candidatos.vue';
 
 export default {
 	components: {
-		SelectMenu, Sidebar, Header,
+		SelectMenu, Sidebar, Header, Candidatos,
 
 	},
 
