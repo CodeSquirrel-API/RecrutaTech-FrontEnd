@@ -1,73 +1,37 @@
 <template>
+    <div class="center">
 
-  <div class="center">
+      <h2 class="titulo style">Esqueci a minha senha</h2>
 
-    <h2 class="titulo">Cadastre-se</h2>
+      <div class="">
+        <form @submit.prevent="CadastroCPF">
+            <div>
+              <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado na sua conta e lhe enviaremos um link com as instruções.</label>    
+            </div>
 
-    <div class="style">
-      <RouterLink to="/CadastroCPF">
-        <button class="opcao2">CPF</button>
-      </RouterLink>
-      
-      <RouterLink to="/CadastroCNPJ">
-        <button class="opcao1">CNPJ</button>
-      </RouterLink>
-    </div>
+            <div class="">
+              <input type="text" maxlength="50" id="email" v-model="email" placeholder="insira o seu e-mail"  />
+            </div>
 
-    <div class="style">
-      <form @submit.prevent="CadastroCPF">
-        <div>
-          <label for="empresa" class="font" >Nome da Empresa:</label>    
-        </div>
-
-        <div>
-          <input type="text" maxlength="50" id="empresa" v-model="empresa" placeholder="Razão Social" />
-        </div>
-
-        <div>
-          <label for="cnpj" class="font" >CNPJ:</label>
-        </div>
-
-        <div class="">
-          <input type="text" maxlength="14" id="cnpj" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
-        </div>
-
-        <div>
-          <label for="email" class="font" >E-mail:</label>
-        </div>
-
-        <div class="">
-          <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com"/>
-        </div>
-
-        <div>
-          <label for="password" class="font" >Senha:</label>
-        </div>
-
-        <div class="">
-          <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
-        </div>
-
-        <div class="center">
-          <button class="btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
-          <div class="custom-popup" v-if="isPopupVisible">
-            <div class="popup-content">
-              <p class="popup-message">{{ popupMessage }}</p>
-              <button class="close-popup-button" @click="closePopup">Fechar</button>
+            <div class="center">
+            <button class="btnCadastrar" @click="showPopup()">Cadastrar</button>
+            <div class="custom-popup" v-if="isPopupVisible">
+              <div class="popup-content">
+                <p class="popup-message">{{ popupMessage }}</p>
+                <button class="close-popup-button" @click="closePopup">Fechar</button>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="center font">
-          <label for="text" >Já tem uma conta?
-            <RouterLink to="/login">Entre</RouterLink>
-          </label>
-        </div>
-
-      </form>
-    </div>
-  </div>  
-</template>
+            <div class="center font">
+              <label for="text">
+                <RouterLink to="/login">Cancele</RouterLink> 
+              </label>
+            </div>
+        </form>
+      </div>
+    </div>  
+  </template>
 
 <style scoped>
 input{
@@ -116,13 +80,19 @@ input{
 }
 
 .style{
-  margin-left: 30px;
+  margin-top: 100px;
+  
 }
 
 
 
 .font{
   color: #FFFFFF;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  max-width: 350px;
+  margin-left: 30px;
 }
 
 .titulo{
@@ -134,7 +104,7 @@ input{
 
 .opcao1{
   border-radius: 5px;
-  margin-left: 10px;
+  margin-right: 10px;
   width: 133px;
   height: 40px;
   background-color: #5D5DFF;
@@ -149,7 +119,7 @@ input{
 
 .opcao2{ 
   border-radius: 5px;
-  margin-right: 10px;
+  margin-left: 10px;
   width: 133px;
   height: 40px;
   background-color: #666666;
@@ -188,28 +158,27 @@ label {
   align-items: center;
   border: none;
   margin-top: 10px;
-  color: #FFFFFF;
   width: 100%;
 }
 </style>
-  
-  <script lang="ts">
-import api2 from "../service/api"
 
+  <script lang="ts">
+  import api2 from '../service/api';
   export default {
+
     data() {
       return {
-        empresa: '',
-        cnpj:'',
+        username: '',
+        cpf:'',
         email:'',
         password: '',
         isPopupVisible: false,
-        popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
+        popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
     },
     computed: {
       camposPreenchidos() {
-    if (this.empresa && this.cnpj && this.email && this.password) {
+    if (this.username && this.cpf && this.email && this.password) {
       return true; // Retorna false se pelo menos um campo estiver vazio.
     } else {
       return false; // Retorna true quando todos os campos estão preenchidos.
@@ -219,13 +188,13 @@ import api2 from "../service/api"
     methods: {
       async cadastrar() {
         await api2.post('user/create', {
-          "name": this.empresa,
+          "name": this.username,
           "password": this.password,
           "email": this.email,
-          "cpf_cnpj": this.cnpj,
-          "userType": 1
+          "cpf_cnpj": this.cpf,
+          "userType": 0
         }).then((response)=>{
-          alert("Empresa Cadastrado")
+          alert("Usuário Cadastrado")
           console.log(response.data)
         })
       },
@@ -239,20 +208,21 @@ import api2 from "../service/api"
         }
       },
       closePopup() {
+
         this.isPopupVisible = false;
-      },
-      validarNumero(){
-        if (isNaN(this.cnpj)) {
-        this.cnpj = null;
-        }
       },
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('name:', this.empresa);
+        console.log('name:', this.username);
         console.log('Senha:', this.password);
-        console.log('cpf', this.cnpj);
+        console.log('cpf', this.cpf);
         console.log('Email:', this.email);
+      },
+      validarNumero(){
+        if (isNaN(this.cpf)) {
+        this.cpf = null;
+        }
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada

@@ -5,6 +5,7 @@ import Chat from '../components/Chat.vue'
 import Configuracoes from '../views/Configuracoes.vue'
 
 
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -73,6 +74,11 @@ const router = createRouter({
       path: '/cadastroCNPJ',
       name: 'cadastroCNPJ',
       component: () => import('../views/CadastroCNPJ.vue')
+    },
+    {
+      path: '/ResetPassWord',
+      name: 'resetpassword',
+      component: () => import('../views/RecuperarSenha.vue')
     }
   ]
 })
