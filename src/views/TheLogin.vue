@@ -23,7 +23,7 @@
         <div class="checkbox font style">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
           <label for="meuCheckbox" class="">Manter conectado </label>
-          <RouterLink class="a direita" to="">Esqueci minha senha</RouterLink>
+          <RouterLink class="a direita" to="/ResetPassWord">Esqueci minha senha</RouterLink>
         </div>       
         
         <div class="center">
