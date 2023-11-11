@@ -1,30 +1,34 @@
 <template>
     <div class="center">
 
-      <h2 class="titulo style">Esqueceu a sua senha?</h2>
+      <h2 class="titulo style">Criando nova senha</h2>
 
       <div class="">
         <form>
             <div>
-              <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado na sua conta e lhe enviaremos um link com as instruções.</label>    
+              <label for="username" class="font" >Para sua segurança, sua senha deve possuir:<br>- Minimo de 8 caractéres<br>- Ao menos um numero<br>- Ao menos uma letra</label>    
             </div>
 
+            <div>
+                <label for="password" class="font">Nova Senha</label>
+            </div>
             <div class="">
-              <input type="text" maxlength="50" id="email" v-model="email" @input="validaremail" placeholder="insira o seu e-mail"  />
+              <input type="text" maxlength="25" id="password" v-model="password"/>
+            </div>
+
+            <div>
+                <label for="password" class="font">Confirmar Nova Senha</label>
+            </div>
+            <div class="">
+              <input type="text" maxlength="25" id="password" v-model="password"/>
             </div>
 
             <div class="center">
             
-            <RouterLink to="/NewPassWord">
-              <button class="btnCadastrar" @click="VerificarEmail">Proximo</button>
-            </RouterLink>
+                <RouterLink to="/login">
+                    <button class="btnCadastrar">Proximo</button>
+                </RouterLink>
  
-          </div>
-
-            <div class="center font">
-              <label for="text">
-                <RouterLink to="/login">Cancele</RouterLink> 
-              </label>
             </div>
         </form>
       </div>
@@ -51,11 +55,8 @@ input{
 
 .font{
   color: #FFFFFF;
-  text-align: center;
   display: flex;
-  justify-content: center;
-  max-width: 350px;
-  margin-left: 30px;
+  max-width: 400px;
 }
 
 .titulo{
@@ -65,7 +66,6 @@ input{
   font-weight: bolder;
 }
 .btnCadastrar{
-  margin-left: 10px;
   border-radius: 5px;
   width: 133px;
   height: 40px;
@@ -99,14 +99,15 @@ label {
 
     data() {
       return {
-        email:'',
+        password:'',
+        confirmpassword:'',
         isPopupVisible: false,
         popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       };
     },
     computed: {
       camposPreenchidos() {
-    if (this.email ) {
+    if (this.password ) {
       return true; // Retorna false se pelo menos um campo estiver vazio.
     } else {
       return false; // Retorna true quando todos os campos estão preenchidos.
@@ -130,33 +131,7 @@ label {
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Email:', this.email);
-      },
-      async VerificarEmail () {
-        try{
-         const responseCheck = await axios.post(`${baseURL}/email/check-code`, {
-          "email": this.email,
-        })
-        console.log(responseCheck.data);
-        console.log(this.email);
-
-        if (responseCheck.data.valid) {
-          this.$router.push('/home');
-        } else {
-          this.$router.push('/login')
-          alert("Codigo incorreto!!");
-          }
-        }
-        catch (error) {
-          console.error(error);
-          
-        }
-          
-      },
-      validaremail(){
-        if (isNaN(this.email)) {
-        this.email = null;
-        }
+        console.log('Password:', this.password);
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada

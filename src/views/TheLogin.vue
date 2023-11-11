@@ -139,13 +139,14 @@
 }
 
 .center {
+  color: #FFFFFF;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
   width: 100%;
   border: none;
   margin-top: 10px;
+  width: 100%;
 }
 .campo-vazio{
   border: 1px solid red;
