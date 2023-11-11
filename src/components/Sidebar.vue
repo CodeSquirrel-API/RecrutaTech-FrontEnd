@@ -21,7 +21,7 @@
 		  <span class="material-icons">group</span>
 		  <span class="text">Banco CHA</span>
 		</router-link>
-		<router-link to="/settings" class="button">
+		<router-link to="/configuracoes" class="button">
 		  <span class="material-icons">settings</span>
 		  <span class="text">Configurações</span>
 		</router-link>

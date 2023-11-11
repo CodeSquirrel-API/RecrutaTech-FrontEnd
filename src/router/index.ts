@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BancoCha from '../views/BancoCha.vue'
 import Home from '../views/Home.vue'
 import Chat from '../components/Chat.vue'
-
+import Configuracoes from '../views/Configuracoes.vue'
 
 
 const router = createRouter({
@@ -12,6 +12,12 @@ const router = createRouter({
       path: '/Home',
       name: 'home',
       component: Home
+    },
+
+    {
+      path: '/configuracoes',
+      name: 'configuracoes',
+      component: Configuracoes
     },
     
     {
@@ -44,6 +50,12 @@ const router = createRouter({
     //   name: 'resultados',
     //   component: () => import('../views/Resultados.vue')
     // },
+
+    {
+      path: '/configuracoes',
+      name: 'configuracoes',
+      component: () => import('../views/Configuracoes.vue')
+    },
 
     {
       path: '/busca',

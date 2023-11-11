@@ -1,4 +1,5 @@
 <template>
+	<Header></Header>
 	<Sidebar></Sidebar>
 	<div class="page-content">
 		<div class="container">
@@ -23,12 +24,12 @@
 <script>
 import SelectMenu from "../components/Select.vue";
 import Sidebar from '../components/Sidebar.vue';
-import Resultados from '../components/Resultados.vue';
-import Candidatos from '../components/Candidatos.vue';
+import Header from '../components/Header.vue';
 
 export default {
 	components: {
-		SelectMenu, Sidebar, Resultados, Candidatos,
+		SelectMenu, Sidebar, Header,
+
 	},
 
 	methods: {
