@@ -45,11 +45,11 @@ const router = createRouter({
       component: () => import('../views/TheLogin.vue')
     },
 
-    {
-      path: '/resultados',
-      name: 'resultados',
-      component: () => import('../views/Resultados.vue')
-    },
+    // {
+    //   path: '/resultados',
+    //   name: 'resultados',
+    //   component: () => import('../views/Resultados.vue')
+    // },
 
     {
       path: '/configuracoes',

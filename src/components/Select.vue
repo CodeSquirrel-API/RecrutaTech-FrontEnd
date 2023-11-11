@@ -1,35 +1,30 @@
 <template>
   <div class="wrapper" :class="{ active: isActive }">
-    <div class="select-btn" @click="toggleDropdown">
+    <div class="select-btn" @click="toggleDropdown(), getCandidates()">
       <span>{{ selectedCargo }}</span>
       <i class="uil uil-angle-down" style="color: #5D5DFF;"></i>
     </div>
+
     <div class="content">
       <div class="search">
         <i class="uil uil-search"></i>
         <input v-model="search" type="text" placeholder="Search" @input="filterCargos" />
       </div>
+
+      <!-- logica para selecionar o cargo e chamar componente; -->
       <ul class="options">
         <li v-for="(cargo, index) in filteredCargos" :key="index" @click="updateCargo(cargo)"
-          :class="{ selected: cargo === selectedCargo }">
+          :class="{ selected: cargo === selectedCargo }" @change="">
           {{ cargo }}
         </li>
         <p v-if="filteredCargos.length === 0" style="margin-top: 10px; color: #fff; font-size: 20px;">Cargo não encontrado
         </p>
       </ul>
     </div>
-    <button @click="skillGetAll()" class="btn-teste" >FUNCAO AQUI</button>
 
-
-    <select v-model="cargo" class="select-option txt-select" @change="getNivel(cargo)">
-      <option
-        v-for="(item, index) in positionsName" :key="index"
-        v-bind:value="item"
-        class="select-option txt-select">
-        {{ item }}
-      </option>
-    </select>
   </div>
+
+  <!-- SELECT PRA NIVEL -->
 </template>
 
 <script lang="ts">
@@ -41,14 +36,18 @@ export default {
       selectedCargo: "Selecione o cargo",
       search: "",
       isActive: false,
-      cargos: [
-        "Desenvolvedor de Software","Engenheiro de Software", "Desenvolvedor Web", "Desenvolvedor de Aplicativos Móveis",
-        "Analista de Dados", "Engenheiro de Software", "Engenheiro de DevOps", "Engenheiro de Segurança Cibernética","Desenvolvedor de Jogos",
-        "Engenheiro de Inteligência Artificial",
-      ],
-      candidates:[],
-      candidatesCurrentProfession:[],
-      skills: []
+      cargos: [],
+      candidates: [],
+      candidatesCurrentProfession: [],
+      selectedCandidatesCurrentProfession: null,
+      skills: [],
+      skillExperience: [],
+      selectedSkillExperience: null,
+      experience: null,
+
+
+
+
     };
   },
 
@@ -58,42 +57,42 @@ export default {
       return this.cargos.filter(cargo => cargo.toLowerCase().startsWith(searchWord));
     }
   },
+
+
   methods: {
-
-
 
     async getCandidates() {
       await axios.get('/candidates/getAll').then((response) => {
         this.candidates = response.data;
-        this.candidatesCurrentProfession = [... new Set(this.candidates.map((cand) => cand.currentProfession))];
-        console.log(this.candidates);
+        this.cargos = this.extractCandidatesProfession(this.candidates);
+        this.experience = this.extractExperienceLevels(this.candidates, this.cargos);
+        console.log(this.cargos);
+        console.log(this.experience);
       });
     },
 
-    getProfissao(cargo) {
-          this.candidatesCurrentProfession = [];
-          this.candidatesCurrentProfession = [
-            ...new Set(this.candidates.filter((cand) => cand.currentProfession == cargo).map((cand) => cand.currentProfession)),
-          ];
-          console.log(this.candidatesCurrentProfession);
-        },
-
-    async skillGetAll(){
-      await axios.get('/skill/getAll').then((response) => {
-        this.skills = response.data;
-        console.log(this.skills);
-      })
+    extractCandidatesProfession(candidates) {
+      const currentProfession = candidates.map((candidates) => candidates.currentProfession);
+      return [...new Set(currentProfession)];
     },
+
 
     toggleDropdown() {
       this.isActive = !this.isActive;
     },
     filterCargos() {
     },
-    updateCargo(cargo) {
+
+    updateCargo(cargo, experience) {
       this.search = "";
       this.selectedCargo = cargo;
       this.isActive = false;
+      this.selectedExperience = this.experience;
+
+    },
+
+    beforeMount() {
+      this.getCandidates();
     },
 
   }
@@ -109,12 +108,14 @@ export default {
   background: #4285f4;
 }
 
-.btn-teste{
-  background-color: aqua;
+.btn-teste {
+  background-color: rgb(0, 247, 255);
 }
+
 .wrapper {
-  width: 500px;
-  margin: 55px auto 0;
+  width: 40%;
+  margin: 5vh 10vh;
+
 }
 
 .select-btn,

@@ -4,6 +4,11 @@
   <div class="page-content">
   <div class="home">
     <h1 class="title">Descrição da Vaga</h1>
+    
+    <p class="descricao">Preencha os campos abaixo para gerar o CHA (Conhecimento, Habilidades e Atitudes) que um profissional de determinada área deve ter para exercer
+      o cargo desejado. 
+    </p>
+
     <label for="descricao" class="input-label">Digite o título do cargo:</label>
     <input class="custom-input" type="text" placeholder="Digite aqui..." v-model="cargo" @input="updateCargoUppercase">
     
@@ -17,7 +22,6 @@
       </select>
     </div>
 
-    <!-- Botões Limpar e Salvar -->
     <div class="button-container">
       <button class="custom-button save-button" @click="gerarCHA" :disabled="!cargo || !experience">Gerar CHA</button>
       <div class="custom-popup" v-if="showPopup1">
@@ -33,6 +37,9 @@
 
     <!-- Título "CHA" -->
     <h2 class="title">CHA - Conhecimento, Habilidade e Atitude</h2>
+    <p class="descricao">Este é o CHA da profissão desejada. Fique a vontade para editar os campos. Clique em salvar para que o CHA
+      seja salvo para pesquisas futuras de candidatos ideais.
+    </p>
 
     <h2 class="cha-title">Conhecimento</h2>
     <textarea v-model="conhecimentos" class="cha-textarea"></textarea>
@@ -43,7 +50,6 @@
     <h2 class="cha-title">Atitude</h2>
     <textarea v-model="atitudes" class="cha-textarea"></textarea>
 
-    <!-- Botões Editar e Buscar -->
     <div class="button-container">
       <button class="custom-button search-button"
         @click="salvarCha(); showPopupcomAtraso2(); limparCHA();limparDescricao();">Salvar</button>
@@ -84,8 +90,9 @@ export default {
       showPopup1: false,
       showPopup2: false,
       popupMessage1: ('Gerando CHA...'),
-      popupMessage2: ('salvo com sucesso!'),
+      popupMessage2: ('Salvo com sucesso!'),
       cargoUppercase: '',
+
     };
   },
   methods: {
@@ -150,76 +157,94 @@ export default {
     },
 
     async salvarCha() {
-      const payload = chaContent.value
+    const payload = chaContent.value;
 
       let position = {
         name: payload.name,
-        knowledge: payload.knowledge.join(""),
-        skill: payload.skill.join(""),
-        attitude: payload.attitude.join(""),
-        experience: payload.experience.join(""),
-      }
+        knowledge: Array.isArray(payload.knowledge) ? payload.knowledge.join("") : payload.knowledge,
+        skill: Array.isArray(payload.skill) ? payload.skill.join("") : payload.skill,
+        attitude: Array.isArray(payload.attitude) ? payload.attitude.join("") : payload.attitude,
+        experience: Array.isArray(payload.experience) ? payload.experience.join("") : payload.experience,
+      };
+
       try {
-        // console.log (payload)
-        // console.log( payload.skill.join(""))
-        // payload.skill = payload.skill.join("")
         const response = await axios.post('/position/create', position);
-        console.log(response)
+        console.log(response);
       } catch (error) {
         console.error(error);
       }
     },
 
-    limparCHA() {
-      this.conhecimentos = '';
-      this.habilidades = '';
-      this.atitudes = '';
+    atualizarCHA() {
+      chaContent.value = {
+        name: this.cargo,
+        knowledge: this.conhecimentos,
+        skill: this.habilidades,
+        attitude: this.atitudes,
+        experience: this.experience
+      };
     },
 
-    limparDescricao(){
-      this.experience = '';
-      this.cargo = '';
+      limparCHA() {
+        this.conhecimentos = '';
+        this.habilidades = '';
+        this.atitudes = '';
+      },
+
+      limparDescricao(){
+        this.experience = '';
+        this.cargo = '';
+      },
+
+      gerarCHA() {
+      this.getCargoGpt();
+      this.showPopupcomAtraso1();
+      },
+
+      showPopupcomAtraso1() {
+        this.showPopup1 = !true;
+        setTimeout(() => {
+          this.showPopup1 = !false;
+        }, 500);
+      },
+
+      showPopupcomAtraso2() {
+        this.showPopup2 = !true;
+        setTimeout(() => {
+          this.showPopup2 = !false;
+        }, 500);
+      },
+
+      closePopup1() {
+        this.showPopup1 = false;
+      },
+
+      closePopup2() {
+        this.showPopup2 = false;
+      },
+
+      updateCargoUppercase() {
+      this.cargoUppercase = this.cargo.toUpperCase();
     },
 
-    gerarCHA() {
-    this.getCargoGpt();
-    this.showPopupcomAtraso1();
-    },
-
-    showPopupcomAtraso1() {
-      this.showPopup1 = !true;
-      setTimeout(() => {
-        this.showPopup1 = !false;
-      }, 500);
-    },
-
-    showPopupcomAtraso2() {
-      this.showPopup2 = !true;
-      setTimeout(() => {
-        this.showPopup2 = !false;
-      }, 500);
-    },
-
-    closePopup1() {
-      this.showPopup1 = false;
-    },
-
-    closePopup2() {
-      this.showPopup2 = false;
-    },
-
-    updateCargoUppercase() {
-    this.cargoUppercase = this.cargo.toUpperCase();
   },
 
-  },
-
-  watch: {
-    cargo: 'limparCHA',
-    experience: 'limparCHA',
+    watch: {
+    cargo: {
+      handler: 'limparCHA',
+      deep: true,
+    },
+    experience: {
+      handler: 'limparCHA',
+      deep: true,
+    },
+    conhecimentos: 'atualizarCHA',
+    habilidades: 'atualizarCHA',
+    atitudes: 'atualizarCHA',
   },
 
 };
+
 </script>
   
 <style scoped>
@@ -414,6 +439,12 @@ export default {
 .search-button:hover {
   background-color: #4455cc;
   border-color: #4455cc;
+}
+
+.descricao{
+  color: #999898;
+  margin: 1vh 0vh 4vh 4vh;
+  font-size: 17px;
 }
 </style>
   

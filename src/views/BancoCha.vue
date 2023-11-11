@@ -1,4 +1,4 @@
-<script lang = "ts">
+<script lang="ts">
 import axios from 'axios';
 import Sidebar from '../components/Sidebar.vue';
 import Header from '../components/Header.vue';
@@ -20,9 +20,8 @@ export default {
       showPopup2: false,
       showPopup3: false,
       loading: true,
-      popupMessage1:('CHA foi limpado!'),
-      popupMessage2:('Busca feita com sucesso'),
-      popupMessage3:('CHA Salvo com sucesso!'),
+      popupMessage2: ('Busca feita com sucesso'),
+      popupMessage3: ('Salvo com sucesso!'),
     };
   },
 
@@ -42,10 +41,10 @@ export default {
       console.log(this.positionsExperience);
     },
 
-    BuscarCha() {
+    async BuscarCha() {
       if (this.buscaRealizada) {
         // Verifica se uma busca anterior foi realizada
-        this.LimparCampos(); // Limpa os campos do CHA
+        this.LimparCampos(false); // Limpa apenas os campos do CHA, mantém o "cargo"
       }
       const CHA = this.positions.find((cha) => cha.name == this.cargo && cha.experience == this.nivel);
       this.conhecimento = CHA.knowledge;
@@ -54,48 +53,86 @@ export default {
       this.buscaRealizada = true; // Marca que uma busca foi realizada
     },
 
-    LimparCampos() {
+    async salvarCha() {
+      if (this.cargo && this.nivel) {
+        // Buscar o objeto correspondente com base em "cargo" e "nivel"
+        const chaIndex = this.positions.findIndex(
+          (cha) => cha.name == this.cargo && cha.experience == this.nivel
+        );
+
+        if (chaIndex !== -1) {
+          // Atualizar os campos do CHA no objeto existente
+          this.positions[chaIndex].knowledge = this.conhecimento;
+          this.positions[chaIndex].skill = this.habilidade;
+          this.positions[chaIndex].attitude = this.atitude;
+        } else {
+          // Se não encontrou um objeto correspondente, criar um novo objeto
+          const position = {
+            name: this.cargo,
+            knowledge: this.conhecimento,
+            skill: this.habilidade,
+            attitude: this.atitude,
+            experience: this.nivel,
+          };
+          this.positions.push(position);
+        }
+
+        try {
+          const response = await axios.post('/position/create', this.positions[chaIndex]);
+          console.log(response);
+          this.showPopupcomAtraso3();
+          this.LimparCampos();
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        // Exiba uma mensagem ou tome a ação apropriada para lidar com campos vazios.
+        console.error('Por favor, preencha todos os campos antes de salvar.');
+      }
+    },
+
+    LimparCampos(clearCargo = true) {
       this.conhecimento = '';
       this.habilidade = '';
       this.atitude = '';
-      this.buscaRealizada = false; // Marca que a busca foi limpa
-      this.cargo = '';
       this.nivel = '';
-    },
-  showPopupcomAtraso1() {
-    this.showPopup1=!true;
-    setTimeout(()=>{
-      this.showPopup1=!false;
-    }, 500);
-  },
-  showPopupcomAtraso2() {
-    this.showPopup2=!true;
-    setTimeout(()=>{
-      this.showPopup2=!false;
-    }, 500);
-  },
-  showPopupcomAtraso3() {
-    this.showPopup3=!true;
-    setTimeout(()=>{
-      this.showPopup3=!false;
-    }, 500);
-  },
-  closePopup1() {
-    this.showPopup1 = false;
-  },
-  closePopup2() {
-    this.showPopup2 = false;
-  },
-  closePopup3() {
-    this.showPopup3 = false;
-  },
 
+      if (clearCargo) {
+        this.cargo = '';
+      }
+      this.buscaRealizada = false;
+    },
+
+    showPopupcomAtraso2() {
+      this.showPopup2 = !true;
+      setTimeout(() => {
+        this.showPopup2 = !false;
+      }, 500);
+    },
+
+    showPopupcomAtraso3() {
+      this.showPopup3 = !true;
+      setTimeout(() => {
+        this.showPopup3 = !false;
+      }, 500);
+    },
+
+    closePopup1() {
+      this.showPopup1 = false;
+    },
+
+    closePopup2() {
+      this.showPopup2 = false;
+    },
+
+    closePopup3() {
+      this.showPopup3 = false;
+    },
   },
 
   beforeMount() {
     this.getPositions();
   },
-
 
   components: {
     Sidebar, Header,
@@ -105,18 +142,19 @@ export default {
     cargo(newValue, oldValue) {
       if (this.buscaRealizada && newValue !== oldValue) {
         // Se uma busca foi realizada e o cargo mudou, limpe os campos do CHA
-        this.LimparCampos();
+        this.LimparCampos(true);
       }
     },
     nivel(newValue, oldValue) {
       if (this.buscaRealizada && newValue !== oldValue) {
         // Se uma busca foi realizada e o nível mudou, limpe os campos do CHA
-        this.LimparCampos();
+        this.LimparCampos(false);
       }
     },
   },
 };
 </script>
+
 
 <template>
     <Sidebar></Sidebar>
@@ -124,6 +162,8 @@ export default {
     <div class="page-content">
       <div class="bancocha">
         <h1 class="title">Banco de CHA</h1>
+
+        <p class="descricao">Selecione o Cargo e Nível abaixo para obter os CHA's que foram salvos.</p>
 
         
         <div class="Cargo">
@@ -154,13 +194,7 @@ export default {
         <!-- Botões  -->
         <div class="button-container">
           <div>
-            <button class="custom-button clear-button" @click="LimparCampos, showPopupcomAtraso1()">Limpar</button>
-            <div class="custom-popup" v-if="showPopup1">
-              <div>
-                <p class="popup-message">{{ popupMessage1 }}</p>
-                <button class="close-popup-button" @click="closePopup1">Fechar</button>
-              </div>
-            </div>
+            <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
           </div>
           <div>
               <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
@@ -176,27 +210,20 @@ export default {
 
       <!-- Linha cinza abaixo dos botões -->
       <hr class="line" />
-
+      <p class="descricao">Fique a vontade para editar os campos, a edição só sera salvar quando clicar em salvar.</p>
       <!-- Título "CHA" -->
 
-      <h2 class="cha-title"> Conhecimentos </h2>
-
-      <!-- Campo de texto multilinea -->
+      <h2 class="cha-title"> Conhecimento </h2>
       <textarea v-model="conhecimento" class="cha-textarea"></textarea>
 
-      <h2 class="cha-title"> Habilidades </h2>
+      <h2 class="cha-title"> Habilidade </h2>
+      <textarea v-model="habilidade" class="cha-textarea"></textarea>
 
-      <!-- Campo de texto multilinea -->
-      <textarea v-model="habilidade" class="cha-textarea"> {{ skill }}</textarea>
-
-      <h2 class="cha-title"> Atitudes </h2>
-<!--  -->
-      <!-- Campo de texto multilinea -->
+      <h2 class="cha-title"> Atitude </h2>
       <textarea v-model="atitude" class="cha-textarea"></textarea>
 
-      <!-- Botões Editar e Buscar -->
       <div class="button-container">
-          <button class="custom-button search-button" @click="showPopupcomAtraso3();LimparCampos();">Salvar</button>
+        <button class="custom-button search-button" @click="salvarCha">Salvar</button>
           <div class="custom-popup" v-if="showPopup3">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage3 }}</p>
@@ -209,6 +236,12 @@ export default {
 </template>
 
 <style scoped>
+
+.descricao{
+  color: #999898;
+  margin: 1vh 0vh 4vh 4vh;
+  font-size: 17px;
+}
 
 .page-content {
   margin-left: 18%; /* Use o mesmo valor da largura do menu */
@@ -255,7 +288,7 @@ export default {
     color: rgb(255, 255, 255); 
     font-size: 30px; 
     font-weight: bold; 
-    margin-left: 25px;
+    margin-left: 14px;
     margin-top: 20px;
   }
   .input-label {

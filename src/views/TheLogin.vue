@@ -232,7 +232,7 @@ import axios from 'axios';
           this.isPopupVisible = true;
         }
         else{
-          alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+          alert('Por favor, preencha todos os campos antes de prosseguir');
           
         }
       },

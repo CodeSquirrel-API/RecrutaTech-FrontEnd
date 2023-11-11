@@ -1,31 +1,33 @@
 <template>
 	<Sidebar></Sidebar>
 		<div class="resultados">
-			<div class="title">
-				<h1>Resultados</h1>
-				<p>Lista de candidatos</p>
-			</div>
+			
 			<div class="candidatos">
 				<div v-for="(candidato, index) in candidatos" :key="index" class="candidato-card">
 					<div class="info">
 						<span class="candidato">{{ candidato.nome }}</span>
 						<span class="match">{{ candidato.match }}%</span>
-						<router-link :to="'/visualizar/' + candidato.id">
-							<button class="visualizar-button">Visualizar</button>
-						</router-link>
+							<button class="visualizar-button" @click="Visualizar =! Visualizar">Visualizar</button>
 					</div>
 					<div class="bar">
 						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
 					</div>
+
+
+					<div v-if="Visualizar">
+						<Candidatos />
+					</div>
 				</div>
 			</div>
 		</div>
+		
 </template>
 
 
 <script>
 
 import Sidebar from '../components/Sidebar.vue'
+import Candidatos from '../components/Candidatos.vue'
 
 export default {
 	data() {
@@ -40,10 +42,16 @@ export default {
 				{ id: 7, nome: 'Candidato 7', match: 95 },
 				{ id: 8, nome: 'Candidato 8', match: 65 },
 			],
+
+			Visualizar: false
+
 		};
+		
 	},
-	components: {
+	components: 
+	{
 		Sidebar,
+		Candidatos,
 	},
 };
 </script>
@@ -82,12 +90,12 @@ export default {
 .candidato-card {
 	background: #0e1011;
 	padding: 16px;
-	margin: 2px;
-	width: 100vh;
+	margin: 5px 2px;
+	width: 100%;
 	display: flex;
 	flex-direction: column;
-	/* border-radius: 5px; */
-	margin-left: 26vh;
+	border-radius: 5px;
+	/* border: none; */
 	align-items: center;
 	border-bottom: solid 1px #ffffff4d;
 }
