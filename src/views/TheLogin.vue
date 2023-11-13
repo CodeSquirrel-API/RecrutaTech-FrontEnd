@@ -179,7 +179,7 @@ import axios from 'axios';
     },
     computed: {
       camposPreenchidos() {
-    if (this.username && this.password) {
+    if (this.email) {
       return true; // Retorna false se pelo menos um campo estiver vazio.
     } else {
       return false; // Retorna true quando todos os campos estão preenchidos.
@@ -243,8 +243,7 @@ import axios from 'axios';
       login() {
         // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
         // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Usuário:', this.username);
-        console.log('Senha:', this.password);
+        console.log('E-mail:', this.email);
       },
       entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
