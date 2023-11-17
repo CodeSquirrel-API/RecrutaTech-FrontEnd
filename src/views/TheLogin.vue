@@ -27,7 +27,7 @@
         </div>       
         
         <div class="center">
-            <button class="close-popup-button entrar" @click="Codigo, showPopup(), VerificarCodigo2()">Entrar</button>
+            <button class="close-popup-button entrar" @click="Codigo, showPopup()">Entrar</button>
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
