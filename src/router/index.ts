@@ -64,7 +64,7 @@ const router = createRouter({
       component: () => import('../views/CadastroCNPJ.vue')
     },
     {
-      path: '/ResetPassword',
+      path: '/resetPassword',
       name: 'resetpassword',
       component: () => import('../views/RecuperarSenha.vue')
     },

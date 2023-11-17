@@ -23,11 +23,11 @@
         <div class="checkbox font style">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
           <label for="meuCheckbox" class="">Manter conectado </label>
-          <RouterLink class="a direita" to="/ResetPassWord">Esqueci minha senha</RouterLink>
+          <RouterLink class="a direita" to="/resetPassword">Esqueci minha senha</RouterLink>
         </div>       
         
         <div class="center">
-            <button class="close-popup-button entrar" @click="Codigo, showPopup()">Entrar</button>
+            <button class="close-popup-button entrar" @click="Codigo, showPopup(), VerificarCodigo2()">Entrar</button>
             <div class="custom-popup" v-if="isPopupVisible">
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
@@ -214,6 +214,28 @@ import axios from 'axios';
         } else {
           this.$router.push('/login')
           alert("Codigo incorreto!!");
+          }
+        }
+        catch (error) {
+          console.error(error);
+          
+        }
+          
+      },
+      async VerificarCodigo2 () {
+        try{
+         const responseCheck = await axios.post(`${baseURL}/email/check-code`, {
+          "email": this.email,
+          "senha": this.password,
+        })
+        console.log(responseCheck.data);
+        console.log(this.email);
+
+        if (responseCheck.data.valid) {
+          this.$router.push('/home');
+        } else {
+          this.$router.push('/login')
+          alert("Senha incorreto!!");
           }
         }
         catch (error) {
