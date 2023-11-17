@@ -32,7 +32,7 @@
               <div class="popup-content">
                 <p class="popup-message">{{ popupMessage }}</p>
                 <br>
-                <input v-model="numero" @input="validarNumero" maxlength="6" :class="{ 'campo-vazio': numero === '' }"/>
+                <input v-model="number" @input="validarNumero" maxlength="6" :class="{ 'campo-vazio': number === '' }"/>
                 <br>
                 <button class="close-popup-button" @click="VerificarCodigo">Login</button>
                 <button class="close-popup-button" @click="closePopup">Fechar</button>
@@ -168,7 +168,7 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        numero: null,
+        number: null,
         code: '',
         isPopupVisible: false,
         email:'',
@@ -181,9 +181,9 @@ import axios from 'axios';
     computed: {
       camposPreenchidos() {
     if (this.email) {
-      return true; // Retorna false se pelo menos um campo estiver vazio.
+      return false; // Retorna false se pelo menos um campo estiver vazio.
     } else {
-      return false; // Retorna true quando todos os campos estão preenchidos.
+      return true; // Retorna true quando todos os campos estão preenchidos.
         }
       }
     },
@@ -246,8 +246,8 @@ import axios from 'axios';
           
       },
       validarNumero(){
-        if (isNaN(this.numero)) {
-          this.numero = null;
+        if (isNaN(this.number)) {
+          this.number = null;
         }
       },
       showPopup() {
