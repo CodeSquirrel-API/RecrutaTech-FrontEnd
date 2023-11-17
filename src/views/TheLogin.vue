@@ -206,41 +206,42 @@ import axios from 'axios';
         }
       }
     },
+    
     methods: {
-      login() {
-      // Block Mock - initial FIXME
-        console.log('teste');
-        //Tecnica de mock;
-        this.loading = true;
-        setTimeout(() => {
-          // loading = true; // -> ccontrola o spinner
-          if(this.username === 'teste@email.com' && this.password === '123456')
-          {
-            console.log('Login efetuado');
-            this.$router.push('/home');
-            this.loading = false;
-          }
-          else
-          {
-            console.log('deu errado'); //-> Maybe use alert by javascript
-            this.loading = false;
-          }
-          // loading = false;
-        }, 6000) // 1 seg = 1000 milisegundos
-        // Block Mock - End
+      async login(){
+      // // Block Mock - initial FIXME
+      //   console.log('teste');
+      //   //Tecnica de mock;
+      //   this.loading = true;
+      //   setTimeout(() => {
+      //     // loading = true; // -> ccontrola o spinner
+      //     if(this.username === 'teste@email.com' && this.password === '123456')
+      //     {
+      //       console.log('Login efetuado');
+      //       this.$router.push('/home');
+      //       this.loading = false;
+      //     }
+      //     else
+      //     {
+      //       console.log('deu errado'); //-> Maybe use alert by javascript
+      //       this.loading = false;
+      //     }
+      //     // loading = false;
+      //   }, 6000) // 1 seg = 1000 milisegundos
+      //   // Block Mock - End
 
 
 
-        //await axios.post(`${baseURL}/login/login`, {
-          //email: this.username,
-          //password: this.password,
+        await axios.post(`${baseURL}/login/login`, {
+          email: this.username,
+          password: this.password,
           //token: '' -> Irs make no sense!!!!!1
-        //}).then((data) => {
-          //console.log(data);
+        }).then((data) => {
+          console.log(data);
 
           // Next Steps -> verify if data is ok and transfer user to other screem.
           // If not ok, show message
-        //});
+        });
       }
 
       // async Codigo () {
