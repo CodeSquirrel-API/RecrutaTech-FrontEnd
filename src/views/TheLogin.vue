@@ -196,7 +196,7 @@ import axios from 'axios';
     this.carregando = true;
 
     try {
-      const response = await axios.post(`${baseURL}/login/login`, {
+      const response = await axios.post(`${baseURL}login/login`, {
         email: this.username,
         password: this.password,
       });
@@ -205,13 +205,12 @@ import axios from 'axios';
       if (response.status === 200) {
         console.log('Login efetuado com sucesso');
         this.$router.push('/home');
+
       } else {
         console.log('Credenciais inválidas');
-        // Aqui você pode exibir uma mensagem de erro para o usuário
       }
     } catch (error) {
       console.error('Erro no login:', error);
-      // Lida com erros de login, como conexão com o servidor, por exemplo
     } finally {
       this.carregando = false;
     }
