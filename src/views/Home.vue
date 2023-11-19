@@ -409,8 +409,8 @@ export default {
 
 /* Estilos para o campo de texto multilinear */
 .cha-textarea {
+  font-size: 17px;
   width: 80%;
-  height: 100px;
   padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -418,6 +418,9 @@ export default {
   margin-top: 5px;
   margin-left: 25px;
   margin-bottom: 15px;
+  overflow: auto;
+  min-height: 150px;
+  overflow: hidden;
 }
 
 /* Estilos para os botões "Editar" e "Buscar" */
