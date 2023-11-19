@@ -82,7 +82,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
+    padding: 10px 200px;
     transition: 0.5s ease;
 
 }

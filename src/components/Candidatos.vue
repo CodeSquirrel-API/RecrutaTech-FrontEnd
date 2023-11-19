@@ -2,87 +2,75 @@
   <div class="container" style="color: rgb(255, 255, 255);">
 
     <div class="select-btn">
-      <select v-model="selectedCargo" class="select-option txt-select" placeholder="Selecione o cargo." @change="getNivel(selectedCargo)">
+      
+      <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
         <option value="" disabled selected>Selecione o cargo</option>
-        <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item" class="select-option txt-select">
+        <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item"
+          class="select-option txt-select">
           {{ item }}
         </option>
       </select>
 
-      <select v-model="nivel" name="experience" placeholder="Selecione o nível de experiência." class="select-option txt-select">
+      <select v-model="nivel" name="experience"  class="select-option txt-select">
         <option value="" disabled selected>Selecione o nível</option>
-
         <option v-for="(experience, index) in positionsExperience" :key="index" :value="experience">
           {{ experience }}
         </option>
       </select>
-      <button @click="buscarCandidatosPorFiltro" style="display: block;" class="btn-buscar" >Buscar</button>
+
+      <button class="btn-buscar" @click="buscarCandidatosPorFiltro">Buscar</button>
     </div>
 
-    
-
-    
-
-    <div v-for="(candidato, index) in candidatosFiltrados" :key="index" class="candidato-card">
-
-      <div class="info">
-        <span class="candidato">{{ candidato.name }}</span>
-        <span class="match">{{ candidato.match }}%</span>
-
-    
-        <button class="visualizar-button" @click="visualizarCandidato(candidato), visualizar =! visualizar">Visualizar</button>
-      </div>
-      <div class="bar">
-						<div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
-			</div>
-
-
-
-      
-      <div v-if="visualizar">
-        <div class="candidato-info" v-if="candidatoSelecionado === candidato">
-          <p class="infos"><strong>Informações do Candidato</strong></p>
-          <p class="texto-info" style="margin-left: 20px;">Nome: {{ candidato.name }}</p>
-          <p class="texto-info" style="margin-left: 20px;">E-mail: {{ candidato.email }}</p>
-
-          <hr>
-
-          <p class="infos"><strong>Conhecimentos</strong></p>
-          <ul>
-            <li v-for="(conhecimento, index) in candidato.knowledgeList" :key="index">
-              <p class="texto-info" style="margin-left: 20px;"> {{ conhecimento.name }}</p>
-              <!-- <p><strong>Descrição:</strong> {{ conhecimento.description }}</p> -->
-
-            </li>
-          </ul>
-
-          <hr>
-
-          <p class="infos"><strong>Habilidades</strong></p>
-          <ul>
-            <li v-for="(habilidade, index) in candidato.skillsList" :key="index">
-              <p class="texto-info" style="margin-left: 20px;"><strong></strong> {{ habilidade.name }}</p>
-              <p class="texto-info" style="margin-left: 20px;"><strong></strong> {{ habilidade.description }}</p>
-            </li>
-          </ul>
-
-          <hr>
-
-          <p class="infos"><strong>Atitudes</strong></p>
-          <ul>
-            <li v-for="(atitude, index) in candidato.attitudeList" :key="index">
-              <p class="texto-info" style="margin-left: 20px;"> {{ atitude.name }}</p>
-              <!-- <p><strong>Descrição:</strong> {{ atitude.description }}</p> -->
-
-            </li>
-          </ul>
-
+    <div v-for="(candidato, index) in candidatosFiltrados" :key="index" class="candidato-container">
+      <div class="candidato-card">
+        <div class="info">
+          <span class="candidato">{{ candidato.name }}</span>
+          <span class="match">{{ candidato.match }}%</span>
+          <button class="visualizar-button" @click="toggleVisualizar(candidato)">
+            {{ visualizar && candidatoSelecionado === candidato ? 'Fechar' : 'Visualizar' }}
+          </button>
         </div>
+        <div class="bar">
+          <div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
+        </div>
+      </div>
+
+      <div class="candidato-info" v-if="visualizar && candidatoSelecionado === candidato">
+        <p class="infos"><strong>Informações do Candidato</strong></p>
+        <p class="texto-info">Nome: {{ candidato.name }}</p>
+        <p class="texto-info">E-mail: {{ candidato.email }}</p>
+
+        <hr>
+
+        <p class="infos"><strong>Conhecimentos</strong></p>
+        <ul>
+          <li v-for="(conhecimento, index) in candidato.knowledgeList" :key="index">
+            <p class="texto-info">{{ conhecimento.name }}</p>
+          </li>
+        </ul>
+
+        <hr>
+
+        <p class="infos"><strong>Habilidades</strong></p>
+        <ul>
+          <li v-for="(habilidade, index) in candidato.skillsList" :key="index">
+            <p class="texto-info"><strong>{{ habilidade.name }}</strong>: {{ habilidade.description }}</p>
+          </li>
+        </ul>
+
+        <hr>
+
+        <p class="infos"><strong>Atitudes</strong></p>
+        <ul>
+          <li v-for="(atitude, index) in candidato.attitudeList" :key="index">
+            <p class="texto-info">{{ atitude.name }}</p>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-
-    </div>
 </template>
+
 
 <script lang="ts">
 import axios from 'axios';
@@ -95,7 +83,7 @@ export default {
       nivel: '',
       candidatesProfessions: [],
       positionsExperience: [],
-      candidatosFiltrados: [], 
+      candidatosFiltrados: [],
       candidatoSelecionado: null,
       visualizar: false,
     };
@@ -135,6 +123,11 @@ export default {
     visualizarCandidato(candidato) {
       this.candidatoSelecionado = candidato;
     },
+
+    toggleVisualizar(candidato) {
+      this.visualizarCandidato(candidato);
+      this.visualizar = !this.visualizar;
+    },
   },
 
   beforeMount() {
@@ -145,11 +138,10 @@ export default {
 </script>
 
 <style scoped>
-
-
-.container{
+.container {
   display: block;
   
+
 }
 
 .select-option::placeholder {
@@ -158,19 +150,20 @@ export default {
 
 
 .bar {
-	width: 100%;
-	background-color: #eee;
-	height: 10px;
-	margin-top: 8px;
-	border-radius: 5px;
+  width: 100%;
+  background-color: #eee;
+  height: 10px;
+  margin-top: 8px;
+  border-radius: 5px;
 }
 
 .ranked-bar {
-	height: 100%;
+  height: 100%;
   display: flex;
-	background-color: #5D5DFF;
-	border-radius: 5px;
+  background-color: #5D5DFF;
+  border-radius: 5px;
 }
+
 .select-option {
   width: 30%;
   border: 1px solid #ccc;
@@ -187,88 +180,94 @@ export default {
 }
 
 .visualizar-button {
-	background-color: #5D5DFF;
-	color: white;
-	margin-bottom: 1vh;
-	padding: 8px 16px;
-	display: inline-block;
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
-	transition: all 0.5s ease;
+  background-color: #5D5DFF;
+  color: white;
+  margin-bottom: 1vh;
+  padding: 8px 16px;
+  display: inline-block;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
 }
+
 .visualizar-button:hover {
-	background-color: #5858ee;
-	transform: translateY(-3px);
+  background-color: #5858ee;
+  transform: translateY(-3px);
 }
 
 .info {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .candidato-card {
-	background: #0e1011;
-	padding: 16px;
-	margin: 5px 2px;
+  background: #0e1011;
+  padding: 16px;
+  margin: 10px;
   margin-left: 27vh;
-	width: 170%;
-	display: flex;
-	flex-direction: column;
-	border-radius: 5px;
-	/* border: none; */
-	align-items: center;
-	border-bottom: solid 1px #ffffff4d;
-  flex: 1;
-}
-
-.candidato-info{
-  flex: 1;
+  width: 170%;
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-  margin-top: 2vh;
-}
-.btn-buscar{
-  background-color: #5D5DFF;
-	color: white;
-  margin-left: 18vh;
-	margin-top: 2vh;
-  font-size: 20px;
-	padding: 8px 56px;
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
-	transition: all 0.5s ease;
+  border-radius: 5px;
+  /* border: none; */
+  align-items: center;
+  box-shadow: inset 0px -2px 0.5px #ffffffa8;
+  flex: 1;
 }
 
+.candidato-info {
+  background: #0e1011;
+  padding: 16px;
+  margin: 10x 2px;
+  margin-left: 27vh;
+  width: 170%;
+  padding: 10px 50px;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 3px #ffffffa8;
+  flex: 1;
+}
+
+.btn-buscar {
+  background-color: #5D5DFF;
+  color: white;
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  padding: 8px 56px;
+  cursor: pointer;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
+  transition: all 0.5s ease;
+  position: relative;
+}
 
 .btn-buscar:hover{
-  background-color: #5D5DFF;
-	color: white;
-  margin-left:18vh;
-	margin-bottom: 1vh;
-	padding: 8px 56px;
   opacity: 0.8;
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
-	transform: translateY(-3px);
 }
+
 
 .select-btn {
-  display: block;
-  padding: 20px 20px;
-  color: #fff;
-  margin-left: 10vh;
-  font-size: 22px;
-  border-radius: 7px;
-  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 2vw;
+  margin-left: 70%;
+  justify-content: center;
+  text-align: center;
 }
 
-.select-btn select{
+.select-option,
+.btn-buscar {
+  display: block;
+  margin: 5px; 
+}
+  
+.select-btn select {
   display: block;
   cursor: pointer;
   width: 400px;
@@ -278,17 +277,16 @@ export default {
   font-size: 22px;
   background: #0e1011;
   border-radius: 7px;
-  justify-content: space-between;
+  justify-content: center;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
-.infos{
+
+.infos {
   margin-bottom: 2vh;
   margin-top: 2vh;
 }
 
-.texto-info{
+.texto-info {
   margin: 1vh 0;
 }
-
-
 </style>
