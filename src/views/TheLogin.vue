@@ -23,7 +23,7 @@
         <div class="checkbox font style">
           <input type="checkbox" id="meuCheckbox" v-model="manterConectado"/>
           <label for="meuCheckbox" class="">Manter conectado </label>
-          <RouterLink class="a direita" to="/ResetPassWord">Esqueci minha senha</RouterLink>
+          <RouterLink class="a direita" to="/resetPassword">Esqueci minha senha</RouterLink>
         </div>       
         
         <div class="center">
@@ -169,7 +169,7 @@ import axios from 'axios';
   export default {
     data() {
       return {
-        numero: null,
+        number: null,
         code: '',
         isPopupVisible: false,
         email:'',
@@ -184,9 +184,9 @@ import axios from 'axios';
     computed: {
       camposPreenchidos() {
     if (this.email) {
-      return true; // Retorna false se pelo menos um campo estiver vazio.
+      return false; // Retorna false se pelo menos um campo estiver vazio.
     } else {
-      return false; // Retorna true quando todos os campos estão preenchidos.
+      return true; // Retorna true quando todos os campos estão preenchidos.
         }
       }
     },
