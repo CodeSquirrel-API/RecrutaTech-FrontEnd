@@ -19,9 +19,10 @@ export default {
       showPopup1: false,
       showPopup2: false,
       showPopup3: false,
-      loading: true,
       popupMessage2: ('Busca feita com sucesso'),
       popupMessage3: ('Salvo com sucesso!'),
+      carregando:false,
+      loading: '<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve"> <path opacity="0.2" fill="#5D5DFF" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/> <path fill="#5D5DFF" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z"> <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"/></path></svg>',
     };
   },
 
@@ -42,6 +43,7 @@ export default {
     },
 
     async BuscarCha() {
+      this.carregando = true;
       if (this.buscaRealizada) {
         // Verifica se uma busca anterior foi realizada
         this.LimparCampos(false); // Limpa apenas os campos do CHA, mantém o "cargo"
@@ -51,7 +53,9 @@ export default {
       this.habilidade = CHA.skill;
       this.atitude = CHA.attitude;
       this.buscaRealizada = true; // Marca que uma busca foi realizada
+      this.carregando = false;
     },
+       
 
     async salvarCha() {
       if (this.cargo && this.nivel) {
@@ -197,13 +201,7 @@ export default {
             <button class="custom-button clear-button" @click="LimparCampos()">Limpar</button>
           </div>
           <div>
-              <button class="custom-button save-button" @click="BuscarCha(), showPopupcomAtraso2()">Buscar</button>
-            <div class="custom-popup" v-if="showPopup2">
-              <div class="popup-content">
-                <p class="popup-message">{{ popupMessage2 }}</p>
-                <button class="close-popup-button" @click="closePopup2">Fechar</button>
-              </div>
-            </div>
+              <button class="custom-button save-button" @click="BuscarCha()">Buscar</button>
           </div>
         </div>
       </div>
@@ -214,13 +212,22 @@ export default {
       <!-- Título "CHA" -->
 
       <h2 class="cha-title"> Conhecimento </h2>
-      <textarea v-model="conhecimento" class="cha-textarea"></textarea>
+      <div class="textarea-container">
+      <div v-if="carregando" v-html="loading" class="loading-icon"></div>
+        <textarea v-model="conhecimento" class="cha-textarea"></textarea>
+      </div>
 
       <h2 class="cha-title"> Habilidade </h2>
-      <textarea v-model="habilidade" class="cha-textarea"></textarea>
+      <div class="textarea-container">
+      <div v-if="carregando" v-html="loading" class="loading-icon"></div>
+        <textarea v-model="habilidade" class="cha-textarea"></textarea>
+      </div>
 
       <h2 class="cha-title"> Atitude </h2>
-      <textarea v-model="atitude" class="cha-textarea"></textarea>
+      <div class="textarea-container">
+      <div v-if="carregando" v-html="loading" class="loading-icon"></div>
+        <textarea v-model="atitude" class="cha-textarea"></textarea>
+      </div>
 
       <div class="button-container">
         <button class="custom-button search-button" @click="salvarCha">Salvar</button>
@@ -237,6 +244,18 @@ export default {
 
 <style scoped>
 
+.textarea-container {
+  position: relative;
+}
+
+.loading-icon {
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Adicione outros estilos para o ícone de carregamento, como largura, altura etc. */
+}
 .descricao{
   color: #999898;
   margin: 1vh 0vh 4vh 4vh;
