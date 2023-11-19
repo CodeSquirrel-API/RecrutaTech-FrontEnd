@@ -29,12 +29,15 @@
         <div class="center">
             <button class="close-popup-button entrar" @click="login()" v-if="loading === false">Entrar</button>
             <div class="loader loader--style1" title="0" v-if="loading === true">
+              
               <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
               width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
-              <path opacity="0.2" fill="#000" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
+
+              <path opacity="0.2" fill="#5D5DFF" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
                 s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
                 c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
-              <path fill="#000" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
+
+              <path fill="#5D5DFF" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
                 C22.32,8.481,24.301,9.057,26.013,10.047z">
                 <animateTransform attributeType="xml"
                   attributeName="transform"
@@ -208,7 +211,31 @@ import axios from 'axios';
     },
     
     methods: {
-      async login(){
+      async login() {
+    this.loading = true;
+
+    try {
+      const response = await axios.post(`${baseURL}/login/login`, {
+        email: this.username,
+        password: this.password,
+      });
+
+      // Verifique a resposta do servidor e redirecione conforme necessário
+      if (response.status === 200) {
+        console.log('Login efetuado com sucesso');
+        this.$router.push('/home');
+      } else {
+        console.log('Credenciais inválidas');
+        // Aqui você pode exibir uma mensagem de erro para o usuário
+      }
+    } catch (error) {
+      console.error('Erro no login:', error);
+      // Lida com erros de login, como conexão com o servidor, por exemplo
+    } finally {
+      this.loading = false;
+    }
+  }
+      //async login(){
       // // Block Mock - initial FIXME
       //   console.log('teste');
       //   //Tecnica de mock;
@@ -230,19 +257,33 @@ import axios from 'axios';
       //   }, 6000) // 1 seg = 1000 milisegundos
       //   // Block Mock - End
 
+      //   this.loading = true;
+      //   setTimeout(() => {
+      //     // loading = true; // -> ccontrola o spinner
+      //     if(this.username === this.username && this.password === this.password)
+      //     {
+      //       console.log('Login efetuado');
+      //       this.$router.push('/home');
+      //       this.loading = false;
+      //     }
+      //     else
+      //     {
+      //       console.log('deu errado'); //-> Maybe use alert by javascript
+      //       this.loading = false;
+      //     }
+      //     // loading = false;
+      //   }, 6000)
+      //   await axios.post(`${baseURL}/login/login`, {
+      //     email: this.username,
+      //     password: this.password,
+      //     //token: '' -> Irs make no sense!!!!!1
+      //   }).then((data) => {
+      //     console.log(data);
 
-
-        await axios.post(`${baseURL}/login/login`, {
-          email: this.username,
-          password: this.password,
-          //token: '' -> Irs make no sense!!!!!1
-        }).then((data) => {
-          console.log(data);
-
-          // Next Steps -> verify if data is ok and transfer user to other screem.
-          // If not ok, show message
-        });
-      }
+      //     // Next Steps -> verify if data is ok and transfer user to other screem.
+      //     // If not ok, show message
+      //   });
+      // }
 
       // async Codigo () {
       //   try{
