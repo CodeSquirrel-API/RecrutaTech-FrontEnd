@@ -238,7 +238,7 @@ export default {
       },
 
       updateCargoUppercase() {
-      this.cargoUppercase = this.cargo.toUpperCase();
+      this.cargo = this.cargo.toUpperCase();
     },
 
   },
