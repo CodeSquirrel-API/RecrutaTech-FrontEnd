@@ -212,6 +212,10 @@ export default {
 
         // Verifique a resposta do servidor e redirecione conforme necessário
         if (response.status === 200) {
+          const token = response.data;
+
+          // Armazene o token no localStorage
+          localStorage.setItem('token', token);
           console.log('Login efetuado com sucesso');
           this.$router.push('/home');
 
