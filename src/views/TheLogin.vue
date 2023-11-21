@@ -181,15 +181,15 @@ import axios from 'axios';
         popupMessage:'seu codigo será enviado em 5 minutos para o seu e-mail: ***@***.com, verifique o seu codigo para prosseguir com o seu login!'
       };
     },
-    computed: {
-      camposPreenchidos() {
-    if (this.email) {
-      return false; // Retorna false se pelo menos um campo estiver vazio.
-    } else {
-      return true; // Retorna true quando todos os campos estão preenchidos.
-        }
-      }
-    },
+    //computed: {
+    //   camposPreenchidos() {
+    // if (this.email) {
+    //   return false; // Retorna false se pelo menos um campo estiver vazio.
+    // } else {
+    //   return true; // Retorna true quando todos os campos estão preenchidos.
+    //     }
+    //   }
+    // },
     
     methods: {
       async login() {
