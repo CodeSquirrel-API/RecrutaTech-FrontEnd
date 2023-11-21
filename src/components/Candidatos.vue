@@ -2,16 +2,18 @@
   <div class="container" style="color: rgb(255, 255, 255);">
 
     <div class="select-btn">
-      
+
+      <input v-model="searchQuery" @input="filterCandidates" class="autocomplete-input"
+        placeholder="Search for a cargo" />
+
       <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
         <option value="" disabled selected>Selecione o cargo</option>
-        <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item"
-          class="select-option txt-select">
+        <option v-for="(item, index) in sortedCandidates" :key="index" :value="item" class="select-option txt-select">
           {{ item }}
         </option>
       </select>
 
-      <select v-model="nivel" name="experience"  class="select-option txt-select">
+      <select v-model="nivel" name="experience" class="select-option txt-select">
         <option value="" disabled selected>Selecione o nível</option>
         <option v-for="(experience, index) in positionsExperience" :key="index" :value="experience">
           {{ experience }}
@@ -74,7 +76,7 @@
 
 <script lang="ts">
 import axios from 'axios';
-
+import AutoComplete from 'Select.vue';
 export default {
   data() {
     return {
@@ -84,9 +86,32 @@ export default {
       candidatesProfessions: [],
       positionsExperience: [],
       candidatosFiltrados: [],
+      isDropdownVisible: false,
       candidatoSelecionado: null,
       visualizar: false,
+      searchQuery: "",
     };
+  },
+
+  computed: {
+    filteredCandidates() {
+      return this.candidatesProfessions.filter(candidate =>
+        candidate.toLowerCase().includes(this.searchQuery.toLowerCase())
+
+      );
+    },
+
+    showSelect() {
+      return this.searchQuery.length > 0;
+    },
+
+    sortedCandidates() {
+      const sortedList = [...this.filteredCandidates];
+      
+      sortedList.sort();
+
+      return sortedList;
+    }
   },
   methods: {
     async getCandidates() {
@@ -97,6 +122,9 @@ export default {
       } catch (error) {
         console.error('Erro na requisição:', error);
       }
+    },
+
+    filterCandidates() {
     },
 
     async getPositions() {
@@ -130,6 +158,10 @@ export default {
     },
   },
 
+  sortedCandidates() {
+      return this.filteredCandidates.slice().sort();
+    },
+
   beforeMount() {
     this.getCandidates();
     this.getPositions();
@@ -140,7 +172,7 @@ export default {
 <style scoped>
 .container {
   display: block;
-  
+
 
 }
 
@@ -245,7 +277,7 @@ export default {
   position: relative;
 }
 
-.btn-buscar:hover{
+.btn-buscar:hover {
   opacity: 0.8;
 }
 
@@ -264,9 +296,9 @@ export default {
 .select-option,
 .btn-buscar {
   display: block;
-  margin: 5px; 
+  margin: 5px;
 }
-  
+
 .select-btn select {
   display: block;
   cursor: pointer;
@@ -288,5 +320,18 @@ export default {
 
 .texto-info {
   margin: 1vh 0;
+}
+
+.autocomplete-input {
+  display: block;
+  width: 400px;
+  height: 50px;
+  margin: 8px;
+  color: #fff;
+  font-size: 22px;
+  background: #0e1011;
+  border-radius: 7px;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
 }
 </style>
