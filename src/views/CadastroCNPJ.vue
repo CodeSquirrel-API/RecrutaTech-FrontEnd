@@ -10,7 +10,7 @@
       </RouterLink>
     </div>
     <div class="style">
-      <form @submit.prevent="cadastrar">
+      <form @submit.prevent="">
         <div>
           <label for="empresa" class="font" >Nome da Empresa:</label>    
         </div>
@@ -36,7 +36,8 @@
           <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
         </div>
         <div class="center">
-          <button class="btnCadastrar" @click="cadastrar(); showPopup()">Cadastrar</button>
+          <button class="btnCadastrar" @click="cadastrar" v-if="carregando === false">Cadastrar</button>
+          <div class="loader loader--style1" title="0" v-if="carregando === true" v-html="loading"></div>
           <div class="custom-popup" v-if="isPopupVisible">
             <div class="popup-content">
               <p class="popup-message">{{ popupMessage }}</p>
@@ -55,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import baseURL from '@/service/api';
 import axios from 'axios';
 
 export default {
@@ -66,6 +68,8 @@ export default {
       password: '',
       isPopupVisible: false,
       popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
+      carregando: false,
+      loading: '<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve"> <path opacity="0.2" fill="#5D5DFF" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/> <path fill="#5D5DFF" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0C22.32,8.481,24.301,9.057,26.013,10.047z"> <animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.5s" repeatCount="indefinite"/></path></svg>'
     };
    },
 
@@ -81,13 +85,13 @@ export default {
 
     methods: {
       async cadastrar() {
+    this.carregando = true;
       try {
-        const response = await axios.post('/user/create', {
+        const response = await axios.post(`${baseURL}login/register`, {
           "name": this.empresa,
           "password": this.password,
           "email": this.email,
-          "cpf_cnpj": this.cnpj,
-          "userType": 1
+          "cpf_cnpj": this.cnpj
         });
 
         alert("Empresa Cadastrada");
@@ -96,7 +100,9 @@ export default {
       } catch (error) {
         console.error('Erro ao cadastrar empresa:', error);
         alert('Ocorreu um erro ao cadastrar a empresa. Verifique o console para obter mais detalhes.');
-      }
+      } finally {
+      this.carregando = false;
+    }
     },
       
       showPopup() {
@@ -146,6 +152,7 @@ input{
   margin: 5px 5px;
   border-style:solid;
   border-color:#33363A;
+  border-radius: 10px;
 }
 .custom-popup {
   position: fixed;
@@ -156,7 +163,7 @@ input{
   border: 1px solid #ccc;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   padding: 20px;
-  border-radius: 5px;
+  border-radius: 10px;
   z-index: 1000;
 }
 .popup-content {
@@ -193,7 +200,7 @@ input{
   margin-top: 25px;
 }
 .opcao1{
-  border-radius: 5px;
+  border-radius: 10px;
   margin-left: 10px;
   width: 133px;
   height: 40px;
@@ -206,7 +213,7 @@ input{
   background-color: #2980b9;
 }
 .opcao2{ 
-  border-radius: 5px;
+  border-radius: 10px;
   margin-right: 10px;
   width: 133px;
   height: 40px;
@@ -221,7 +228,7 @@ input{
 .btnCadastrar{
   margin-left: 10px;
   margin-top: 5px;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 133px;
   height: 40px;
   background-color: #5D5DFF;
