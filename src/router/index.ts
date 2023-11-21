@@ -81,11 +81,10 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   console.log(localStorage.getItem('token'));
     
-  if(to.name !== 'login' && !localStorage.getItem('token')) {
+  if(to.name !== 'login' && to.name!='cadastroCPF' && to.name!='cadastroCNPJ' && to.name!='resetpassword' && !localStorage.getItem('token')) {
     return false;
   }
   return true;
-
 })
 
 export default router
