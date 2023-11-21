@@ -1,8 +1,8 @@
 <template>
 	<aside class="fixed-menu">
-	  <div class="logo">
+	  <router-link to="/home" class="logo">
 		<img :src="logoURL" alt="Vue" />
-	  </div>
+	  </router-link>
   
 	  <div class="menu">
 		<router-link to="/home" class="button">
@@ -66,6 +66,12 @@
   justify-content: center; 
   align-items: center; 
   margin-bottom: 5vh;
+  transition: all 0.7s ease;
+}
+
+.fixed-menu .logo img:hover {
+	scale: 1.09;
+	opacity: 0.8;
 }
 
   .fixed-menu h3 {
