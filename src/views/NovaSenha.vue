@@ -1,39 +1,85 @@
 <template>
-    <div class="center">
+  <div class="center">
+    <h2 class="titulo style">Criando nova senha</h2>
+    <div class="">
+      <form @submit.prevent="submitForm">
+        <div>
+          <label for="password" class="font">
+            Para garantir a segurança da sua senha, certifique-se de que ela atenda aos seguintes critérios:<br />
+            - Mínimo de 8 caracteres<br />
+            - Pelo menos um número<br />
+            - Pelo menos uma letra
+          </label>
+        </div>
+        <div>
+          <label for="password" class="font">Nova senha</label>
+        </div>
+        <div class="">
+          <input type="password" maxlength="25" id="password" v-model="password" />
+        </div>
+        <div>
+          <label for="confirmPassword" class="font">Confirmar nova senha</label>
+        </div>
+        <div class="">
+          <input type="password" maxlength="25" id="confirmPassword" v-model="confirmPassword" />
+        </div>
+        <div class="center">
+          <button class="btnCadastrar" type="submit">Próximo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</template>
 
-      <h2 class="titulo style">Criando nova senha</h2>
+<script lang="ts">
+import baseURL from '../service/api';
+import axios from 'axios';
 
-      <div class="">
-        <form>
-            <div>
-              <label for="username" class="font" >Para sua segurança, sua senha deve possuir:<br>- Minimo de 8 caractéres<br>- Ao menos um numero<br>- Ao menos uma letra</label>    
-            </div>
-
-            <div>
-                <label for="password" class="font">Nova Senha</label>
-            </div>
-            <div class="">
-              <input type="text" maxlength="25" id="password" v-model="password"/>
-            </div>
-
-            <div>
-                <label for="password" class="font">Confirmar Nova Senha</label>
-            </div>
-            <div class="">
-              <input type="text" maxlength="25" id="password" v-model="password"/>
-            </div>
-
-            <div class="center">
-            
-                <RouterLink to="/login">
-                    <button class="btnCadastrar">Proximo</button>
-                </RouterLink>
- 
-            </div>
-        </form>
-      </div>
-    </div>  
-  </template>
+export default {
+  data() {
+    return {
+      password: '',
+      confirmPassword: '',
+      isPopupVisible: false,
+      popupMessage: 'Sua senha foi alterada com sucesso.',
+    };
+  },
+  computed: {
+    camposPreenchidos() {
+      return this.password && this.confirmPassword;
+    },
+  },
+  methods: {
+    async submitForm() {
+      if (this.camposPreenchidos) {
+        try {
+          // Substitua 'seuToken' pelo token obtido, se necessário
+          const token = 'seuToken';
+          
+          // Chame a API para alterar a senha
+          const response = await axios.put(`${baseURL}user/changePassword/${token}/${this.password}`);
+          
+          // Exiba a mensagem de sucesso ou erro conforme necessário
+          alert('Senha alterada com sucesso.');
+          console.log(response.data);
+          
+          // Redirecione para a página de login
+          this.entrar();
+        } catch (error) {
+          console.error('Erro ao alterar senha:', error);
+          alert('Ocorreu um erro ao alterar a senha. Verifique o console para obter mais detalhes.');
+        }
+      } else {
+        alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+      }
+    },
+    entrar() {
+      // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
+      this.$router.push('/login');
+    },
+  },
+};
+</script>
 
 <style scoped>
 input{
@@ -46,19 +92,16 @@ input{
   margin: 5px 5px;
   border-style:solid;
   border-color:#33363A;
+  border-radius: 10px;
 }
-
 .style{
-  margin-top: 100px;
-  
+  margin-top: 70px;
 }
-
 .font{
   color: #FFFFFF;
   display: flex;
   max-width: 400px;
 }
-
 .titulo{
   text-align: center;
   color: #fff;
@@ -72,7 +115,7 @@ input{
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
-  border: none;
+  border-radius: 10px;
 }
 .btnCadastrar:hover {
   background-color: #2980b9;
@@ -89,54 +132,9 @@ label {
   flex-direction: column;
   align-items: center;
   border: none;
-  margin-top: 10px;
+  margin-top: 5px;
   width: 100%;
 }
 </style>
 
-  <script lang="ts">
-  export default {
-
-    data() {
-      return {
-        password:'',
-        confirmpassword:'',
-        isPopupVisible: false,
-        popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
-      };
-    },
-    computed: {
-      camposPreenchidos() {
-    if (this.password ) {
-      return true; // Retorna false se pelo menos um campo estiver vazio.
-    } else {
-      return false; // Retorna true quando todos os campos estão preenchidos.
-        }
-      }
-    },
-    methods: {
-      showPopup() {
-        if (this.camposPreenchidos){
-          this.isPopupVisible = true;
-        }
-        else{
-          alert('Por favor, preencha todos os campos antes de exibir o pop-up');
-          
-        }
-      },
-      closePopup() {
-
-        this.isPopupVisible = false;
-      },
-      login() {
-        // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-        // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-        console.log('Password:', this.password);
-      },
-      entrar() {
-      // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-      this.$router.push('/login')
-      },
-    },
-  };
-  </script>
+ 
