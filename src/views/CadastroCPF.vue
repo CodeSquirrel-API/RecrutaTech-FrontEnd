@@ -98,6 +98,7 @@ export default {
 
         alert("Usuário Cadastrado");
         console.log(response.data);
+        this.$router.push('/login');  
 
       } catch (error) {
         console.error('Erro ao cadastrar usuário:', error);

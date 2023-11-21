@@ -96,6 +96,7 @@ export default {
 
         alert("Empresa Cadastrada");
         console.log(response.data);
+        this.$router.push('/login');  
 
       } catch (error) {
         console.error('Erro ao cadastrar empresa:', error);
