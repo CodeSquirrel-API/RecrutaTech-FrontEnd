@@ -408,7 +408,9 @@ export default {
 .cha-textarea {
   font-size: 17px;
   width: 80%;
-  padding: 30px;
+  /* padding: 30px; */
+  padding-left: 10px;
+  padding-top: 5px;
   border: 1px solid #ccc;
   border-radius: 10px;
   outline: none;
