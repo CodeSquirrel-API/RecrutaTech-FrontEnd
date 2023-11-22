@@ -15,25 +15,28 @@
           <label for="empresa" class="font" >Nome da Empresa:</label>    
         </div>
         <div>
-          <input type="text" maxlength="50" id="empresa" v-model="empresa" placeholder="Razão Social" />
+          <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': empresa === '' && showEmptyWarning  }" id="empresa" v-model="empresa" placeholder="Razão Social" required/>
         </div>
         <div>
           <label for="cnpj" class="font" >CNPJ:</label>
         </div>
         <div class="">
-          <input type="text" maxlength="14" id="cnpj" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
+          <input type="text" maxlength="14" @focus="onInputFocus" :class="{ 'empty-required': cnpj === '' && showEmptyWarning }" id="cnpj" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" required/>
         </div>
         <div>
           <label for="email" class="font" >E-mail:</label>
         </div>
         <div class="">
-          <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com"/>
+          <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': email === '' && showEmptyWarning }" id="email" v-model="email" placeholder="email@exemplo.com" required/>
         </div>
         <div>
           <label for="password" class="font" >Senha:</label>
         </div>
         <div class="">
-          <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
+          <input type="password" maxlength="20" @focus="onInputFocus" :class="{ 'empty-required': password === '' && showEmptyWarning }" id="password" v-model="password" placeholder="********" required/>
+        </div>
+        <div v-if="showEmptyWarning">
+          Por favor, preencha todos os campos.
         </div>
         <div class="center">
           <button class="btnCadastrar" @click="cadastrar" v-if="carregando === false">Cadastrar</button>
@@ -66,6 +69,7 @@ export default {
       cnpj:'',
       email:'',
       password: '',
+      showEmptyWarning: false,
       isPopupVisible: false,
       popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
       carregando: false,
@@ -118,6 +122,10 @@ export default {
 
       closePopup() {
         this.isPopupVisible = false;
+      },
+      
+      onInputFocus() {
+      this.showEmptyWarning = this.empresa === ''|| this.password === '' || this.cnpj === '' || this.email === '';
       },
 
       validarNumero(){
@@ -254,6 +262,9 @@ label {
   border: none;
   margin-top: 10px;
   width: 100%;
+}
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
 }
 </style>
   
