@@ -15,16 +15,19 @@
           <label for="password" class="font">Nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" id="password" v-model="password" />
+          <input type="password" maxlength="25" @focus="onInputFocus" :class="{ 'empty-required': password === '' && showEmptyWarning }" id="password" v-model="password" required/>
         </div>
         <div>
           <label for="confirmPassword" class="font">Confirmar nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" id="confirmPassword" v-model="confirmPassword" />
+          <input type="password" maxlength="25" @focus="onInputFocus" :class="{ 'empty-required': confirmPassword === '' && showEmptyWarning }" id="confirmPassword" v-model="confirmPassword" required/>
         </div>
         <div class="center">
           <button class="btnCadastrar" type="submit">Próximo</button>
+        </div>
+        <div v-if="showEmptyWarning">
+          Por favor, preencha todos os campos.
         </div>
       </form>
     </div>
@@ -41,12 +44,13 @@ export default {
       password: '',
       confirmPassword: '',
       isPopupVisible: false,
+      showEmptyWarning: false,
       popupMessage: 'Sua senha foi alterada com sucesso.',
     };
   },
   computed: {
     camposPreenchidos() {
-      return this.password && this.confirmPassword;
+      return this.password === '' || this.confirmPassword === '';
     },
   },
   methods: {
@@ -72,6 +76,10 @@ export default {
       } else {
         alert('Por favor, preencha todos os campos antes de exibir o pop-up');
       }
+    },
+    onInputFocus() {
+      // Verifica se o campo está vazio quando o usuário seleciona o input
+      this.showEmptyWarning = this.password === ''|| this.confirmPassword === '';
     },
     entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
@@ -134,6 +142,9 @@ label {
   border: none;
   margin-top: 5px;
   width: 100%;
+}
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
 }
 </style>
 

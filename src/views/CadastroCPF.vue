@@ -15,25 +15,28 @@
               <label for="username" class="font" >Nome Completo: </label>    
             </div>
             <div class="">
-              <input type="text" maxlength="50" id="username" v-model="username" placeholder="Digite o seu nome"  />
+              <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': username === '' && showEmptyWarning }" id="username" v-model="username" placeholder="Digite o seu nome"  required/>
             </div>
             <div>
               <label for="cpf" class="font" >CPF: </label>
             </div>
             <div class="">
-              <input type="text" maxlength="11" id="cpf" v-model="cpf" @input="validarNumero"  placeholder="000.000.000-00"  />
+              <input type="text" maxlength="11" @focus="onInputFocus" :class="{ 'empty-required': cpf === '' && showEmptyWarning }" id="cpf" v-model="cpf" @input="validarNumero"  placeholder="000.000.000-00"  required/>
             </div>
             <div>
               <label for="email" class="font" >E-mail: </label>
             </div>
             <div class="">
-              <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com" />
+              <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': email === ''&& showEmptyWarning }" id="email" v-model="email" placeholder="email@exemplo.com" required>
             </div>
             <div>
               <label for="password" class="font" >Senha: </label>
             </div>
             <div class="">
-              <input type="password" maxlength="20" id="password" v-model="password" placeholder="********" />
+              <input type="password" maxlength="20" @focus="onInputFocus" :class="{ 'empty-required': password === '' && showEmptyWarning }" id="password" v-model="password" placeholder="********" required/>
+            </div>
+            <div v-if="showEmptyWarning">
+              Por favor, preencha todos os campos.
             </div>
             <div class="center">
             <button class="btnCadastrar" @click="cadastrar()" v-if="carregando === false">Cadastrar</button>
@@ -67,6 +70,7 @@ export default {
       cpf:'',
       email:'',
       password: '',
+      showEmptyWarning: false,
       isPopupVisible: false,
       popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       carregando: false,
@@ -120,7 +124,10 @@ export default {
         closePopup() {
           this.isPopupVisible = false;
     },
-
+    onInputFocus() {
+      this.showEmptyWarning = this.username === ''|| this.password === '' || this.cpf === '' || this.email === '';
+    },
+ 
     login() {
       // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
       // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
@@ -255,6 +262,9 @@ label {
   border: none;
   margin-top: 10px;
   width: 100%;
+} 
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
 }
 </style>
 

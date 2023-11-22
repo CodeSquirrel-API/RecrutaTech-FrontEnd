@@ -14,7 +14,11 @@
             </div>
 
             <div class="style">
-              <input type="text" maxlength="75" class="campoInput" id="email" v-model="username" placeholder="exemplo@gmail.com"/>
+              <input type="text" maxlength="75" @focus="onInputFocus" class="campoInput" :class="{ 'empty-required': email === '' && showEmptyWarning }" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
+            </div>
+            
+            <div v-if="showEmptyWarning">
+              Por favor, preencha o campo acima.
             </div>
 
             <div class="center">
@@ -26,7 +30,7 @@
               <button class="entrar">Voltar</button>
             </RouterLink>
  
-          </div>
+            </div>
         </form>
     
   </div>  
@@ -94,6 +98,10 @@ margin-top: 5px;
 margin-left: 5px; 
 align-items: flex-start;
 }
+
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
+}
 </style>
 
 <script lang="ts">
@@ -105,22 +113,9 @@ export default {
     return {
       numero: null,
       code: '',
-      isPopupVisible: false,
       email:'',
-      username: '',
-      password: '',
-      manterConectado: false,
-      popupMessage:'seu codigo será enviado em 5 minutos para o seu e-mail: ***@***.com, verifique o seu codigo para prosseguir com o seu login!'
+      showEmptyWarning: false,
     };
-  },
-  computed: {
-    camposPreenchidos() {
-  if (this.username && this.password) {
-    return true; // Retorna false se pelo menos um campo estiver vazio.
-  } else {
-    return false; // Retorna true quando todos os campos estão preenchidos.
-      }
-    }
   },
   methods: {
     async Codigo () {
@@ -136,30 +131,15 @@ export default {
         
       }
     },
+    onInputFocus() {
+      this.showEmptyWarning = this.email === '';
+    },
     validarNumero(){
       if (isNaN(this.numero)) {
         this.numero = null;
       }
     },
-    showPopup() {
-      if (this.camposPreenchidos){
-        this.isPopupVisible = true;
-      }
-      else{
-        alert('Por favor, preencha todos os campos antes de prosseguir');
-        
-      }
-    },
-    closePopup() {
-      this.isPopupVisible = false;
-    },
 
-    login() {
-      // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-      // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-      console.log('Usuário:', this.username);
-      console.log('Senha:', this.password);
-    },
     entrar() {
     // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
     this.$router.push('/home')
