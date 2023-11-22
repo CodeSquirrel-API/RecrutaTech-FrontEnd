@@ -5,10 +5,9 @@
       
       <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
         <option value="" disabled selected>Selecione o cargo</option>
-        <option v-for="(item, index) in candidatesProfessions" :key="index" :value="item"
-          class="select-option txt-select">
-          {{ item }}
-        </option>
+        <option v-for="(item, index) in sortedCandidates" :key="index" :value="item" class="select-option txt-select">
+        {{ item }}
+      </option>
       </select>
 
       <select v-model="nivel" name="experience"  class="select-option txt-select">
@@ -87,6 +86,16 @@ export default {
       candidatoSelecionado: null,
       visualizar: false,
     };
+  },
+
+  computed: {
+    sortedCandidates() {
+      const sortedList = [...this.candidatesProfessions];
+      
+      sortedList.sort();
+
+      return sortedList;
+    },
   },
   methods: {
     async getCandidates() {
