@@ -1,7 +1,11 @@
 <template>
 	<aside class="fixed-menu">
 		<div class="logo">
-			<img :src="logoURL" alt="Vue" />
+			<router-link to="/home" class="">
+				<img src="../assets/logo.png" alt="Vue" />
+			</router-link>
+
+
 		</div>
 
 		<div class="menu">
@@ -39,22 +43,22 @@
 </template>
   
 <script lang="ts">
-import logoURL from '../assets/logo.png';
+
 
 export default {
-  methods: {
-    logout() {
+	methods: {
+		logout() {
 
-      const token = localStorage.getItem('token');
-      if (token) {
+			const token = localStorage.getItem('token');
+			if (token) {
 
-        localStorage.removeItem('token');
+				localStorage.removeItem('token');
 
-       
-        this.$router.push('/login'); 
-      }
-    },
-  },
+
+				this.$router.push('/login');
+			}
+		},
+	},
 };
 </script>
   
@@ -80,8 +84,14 @@ export default {
 	height: auto;
 	display: flex;
 	justify-content: center;
+	cursor: pointer;
 	align-items: center;
 	margin-bottom: 5vh;
+	transition: all 0.7s ease;
+}
+
+.fixed-menu .logo img:hover{
+	scale: 1.08;
 }
 
 .fixed-menu h3 {
