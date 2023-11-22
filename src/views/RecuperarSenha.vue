@@ -22,6 +22,9 @@
             <RouterLink to="/login">
               <button class="entrar" @click="Codigo">Proximo</button>
             </RouterLink>
+            <RouterLink to="/login">
+              <button class="entrar">Voltar</button>
+            </RouterLink>
  
           </div>
         </form>
@@ -56,7 +59,7 @@ font-weight: bolder;
 color: white;
 }
 .entrar{
-margin-top:50px ;
+margin-top:10px ;
 margin-bottom: 25px;
 border-radius: 10px;
 width: 400px;
