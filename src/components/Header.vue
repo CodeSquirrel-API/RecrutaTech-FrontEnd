@@ -29,7 +29,7 @@
         <div class="menu-btn">
             <div class="navigation">
                 <div class="navigation-items">
-                    <a href=""><span style="vertical-align: bottom; font-size: 1.5em;" class="material-icons">account_circle</span>Lucas Rafael</a>
+                    <a href=""><span style="vertical-align: bottom; font-size: 1.5em;" class="material-icons">account_circle</span>{{user}}</a>
                 </div>
             </div>
         </div>
@@ -152,11 +152,42 @@ header .navigation .navigation-items a:hover:before {
     background: #5D5DFF;
 }
 </style>
-<script>
+<!-- <script>
 window.addEventListener("scroll", function () {
     var header = document.querySelector("header");
     var mediaicons = document.querySelector(".media-icons")
     header.classList.toggle("sticky", window.scrollY > 0)
     mediaicons.classList.toggle("sticky", window.scrollY > 350)
 })
-</script>
+</script> -->
+<script lang="ts">
+import baseURL from '../service/api';
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      user: '',
+      error: '',
+    };
+  },
+  methods: {
+    async getUserData() {
+      try {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          console.error('Token not found in localStorage');
+          this.error = 'Token not found';
+          return;
+        }
+
+        const response = await axios.get(`${baseURL}user/getUser/${token}`);
+        this.user = response.data;
+      } catch (error) {
+        console.error('Error na requisição:', error);
+        this.error = 'Failed to fetch user data';
+      }
+    },
+  },
+};</script>
