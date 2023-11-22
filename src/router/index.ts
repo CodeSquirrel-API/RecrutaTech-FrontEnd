@@ -88,6 +88,8 @@ const router = createRouter({
   ]
 })
 
+// AQUI EU ESTOU DANDO PERMISSÃO PARA ACESSAR AS OUTRAS ROTAS DA APLICAÇÃO SE O USUÁRIO ESTIVER LOGADO. CASO A ROTA QUE ELE QUER ACESSAR SEJA DIFERENTES DAS QUE ESTÃO ABAIXO
+// ELE VAI PRECISAR FAZER O LOGIN.
 router.beforeEach((to, from) => {
   console.log(localStorage.getItem('token'));
     
