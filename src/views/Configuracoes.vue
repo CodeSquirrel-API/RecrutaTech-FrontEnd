@@ -50,10 +50,16 @@ export default {
               this.messageBackgroundColor = '#ff4d4d';
               return;
             }
-
-            const response = await axios.put(
-              `${baseURL}user/changePassword/${token}/${this.password}`
-            );
+			
+		  const response = await axios.put(
+			`${baseURL}user/changePassword/${token}/${this.password}`,
+			null,  // Adicionei esse parâmetro como corpo vazio, pois o Swagger parece esperar apenas os parâmetros na URL
+			{
+				headers: {
+				Authorization: `Bearer ${token}`,
+				},
+			}
+			);
 
             this.message = 'Senha alterada com sucesso';
             this.messageBackgroundColor = '#1dcd59';
