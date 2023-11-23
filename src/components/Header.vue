@@ -29,15 +29,15 @@
         <div class="menu-btn">
             <div class="navigation">
                 <div class="navigation-items">
-                    <a href=""><span style="vertical-align: bottom; font-size: 1.5em;" class="material-icons">account_circle</span>{{user}}</a>
+                    <a href=""><span style="vertical-align: bottom; font-size: 1.5em;"
+                            class="material-icons">account_circle</span>{{ username ? `Username: ${username}` : 'Loading...' }}</a>
                 </div>
             </div>
         </div>
     </header>
 </template>
 <style>
-
-.navigation-items a span{
+.navigation-items a span {
     margin-right: 10px;
     color: #5D5DFF;
     text-align: center;
@@ -122,7 +122,7 @@ header .navigation .navigation-items a {
     padding: 20px 20px;
     background: #121415;
     border-radius: 10px 0px 0px 10px;
-    box-shadow: 0 5px 5px rgb(0,0,0, 0.3);
+    box-shadow: 0 5px 5px rgb(0, 0, 0, 0.3);
     margin-left: 30px;
     transition: 0.3s ease;
 }
@@ -160,34 +160,38 @@ window.addEventListener("scroll", function () {
     mediaicons.classList.toggle("sticky", window.scrollY > 350)
 })
 </script> -->
-<script lang="ts">
-import baseURL from '../service/api';
+<script>
 import axios from 'axios';
 
 export default {
   data() {
     return {
-      user: '',
-      error: '',
+      username: '',
+      error:'',
     };
   },
+  mounted() {
+    this.getUser();
+  },
   methods: {
-    async getUserData() {
-      try {
-        const token = localStorage.getItem('token');
+    getUser() {
+      const baseURL = '../service/api';
 
-        if (!token) {
-          console.error('Token not found in localStorage');
-          this.error = 'Token not found';
-          return;
-        }
+      const token = localStorage.getItem('token');
 
-        const response = await axios.get(`${baseURL}user/getUser/${token}`);
-        this.user = response.data;
-      } catch (error) {
-        console.error('Error na requisição:', error);
-        this.error = 'Failed to fetch user data';
+      if (!token) {
+        console.error('Token not found in local storage');
+        return;
       }
+
+      axios.get(`${baseURL}user/getUser/${token}`)
+        .then(response => {
+          this.username = response.data.username;
+        })
+        .catch(error => {
+          console.error('Error fetching user:', error);
+        });
     },
   },
-};</script>
+};
+</script>
