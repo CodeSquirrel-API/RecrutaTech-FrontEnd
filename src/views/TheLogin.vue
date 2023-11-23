@@ -33,10 +33,10 @@
           <div class="popup-content">
             <p class="popup-message">{{ popupMessage }}</p>
             <br>
-            <!-- <input v-model="numero" @input="validarNumero" maxlength="6" :class="{ 'campo-vazio': numero === '' }"/> -->
+            <input v-model="code" @input="validarNumero()" maxlength="6" :class="{ 'campo-vazio': numero === '' }"/>
             <br>
-            <!-- <button class="close-popup-button" @click="VerificarCodigo">Login</button> -->
-            <!-- <button class="close-popup-button" @click="closePopup">Fechar</button> -->
+            <button class="close-popup-button" @click="VerificarCodigo()">Login</button>
+            <button class="close-popup-button" @click="closePopup()">Fechar</button>
           </div>
         </div>
       </div>
@@ -178,7 +178,9 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      number: null,
+      token:'',
+      verificado: false,
+      numero: null,
       code: '',
       isPopupVisible: false,
       email: '',
@@ -190,15 +192,15 @@ export default {
       popupMessage: 'seu codigo será enviado em 5 minutos para o seu e-mail: ***@***.com, verifique o seu codigo para prosseguir com o seu login!'
     };
   },
-  //computed: {
-  //   camposPreenchidos() {
-  // if (this.email) {
-  //   return false; // Retorna false se pelo menos um campo estiver vazio.
-  // } else {
-  //   return true; // Retorna true quando todos os campos estão preenchidos.
-  //     }
-  //   } kk
-  // },
+  computed: {
+    camposPreenchidos() {
+  if (this.email) {
+    return false; // Retorna false se pelo menos um campo estiver vazio.
+  } else {
+    return true; // Retorna true quando todos os campos estão preenchidos.
+      }
+    } 
+  },
 
   methods: {
     async login() {
@@ -212,13 +214,20 @@ export default {
 
         // Verifique a resposta do servidor e redirecione conforme necessário
         if (response.status === 200) {
-          const token = response.data;
+            await  this.Codigo();
+            console.log(this.verificado);
 
-          // Armazene o token no localStorage
-          localStorage.setItem('token', token);
-          console.log('Login efetuado com sucesso');
-          this.$router.push('/home');
+          if (this.verificado === true)
+              {
+              this.token = response.data
+              console.log("AQUUUUIIIIIIII")
 
+              // Armazene o token no localStorage
+              localStorage.setItem('token', this.token);
+              console.log('Login efetuado com sucesso');
+              this.$router.push('/home');
+            }
+          
         } else {
           console.log('Credenciais inválidas');
         }
@@ -227,119 +236,86 @@ export default {
       } finally {
         this.carregando = false;
       }
-    }
+    },
 
-    ///salvar o token numa variavel localStorage; 
-    // dps ir no
+    
+    async Codigo () {
+      this.isPopupVisible = true;
+      try{
+       const response = await axios.post(`${baseURL}email/send-code`, 
+       {
+        "email": this.username,
+      })
 
+      if (response.status === 200) {
+        this.VerificarCodigo()
+      }
 
-    //async login(){
-    // // Block Mock - initial FIXME
-    //   console.log('teste');
-    //   //Tecnica de mock;
-    //   this.carregando = true;
-    //   setTimeout(() => {
-    //     // carregando = true; // -> ccontrola o spinner
-    //     if(this.username === 'teste@email.com' && this.password === '123456')
-    //     {
-    //       console.log('Login efetuado');
-    //       this.$router.push('/home');
-    //       this.carregando = false;
-    //     }
-    //     else
-    //     {
-    //       console.log('deu errado'); //-> Maybe use alert by javascript
-    //       this.carregando = false;
-    //     }
-    //     // carregando = false;
-    //   }, 6000) // 1 seg = 1000 milisegundos
-    //   // Block Mock - End
+      else {
+          console.log('Erro ao enviar o código!');
+      }
 
-    //   this.carregando = true;
-    //   setTimeout(() => {
-    //     // carregando = true; // -> ccontrola o spinner
-    //     if(this.username === this.username && this.password === this.password)
-    //     {
-    //       console.log('Login efetuado');
-    //       this.$router.push('/home');
-    //       this.carregando = false;
-    //     }
-    //     else
-    //     {
-    //       console.log('deu errado'); //-> Maybe use alert by javascript
-    //       this.carregando = false;
-    //     }
-    //     // carregando = false;
-    //   }, 6000)
-    //   await axios.post(`${baseURL}/login/login`, {
-    //     email: this.username,
-    //     password: this.password,
-    //     //token: '' -> Irs make no sense!!!!!1
-    //   }).then((data) => {
-    //     console.log(data);
+      console.log(response.data)
+      console.log("codigo enviado para:", this.username)
+      }
 
-    //     // Next Steps -> verify if data is ok and transfer user to other screem.
-    //     // If not ok, show message
-    //   });
-    // }
+      catch (error) {
+        console.error('Erro ao enviar o código')
+      }
+      return true
+      
+    },
 
-    // async Codigo () {
-    //   try{
-    //    const response = await axios.post(`${baseURL}/email/send-code`, {
-    //     "email": this.email,
-    //   })
-    //   console.log(response.data)
-    //   console.log("codigo enviado!", this.email)
-    //   }
-    //   catch (error) {
-    //     console.error('error')
+    
+    async VerificarCodigo () {
+      try{
+       const responseCheck = await axios.post(`${baseURL}email/check-code`, {
+        "email": this.username,
+        "code": this.code,
+      })
 
-    //   }
-    // },
-    // async VerificarCodigo () {
-    //   try{
-    //    const responseCheck = await axios.post(`${baseURL}/email/check-code`, {
-    //     "email": this.email,
-    //     "code": this.code,
-    //   })
-    //   console.log(responseCheck.data);
-    //   console.log(this.email);
+      if (responseCheck.status === 200) {
+        console.log("codigo verificado com sucesso!")
+        this.verificado = true;
+        this.closePopup();
 
-    //   if (responseCheck.data.valid) {
-    //     this.$router.push('/home');
-    //   } else {
-    //     this.$router.push('/login')
-    //     alert("Codigo incorreto!!");
-    //     }
-    //   }
-    //   catch (error) {
-    //     console.error(error);
+        localStorage.setItem('token', this.token);
+        console.log('Login efetuado com sucesso');
+        this.$router.push('/home');
+      } 
+      else {
+        this.$router.push('/login')
+        alert("Codigo incorreto!!");
+        }
+      }
+      catch (error) {
+        console.error(error);
 
-    //   }
+      }
 
-    // },
-    // validarNumero(){
-    //   if (isNaN(this.numero)) {
-    //     this.numero = null;
-    //   }
-    // },
-    // showPopup() {
-    //   if (this.camposPreenchidos){
-    //     this.isPopupVisible = true;
-    //   }
-    //   else{
-    //     alert('Por favor, preencha todos os campos antes de prosseguir');
+    },
 
-    //   }
-    // },
-    // closePopup() {
-    //   this.isPopupVisible = false;
-    // },
-
-
-    //entrar() {
-    //this.$router.push('/home')
-    //},
+    validarNumero(){
+      if (isNaN(this.numero)) {
+        this.numero = null;
+      }
+    },
+    showPopup() {
+      if (this.camposPreenchidos){
+        this.isPopupVisible = true;
+      }
+      else{
+        alert('Por favor, preencha todos os campos antes de prosseguir');
+      }
+    },
+    closePopup() {
+      this.isPopupVisible = false;
+      
+      if(this.token && this.verificado === true){
+        this.$router.push('/home');
+        
+      }
+    },
   },
 };
 </script>
