@@ -8,7 +8,6 @@
             <div>
               <label for="input1" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
             </div>
-
             <div class="style">
               <input type="text" maxlength="75" @focus="onInputFocus('input1')" class="campoInput" :class="{ 'empty-required': email === '' && focusedInput === 'input1' }" id="input1" v-model="email" placeholder="exemplo@gmail.com" required/>
             </div>
@@ -34,7 +33,8 @@ export default {
       numero: null,
       code: '',
       email:'',
-      showEmptyWarning: false,
+      focusedInput: null,
+      initialized: false,
     };
   },
   methods: {
@@ -51,8 +51,11 @@ export default {
         
       }
     },
-    onInputFocus() {
-      this.showEmptyWarning = this.email === '';
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
     },
     validarNumero(){
       if (isNaN(this.numero)) {
@@ -134,51 +137,3 @@ align-items: flex-start;
   border: 1px solid rgb(255, 30, 30);
 }
 </style>
-
-<script lang="ts">
-import baseURL from '../service/api';
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      numero: null,
-      code: '',
-      email:'',
-      focusedInput: null,
-      initialized: false,
-    };
-  },
-  methods: {
-    async Codigo () {
-      try{
-       const response = await axios.post(`${baseURL}/email/send-code`, {
-        "email": this.email,
-      })
-      console.log(response.data)
-      console.log("codigo enviado!", this.email)
-      }
-      catch (error) {
-        console.error('error')
-        
-      }
-    },
-    onInputFocus(inputId) {
-      this.focusedInput = inputId
-      if(this.initialized){
-        this.initialized = true;
-      }
-    },
-    validarNumero(){
-      if (isNaN(this.numero)) {
-        this.numero = null;
-      }
-    },
-
-    entrar() {
-    // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-    this.$router.push('/home')
-    },
-  },
-};
-</script>
