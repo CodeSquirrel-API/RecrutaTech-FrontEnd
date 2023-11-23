@@ -10,15 +10,11 @@
     <h2 class="titulo ">Esqueceu a sua senha?</h2>
     <form>
             <div>
-              <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
+              <label for="input1" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
             </div>
 
             <div class="style">
-              <input type="text" maxlength="75" @focus="onInputFocus" class="campoInput" :class="{ 'empty-required': email === '' && showEmptyWarning }" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
-            </div>
-            
-            <div v-if="showEmptyWarning">
-              Por favor, preencha o campo acima.
+              <input type="text" maxlength="75" @focus="onInputFocus('input1')" class="campoInput" :class="{ 'empty-required': email === '' && focusedInput === 'input1' }" id="input1" v-model="email" placeholder="exemplo@gmail.com" required/>
             </div>
 
             <div class="center">
@@ -114,7 +110,8 @@ export default {
       numero: null,
       code: '',
       email:'',
-      showEmptyWarning: false,
+      focusedInput: null,
+      initialized: false,
     };
   },
   methods: {
@@ -131,8 +128,11 @@ export default {
         
       }
     },
-    onInputFocus() {
-      this.showEmptyWarning = this.email === '';
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
     },
     validarNumero(){
       if (isNaN(this.numero)) {

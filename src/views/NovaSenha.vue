@@ -12,22 +12,19 @@
           </label>
         </div>
         <div>
-          <label for="password" class="font">Nova senha</label>
+          <label for="input1" class="font">Nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" @focus="onInputFocus" :class="{ 'empty-required': password === '' && showEmptyWarning }" id="password" v-model="password" required/>
+          <input type="password" maxlength="25" @focus="onInputFocus('input1')" :class="{ 'empty-required': password === '' && focusedInput === 'input1' }" id="input1" v-model="password" required/>
         </div>
         <div>
-          <label for="confirmPassword" class="font">Confirmar nova senha</label>
+          <label for="input2" class="font">Confirmar nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" @focus="onInputFocus" :class="{ 'empty-required': confirmPassword === '' && showEmptyWarning }" id="confirmPassword" v-model="confirmPassword" required/>
+          <input type="password" maxlength="25" @focus="onInputFocus('input2')" :class="{ 'empty-required': confirmPassword === '' && focusedInput === 'input2' }" id="input2" v-model="confirmPassword" required/>
         </div>
         <div class="center">
           <button class="btnCadastrar" type="submit">Próximo</button>
-        </div>
-        <div v-if="showEmptyWarning">
-          Por favor, preencha todos os campos.
         </div>
       </form>
     </div>
@@ -44,7 +41,8 @@ export default {
       password: '',
       confirmPassword: '',
       isPopupVisible: false,
-      showEmptyWarning: false,
+      focusedInput: null,
+      initialized: false,
       popupMessage: 'Sua senha foi alterada com sucesso.',
     };
   },
@@ -77,9 +75,11 @@ export default {
         alert('Por favor, preencha todos os campos antes de exibir o pop-up');
       }
     },
-    onInputFocus() {
-      // Verifica se o campo está vazio quando o usuário seleciona o input
-      this.showEmptyWarning = this.password === ''|| this.confirmPassword === '';
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
     },
     entrar() {
       // Use o método de roteamento do Vue Router para redirecionar para a rota desejada

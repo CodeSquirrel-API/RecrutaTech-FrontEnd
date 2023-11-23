@@ -12,31 +12,28 @@
       <div class="style">
         <form @submit.prevent="">
             <div>
-              <label for="username" class="font" >Nome Completo: </label>    
+              <label for="input1" class="font" >Nome Completo: </label>    
             </div>
             <div class="">
-              <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': username === '' && showEmptyWarning }" id="username" v-model="username" placeholder="Digite o seu nome"  required/>
+              <input type="text" maxlength="50" @focus="onInputFocus('input1')"  :class="{ 'empty-required': username === '' && focusedInput === 'input1'}" id="input1" v-model="username" placeholder="Digite o seu nome"  required/>
             </div>
             <div>
-              <label for="cpf" class="font" >CPF: </label>
+              <label for="input2" class="font" >CPF: </label>
             </div>
             <div class="">
-              <input type="text" maxlength="11" @focus="onInputFocus" :class="{ 'empty-required': cpf === '' && showEmptyWarning }" id="cpf" v-model="cpf" @input="validarNumero"  placeholder="000.000.000-00"  required/>
+              <input type="text" maxlength="11" @focus="onInputFocus('input2')"  :class="{ 'empty-required': cpf === '' && focusedInput === 'input2' }" id="input2" v-model="cpf" @input="validarNumero"  placeholder="000.000.000-00"  required/>
             </div>
             <div>
-              <label for="email" class="font" >E-mail: </label>
+              <label for="input3" class="font" >E-mail: </label>
             </div>
             <div class="">
-              <input type="text" maxlength="50" @focus="onInputFocus" :class="{ 'empty-required': email === ''&& showEmptyWarning }" id="email" v-model="email" placeholder="email@exemplo.com" required>
+              <input type="text" maxlength="50" @focus="onInputFocus('input3')" :class="{ 'empty-required': email === '' && focusedInput === 'input3' }" id="input3" v-model="email" placeholder="email@exemplo.com" required>
             </div>
             <div>
-              <label for="password" class="font" >Senha: </label>
+              <label for="input4" class="font" >Senha: </label>
             </div>
             <div class="">
-              <input type="password" maxlength="20" @focus="onInputFocus" :class="{ 'empty-required': password === '' && showEmptyWarning }" id="password" v-model="password" placeholder="********" required/>
-            </div>
-            <div v-if="showEmptyWarning">
-              Por favor, preencha todos os campos.
+              <input type="password" maxlength="20" @focus="onInputFocus('input4')" :class="{ 'empty-required': password === '' && focusedInput === 'input4'}" id="input4" v-model="password" placeholder="********" required/>
             </div>
             <div class="center">
             <button class="btnCadastrar" @click="cadastrar()" v-if="carregando === false">Cadastrar</button>
@@ -70,7 +67,8 @@ export default {
       cpf:'',
       email:'',
       password: '',
-      showEmptyWarning: false,
+      focusedInput: null,
+      initialized: false,
       isPopupVisible: false,
       popupMessage: 'Seu cadastro foi realizado com sucesso, verifique o seu email para poder realizar a ativação da sua conta.',
       carregando: false,
@@ -124,10 +122,13 @@ export default {
         closePopup() {
           this.isPopupVisible = false;
     },
-    onInputFocus() {
-      this.showEmptyWarning = this.username === ''|| this.password === '' || this.cpf === '' || this.email === '';
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
+      
     },
- 
     login() {
       // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
       // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
