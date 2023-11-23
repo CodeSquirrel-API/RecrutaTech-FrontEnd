@@ -1,36 +1,74 @@
 <template>
-  
   <div class="center">
-
     <div class="icon">
       <img src="../../public/squirrel.png" width="100" height="100" />
     </div>
-
-
     <h2 class="titulo ">Esqueceu a sua senha?</h2>
     <form>
             <div>
-              <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
+              <label for="input1" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
             </div>
-
             <div class="style">
-              <input type="text" maxlength="75" class="campoInput" id="email" v-model="username" placeholder="exemplo@gmail.com"/>
+              <input type="text" maxlength="75" @focus="onInputFocus('input1')" class="campoInput" :class="{ 'empty-required': email === '' && focusedInput === 'input1' }" id="input1" v-model="email" placeholder="exemplo@gmail.com" required/>
             </div>
-
             <div class="center">
-            
             <RouterLink to="/login">
-              <button class="entrar" @click="Codigo">Proximo</button>
+              <button class="entrar" @click="Codigo">Enviar</button>
             </RouterLink>
             <RouterLink to="/login">
               <button class="entrar">Voltar</button>
             </RouterLink>
- 
-          </div>
-        </form>
-    
+            </div>
+      </form>
   </div>  
 </template>
+
+<script lang="ts">
+import baseURL from '../service/api';
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      numero: null,
+      code: '',
+      email:'',
+      focusedInput: null,
+      initialized: false,
+    };
+  },
+  methods: {
+    async Codigo () {
+      try{
+       const response = await axios.put(`${baseURL}login/changePassword`, {
+        "email": this.email,
+      })
+      console.log(response.data)
+      console.log("codigo enviado!", this.email)
+      }
+      catch (error) {
+        console.error('error')
+        
+      }
+    },
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
+    },
+    validarNumero(){
+      if (isNaN(this.numero)) {
+        this.numero = null;
+      }
+    },
+
+    entrar() {
+    this.$router.push('/login')
+    },
+  },
+};
+</script>
 
 <style scoped>
 .style{
@@ -94,76 +132,8 @@ margin-top: 5px;
 margin-left: 5px; 
 align-items: flex-start;
 }
+
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
+}
 </style>
-
-<script lang="ts">
-import baseURL from '../service/api';
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      numero: null,
-      code: '',
-      isPopupVisible: false,
-      email:'',
-      username: '',
-      password: '',
-      manterConectado: false,
-      popupMessage:'seu codigo será enviado em 5 minutos para o seu e-mail: ***@***.com, verifique o seu codigo para prosseguir com o seu login!'
-    };
-  },
-  computed: {
-    camposPreenchidos() {
-  if (this.username && this.password) {
-    return true; // Retorna false se pelo menos um campo estiver vazio.
-  } else {
-    return false; // Retorna true quando todos os campos estão preenchidos.
-      }
-    }
-  },
-  methods: {
-    async Codigo () {
-      try{
-       const response = await axios.post(`${baseURL}/email/send-code`, {
-        "email": this.email,
-      })
-      console.log(response.data)
-      console.log("codigo enviado!", this.email)
-      }
-      catch (error) {
-        console.error('error')
-        
-      }
-    },
-    validarNumero(){
-      if (isNaN(this.numero)) {
-        this.numero = null;
-      }
-    },
-    showPopup() {
-      if (this.camposPreenchidos){
-        this.isPopupVisible = true;
-      }
-      else{
-        alert('Por favor, preencha todos os campos antes de prosseguir');
-        
-      }
-    },
-    closePopup() {
-      this.isPopupVisible = false;
-    },
-
-    login() {
-      // Aqui você pode implementar a lógica de autenticação, como fazer uma requisição para um servidor.
-      // Por simplicidade, vamos apenas imprimir os valores do nome de usuário e senha por agora.
-      console.log('Usuário:', this.username);
-      console.log('Senha:', this.password);
-    },
-    entrar() {
-    // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-    this.$router.push('/home')
-    },
-  },
-};
-</script>

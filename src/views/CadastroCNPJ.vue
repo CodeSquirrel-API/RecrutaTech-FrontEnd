@@ -12,28 +12,28 @@
     <div class="style">
       <form @submit.prevent="">
         <div>
-          <label for="empresa" class="font" >Nome da Empresa:</label>    
+          <label for="input1" class="font" >Nome da Empresa:</label>    
         </div>
         <div>
-          <input type="text" maxlength="50" id="empresa" v-model="empresa" placeholder="Razão Social" />
+          <input type="text" maxlength="50" @focus="onInputFocus('input1')" :class="{ 'empty-required': empresa === '' && focusedInput === 'input1'}" id="input1" v-model="empresa" placeholder="Razão Social" required/>
         </div>
         <div>
-          <label for="cnpj" class="font" >CNPJ:</label>
+          <label for="input2" class="font" >CNPJ:</label>
         </div>
         <div class="">
-          <input type="text" maxlength="14" id="cnpj" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" />
+          <input type="text" maxlength="14" @focus="onInputFocus('input2')" :class="{ 'empty-required': cnpj === '' && focusedInput === 'input2'}" id="input2" v-model="cnpj" @input="validarNumero" placeholder="XX.XXX.XXX/0001-XX" required/>
         </div>
         <div>
-          <label for="email" class="font" >E-mail:</label>
+          <label for="input3" class="font" >E-mail:</label>
         </div>
         <div class="">
-          <input type="text" maxlength="50" id="email" v-model="email" placeholder="email@exemplo.com"/>
+          <input type="text" maxlength="50" @focus="onInputFocus('input3')" :class="{ 'empty-required': email === '' && focusedInput === 'input3'}" id="input3" v-model="email" placeholder="email@exemplo.com" required/>
         </div>
         <div>
-          <label for="password" class="font" >Senha:</label>
+          <label for="input4" class="font" >Senha:</label>
         </div>
         <div class="">
-          <input type="password" maxlength="20" id="password" v-model="password" placeholder="********"/>
+          <input type="password" maxlength="20" @focus="onInputFocus('input4')" :class="{ 'empty-required': password === '' && focusedInput === 'input4'}" id="input4" v-model="password" placeholder="********" required/>
         </div>
         <div class="center">
           <button class="btnCadastrar" @click="cadastrar" v-if="carregando === false">Cadastrar</button>
@@ -66,6 +66,9 @@ export default {
       cnpj:'',
       email:'',
       password: '',
+      focusedInput: null,
+      initialized: false,
+      showEmptyWarning: false,
       isPopupVisible: false,
       popupMessage: 'O cadastro da sua empresa foi registrado com sucesso!',
       carregando: false,
@@ -119,6 +122,13 @@ export default {
       closePopup() {
         this.isPopupVisible = false;
       },
+      
+      onInputFocus(inputId) {
+        this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
+      }
+            },
 
       validarNumero(){
         if (isNaN(this.cnpj)) {
@@ -254,6 +264,9 @@ label {
   border: none;
   margin-top: 10px;
   width: 100%;
+}
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
 }
 </style>
   

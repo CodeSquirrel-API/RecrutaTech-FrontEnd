@@ -4,58 +4,84 @@
 
 		<Sidebar></Sidebar>
 		<Header></Header>
-		<form @submit.prevent="checkPassword">
+		<form @submit.prevent="changePassword">
 			<label for="password">Nova Senha</label>
 			<input v-model="password" type="password" id="password" placeholder="Insira sua nova senha">
 			<label for="cnfrm-password">Confirmar Senha</label>
 			<input v-model="cnfrmPassword" type="password" id="cnfrm-password" placeholder="Confirme sua nova senha">
 
-			<p
-				:style="{ backgroundColor: messageBackgroundColor, color: '#fff', padding: '5px 25px', marginTop: '10px', marginLeft: '11vh', borderRadius: '5px' }">
+			<p :style="{ backgroundColor: messageBackgroundColor, color: '#fff', padding: '5px 25px', marginTop: '10px', marginLeft: '11vh', borderRadius: '5px' }">
 				{{ message }}</p>
-			<button type="submit">Alterar</button>
+			<button type="button" @click="changePassword">Alterar</button>
 		</form>
 	</div>
 </template>
-  
-<script>
+
+<script lang="ts">
 import Sidebar from '../components/Sidebar.vue';
 import Header from '../components/Header.vue';
+import baseURL from '@/service/api';
+import axios from 'axios';
 
 export default {
-	components: {
-		Sidebar,
-		Header,
-	},
-	data() {
-		return {
-			password: '',
-			cnfrmPassword: '',
-			message: '',
-			messageBackgroundColor: '',
-		};
-	},
-	methods: {
-		checkPassword() {
-			if (this.password.length !== 0) {
-				if (this.password === this.cnfrmPassword) {
-					this.message = 'As senhas coincidem';
-					this.messageBackgroundColor = '#1dcd59';
+  components: {
+    Sidebar,
+    Header,
+  },
+  data() {
+    return {
+      password: '',
+      cnfrmPassword: '',
+      message: '',
+      messageBackgroundColor: '',
+    };
+  },
+  methods: {
+    async changePassword() {
+      if (this.password.length !== 0) {
+        if (this.password === this.cnfrmPassword) {
+          try {
+            // token do localStorage
+            const token = localStorage.getItem('token');
 
-				} else {
-					this.message = "Senhas divergentes";
-					this.messageBackgroundColor = '#ff4d4d';
-
-				}
-			} else {
-				alert("A senha não pode ser vazia");
-				this.message = '';
+            if (!token) {
+              console.error('Token not found in localStorage');
+              this.message = 'Token não encontrado. Faça o login novamente.';
+              this.messageBackgroundColor = '#ff4d4d';
+              return;
+            }
+			
+		  const response = await axios.put(
+			`${baseURL}user/changePassword/${token}/${this.password}`,
+			null,  // Adicionei esse parâmetro como corpo vazio, pois o Swagger parece esperar apenas os parâmetros na URL
+			{
+				headers: {
+				Authorization: `Bearer ${token}`,
+				},
 			}
-		},
-	},
+			);
+
+            this.message = 'Senha alterada com sucesso';
+            this.messageBackgroundColor = '#1dcd59';
+            console.log(response.data);
+          } catch (error) {
+            console.error('Erro ao alterar senha:', error);
+            this.message =
+              'Erro ao alterar senha. Verifique o console para obter mais detalhes.';
+            this.messageBackgroundColor = '#ff4d4d';
+          }
+        } else {
+          this.message = 'Senhas divergentes';
+          this.messageBackgroundColor = '#ff4d4d';
+        }
+      } else {
+        alert('A senha não pode ser vazia');
+        this.message = '';
+      }
+    },
+  },
 };
 </script>
-  
 
 <style scoped>
 form {

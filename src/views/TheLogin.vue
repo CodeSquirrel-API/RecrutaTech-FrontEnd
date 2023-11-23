@@ -11,13 +11,12 @@
 
       <div class="style">
         <label for="email" class="font">E-mail:</label>
-        <input type="text" maxlength="50" class="campoInput" id="email" v-model="username"
-          placeholder="exemplo@gmail.com" />
+        <input type="text" maxlength="50" class="campoInput" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
       </div>
 
       <div class="style">
         <label for="password" class="font">Senha:</label>
-        <input type="password" class="campoInput" id="password" v-model="password" placeholder="********" />
+        <input type="password" class="campoInput" id="password" v-model="password" placeholder="********" required/>
       </div>
 
       <div class="checkbox font style">
@@ -159,10 +158,6 @@
   width: 100%;
 }
 
-.campo-vazio {
-  border: 1px solid red;
-}
-
 label {
   display: block;
   margin-top: 5px;
@@ -184,7 +179,6 @@ export default {
       code: '',
       isPopupVisible: false,
       email: '',
-      username: '',
       password: '',
       manterConectado: false,
       carregando: false,
@@ -208,7 +202,7 @@ export default {
 
       try {
         const response = await axios.post(`${baseURL}login/login`, {
-          email: this.username,
+          email: this.email,
           password: this.password,
         });
 

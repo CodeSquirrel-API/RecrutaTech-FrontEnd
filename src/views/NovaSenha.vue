@@ -12,16 +12,16 @@
           </label>
         </div>
         <div>
-          <label for="password" class="font">Nova senha</label>
+          <label for="input1" class="font">Nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" id="password" v-model="password" />
+          <input type="password" maxlength="25" @focus="onInputFocus('input1')" :class="{ 'empty-required': password === '' && focusedInput === 'input1' }" id="input1" v-model="password" required/>
         </div>
         <div>
-          <label for="confirmPassword" class="font">Confirmar nova senha</label>
+          <label for="input2" class="font">Confirmar nova senha</label>
         </div>
         <div class="">
-          <input type="password" maxlength="25" id="confirmPassword" v-model="confirmPassword" />
+          <input type="password" maxlength="25" @focus="onInputFocus('input2')" :class="{ 'empty-required': confirmPassword === '' && focusedInput === 'input2' }" id="input2" v-model="confirmPassword" required/>
         </div>
         <div class="center">
           <button class="btnCadastrar" type="submit">Próximo</button>
@@ -41,12 +41,14 @@ export default {
       password: '',
       confirmPassword: '',
       isPopupVisible: false,
+      focusedInput: null,
+      initialized: false,
       popupMessage: 'Sua senha foi alterada com sucesso.',
     };
   },
   computed: {
     camposPreenchidos() {
-      return this.password && this.confirmPassword;
+      return this.password === '' || this.confirmPassword === '';
     },
   },
   methods: {
@@ -71,6 +73,12 @@ export default {
         }
       } else {
         alert('Por favor, preencha todos os campos antes de exibir o pop-up');
+      }
+    },
+    onInputFocus(inputId) {
+      this.focusedInput = inputId
+      if(this.initialized){
+        this.initialized = true;
       }
     },
     entrar() {
@@ -134,6 +142,9 @@ label {
   border: none;
   margin-top: 5px;
   width: 100%;
+}
+.empty-required {
+  border: 1px solid rgb(255, 30, 30);
 }
 </style>
 
