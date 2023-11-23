@@ -216,6 +216,7 @@ export default {
         if (response.status === 200) {
             await  this.Codigo();
             console.log(this.verificado);
+            this.token = response.data
 
           if (this.verificado === true)
               {
@@ -227,7 +228,7 @@ export default {
               console.log('Login efetuado com sucesso');
               this.$router.push('/home');
             }
-          
+        
         } else {
           console.log('Credenciais inválidas');
         }
@@ -246,54 +247,52 @@ export default {
        {
         "email": this.username,
       })
+        if (response.status === 200) {
+          console.log("enviado email")
+        }
 
-      if (response.status === 200) {
-        this.VerificarCodigo()
-      }
-
-      else {
-          console.log('Erro ao enviar o código!');
-      }
-
-      console.log(response.data)
-      console.log("codigo enviado para:", this.username)
+        else {
+            console.log('Erro ao enviar o código!');
+        }
+      console.log("codigo enviado para:", this.username);
+      console.log(this.verificado);
       }
 
       catch (error) {
         console.error('Erro ao enviar o código')
       }
-      return true
-      
     },
 
     
-    async VerificarCodigo () {
-      try{
-       const responseCheck = await axios.post(`${baseURL}email/check-code`, {
-        "email": this.username,
-        "code": this.code,
-      })
+    async VerificarCodigo() {
+  try {
+    const responseCheck = await axios.post(`${baseURL}email/check-code`, {
+      "email": this.username,
+      "code": this.code,
+    });
 
-      if (responseCheck.status === 200) {
-        console.log("codigo verificado com sucesso!")
-        this.verificado = true;
-        this.closePopup();
+    if (responseCheck.status === 200) {
+      console.log("Código verificado com sucesso!");
+      this.verificado = true;
+      console.log(this.verificado);
 
-        localStorage.setItem('token', this.token);
-        console.log('Login efetuado com sucesso');
-        this.$router.push('/home');
-      } 
-      else {
-        this.$router.push('/login')
-        alert("Codigo incorreto!!");
-        }
-      }
-      catch (error) {
-        console.error(error);
+      this.token = responseCheck.data; // Corrigido para responseCheck.data
 
-      }
+      // Armazene o token no localStorage
+      localStorage.setItem('token', this.token);
+      console.log('Login efetuado com sucesso');
+      console.log(localStorage);
+      this.$router.push('/home');
 
-    },
+      this.closePopup();
+    } else {
+      alert("Código incorreto!!");
+    }
+  } catch (error) {
+    console.error(error);
+  }
+},
+
 
     validarNumero(){
       if (isNaN(this.numero)) {
