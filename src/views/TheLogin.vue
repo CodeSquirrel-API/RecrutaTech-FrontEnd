@@ -11,7 +11,7 @@
 
       <div class="style">
         <label for="email" class="font">E-mail:</label>
-        <input type="text" maxlength="50" class="campoInput" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
+        <input type="text" maxlength="50" class="campoInput" id="email" v-model="username" placeholder="exemplo@gmail.com" required/>
       </div>
 
       <div class="style">
@@ -202,7 +202,7 @@ export default {
 
       try {
         const response = await axios.post(`${baseURL}login/login`, {
-          email: this.email,
+          email: this.username,
           password: this.password,
         });
 
