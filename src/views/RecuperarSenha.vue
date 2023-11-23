@@ -1,40 +1,73 @@
 <template>
-  
   <div class="center">
-
     <div class="icon">
       <img src="../../public/squirrel.png" width="100" height="100" />
     </div>
-
-
     <h2 class="titulo ">Esqueceu a sua senha?</h2>
-    <form>
-            <div>
-              <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
-            </div>
-
-            <div class="style">
-              <input type="text" maxlength="75" @focus="onInputFocus" class="campoInput" :class="{ 'empty-required': email === '' && showEmptyWarning }" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
-            </div>
-            
+      <form>
+          <div>
+            <label for="username" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
+          </div>
+          <div class="style">
+            <input type="text" maxlength="75" @focus="onInputFocus" class="campoInput" :class="{ 'empty-required': email === '' && showEmptyWarning }" id="email" v-model="email" placeholder="exemplo@gmail.com" required/>
+          </div>
             <div v-if="showEmptyWarning">
               Por favor, preencha o campo acima.
             </div>
-
             <div class="center">
-            
             <RouterLink to="/login">
-              <button class="entrar" @click="Codigo">Proximo</button>
+              <button class="entrar" @click="Codigo">Enviar</button>
             </RouterLink>
             <RouterLink to="/login">
               <button class="entrar">Voltar</button>
             </RouterLink>
- 
             </div>
-        </form>
-    
+      </form>
   </div>  
 </template>
+
+<script lang="ts">
+import baseURL from '../service/api';
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      numero: null,
+      code: '',
+      email:'',
+      showEmptyWarning: false,
+    };
+  },
+  methods: {
+    async Codigo () {
+      try{
+       const response = await axios.put(`${baseURL}login/changePassword`, {
+        "email": this.email,
+      })
+      console.log(response.data)
+      console.log("codigo enviado!", this.email)
+      }
+      catch (error) {
+        console.error('error')
+        
+      }
+    },
+    onInputFocus() {
+      this.showEmptyWarning = this.email === '';
+    },
+    validarNumero(){
+      if (isNaN(this.numero)) {
+        this.numero = null;
+      }
+    },
+
+    entrar() {
+    this.$router.push('/login')
+    },
+  },
+};
+</script>
 
 <style scoped>
 .style{
@@ -104,46 +137,3 @@ align-items: flex-start;
 }
 </style>
 
-<script lang="ts">
-import baseURL from '../service/api';
-import axios from 'axios';
-
-export default {
-  data() {
-    return {
-      numero: null,
-      code: '',
-      email:'',
-      showEmptyWarning: false,
-    };
-  },
-  methods: {
-    async Codigo () {
-      try{
-       const response = await axios.post(`${baseURL}/email/send-code`, {
-        "email": this.email,
-      })
-      console.log(response.data)
-      console.log("codigo enviado!", this.email)
-      }
-      catch (error) {
-        console.error('error')
-        
-      }
-    },
-    onInputFocus() {
-      this.showEmptyWarning = this.email === '';
-    },
-    validarNumero(){
-      if (isNaN(this.numero)) {
-        this.numero = null;
-      }
-    },
-
-    entrar() {
-    // Use o método de roteamento do Vue Router para redirecionar para a rota desejada
-    this.$router.push('/home')
-    },
-  },
-};
-</script>
