@@ -181,7 +181,7 @@ export default {
         experience: Array.isArray(payload.experience) ? payload.experience.join("") : payload.experience,
       };
 
-      try {
+        try {
         const response = await axios.post('/position/create', position);
         console.log(response);
       } catch (error) {
@@ -213,6 +213,7 @@ export default {
       gerarCHA() {
       this.getCargoGpt();
       this.showPopupcomAtraso1();
+      console.log()
       },
 
       showPopupcomAtraso1() {

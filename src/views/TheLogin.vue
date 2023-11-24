@@ -173,6 +173,7 @@ import axios from 'axios';
 export default {
   data() {
     return {
+      response:'',
       token:'',
       verificado: false,
       numero: null,
@@ -201,24 +202,26 @@ export default {
       this.carregando = true;
 
       try {
-        const response = await axios.post(`${baseURL}login/login`, {
+        this.response = await axios.post(`${baseURL}login/login`, {
           email: this.username,
           password: this.password,
         });
 
         // Verifique a resposta do servidor e redirecione conforme necessário
-        if (response.status === 200) {
+        if (this.response.status === 200) {
             await  this.Codigo();
             console.log(this.verificado);
-            this.token = response.data
+            this.token = this.response.data.token;
 
           if (this.verificado === true)
               {
-              this.token = response.data
+              this.token = this.response.data.token;
               console.log("AQUUUUIIIIIIII")
+              
 
               // Armazene o token no localStorage
               localStorage.setItem('token', this.token);
+              
               console.log('Login efetuado com sucesso');
               this.$router.push('/home');
             }
@@ -260,7 +263,7 @@ export default {
     
     async VerificarCodigo() {
   try {
-    const responseCheck = await axios.post(`${baseURL}email/check-code`, {
+    const responseCheck = await axios.post(`${baseURL}email/check-code`,{
       "email": this.username,
       "code": this.code,
     });
@@ -270,15 +273,15 @@ export default {
       this.verificado = true;
       console.log(this.verificado);
 
-      this.token = responseCheck.data; // Corrigido para responseCheck.data
-
+      this.token = this.response.data.token; // Corrigido para responseCheck.data
+      console.log("reponse = ",this.response);
       // Armazene o token no localStorage
       localStorage.setItem('token', this.token);
-      console.log('Login efetuado com sucesso');
       console.log(localStorage);
       this.$router.push('/home');
 
       this.closePopup();
+      return this.token;
     } else {
       alert("Código incorreto!!");
     }

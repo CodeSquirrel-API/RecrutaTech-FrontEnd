@@ -162,36 +162,46 @@ window.addEventListener("scroll", function () {
 </script> -->
 <script>
 import axios from 'axios';
+import baseURL from '../service/api';
 
 export default {
   data() {
     return {
       username: '',
       error:'',
+      config:'',
     };
-  },
-  mounted() {
-    this.getUser();
   },
   methods: {
     getUser() {
-      const baseURL = '../service/api';
 
       const token = localStorage.getItem('token');
-
       if (!token) {
         console.error('Token not found in local storage');
         return;
       }
 
-      axios.get(`${baseURL}user/getUser/${token}`)
-        .then(response => {
-          this.username = response.data.username;
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+
+    const response = axios.get(`${baseURL}user/getUser/${token}`, config).then(response => {
+        console.log('Resposta da API:', response.data);
+        this.username = response.data.name;
         })
+
         .catch(error => {
           console.error('Error fetching user:', error);
-        });
+        });  
     },
+    
   },
+  mounted() {
+    this.getUser();
+  },
+
+  
 };
 </script>

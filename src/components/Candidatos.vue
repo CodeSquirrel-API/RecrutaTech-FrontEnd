@@ -73,6 +73,7 @@
 
 <script lang="ts">
 import axios from 'axios';
+import baseURL from '@/service/api';
 
 export default {
   data() {
@@ -100,7 +101,7 @@ export default {
   methods: {
     async getCandidates() {
       try {
-        const response = await axios.get('/candidates/getAll');
+        const response = await axios.get(`${baseURL}candidates/getAll`);
         this.candidates = response.data;
         this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
       } catch (error) {
@@ -110,7 +111,7 @@ export default {
 
     async getPositions() {
       try {
-        const response = await axios.get('/position/getAll');
+        const response = await axios.get(`${baseURL}position/getAll`);
         this.positionsExperience = [...new Set(response.data)];
       } catch (error) {
         console.error('Erro na requisição de posições:', error);
