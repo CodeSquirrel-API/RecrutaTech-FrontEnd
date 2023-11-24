@@ -95,15 +95,11 @@ export default {
       }
     },
 
-    LimparCampos(clearCargo = true) {
+    LimparCampos() {
       this.conhecimento = '';
       this.habilidade = '';
       this.atitude = '';
       this.nivel = '';
-
-      if (clearCargo) {
-        this.cargo = '';
-      }
       this.buscaRealizada = false;
     },
 
