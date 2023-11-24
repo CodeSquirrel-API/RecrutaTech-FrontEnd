@@ -1,15 +1,17 @@
 <template>
 	<div class="page-content">
-		<h1 class="title">Alterar senha</h1>
-
+		<h2 class="title">Alterar Senha</h2>
+		<div class="descricao">
+			<p>Insira a nova senha nos campos indicados e finalize o processo clicando em 'Alterar'. 
+		Proteja sua conta com uma senha forte e atualizada.</p>
+		</div>
 		<Sidebar></Sidebar>
 		<Header></Header>
 		<form @submit.prevent="changePassword">
-			<label for="password">Nova Senha</label>
+			<label for="password">Nova senha</label>
 			<input v-model="password" type="password" id="password" placeholder="Insira sua nova senha">
-			<label for="cnfrm-password">Confirmar Senha</label>
+			<label for="cnfrm-password">Confirmar senha</label>
 			<input v-model="cnfrmPassword" type="password" id="cnfrm-password" placeholder="Confirme sua nova senha">
-
 			<p :style="{ backgroundColor: messageBackgroundColor, color: '#fff', padding: '5px 25px', marginTop: '10px', marginLeft: '11vh', borderRadius: '5px' }">
 				{{ message }}</p>
 			<button type="submit">Alterar</button>
@@ -98,8 +100,21 @@ export default {
 };
 </script>
 
-
 <style scoped>
+.title {
+  color: rgb(255, 255, 255);
+  font-size: 35px;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+.descricao {
+  color: #999898;
+  margin-top: -5px;
+  margin-left: -20px;
+  font-size: 25px;
+}
+
 form {
 	background-color: #121415;
 	width: 450px;
