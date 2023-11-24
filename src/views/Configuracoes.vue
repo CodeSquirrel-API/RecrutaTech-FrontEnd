@@ -12,7 +12,7 @@
 
 			<p :style="{ backgroundColor: messageBackgroundColor, color: '#fff', padding: '5px 25px', marginTop: '10px', marginLeft: '11vh', borderRadius: '5px' }">
 				{{ message }}</p>
-			<button type="button" @click="changePassword">Alterar</button>
+			<button type="submit">Alterar</button>
 		</form>
 	</div>
 </template>
@@ -20,7 +20,7 @@
 <script lang="ts">
 import Sidebar from '../components/Sidebar.vue';
 import Header from '../components/Header.vue';
-import baseURL from '@/service/api';
+import baseURL from '../service/api';
 import axios from 'axios';
 
 export default {
@@ -28,6 +28,7 @@ export default {
     Sidebar,
     Header,
   },
+
   data() {
     return {
       password: '',
@@ -41,7 +42,6 @@ export default {
       if (this.password.length !== 0) {
         if (this.password === this.cnfrmPassword) {
           try {
-            // token do localStorage
             const token = localStorage.getItem('token');
 
             if (!token) {
@@ -51,21 +51,36 @@ export default {
               return;
             }
 			
-		  const response = await axios.put(
-			`${baseURL}user/changePassword/${token}/${this.password}`,
-			null,  // Adicionei esse parâmetro como corpo vazio, pois o Swagger parece esperar apenas os parâmetros na URL
-			{
-				headers: {
-				Authorization: `Bearer ${token}`,
-				},
-			}
-			);
+            const response = await axios.put(
+              `${baseURL}user/changePassword/${token}/${this.password}`,
+              null,
+              {
+                headers: {
+				'Content-Type': 'application/json', // Adicione esta linha
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
 
             this.message = 'Senha alterada com sucesso';
             this.messageBackgroundColor = '#1dcd59';
             console.log(response.data);
           } catch (error) {
             console.error('Erro ao alterar senha:', error);
+
+            if (error.response) {
+              // O servidor respondeu com um status de erro
+              console.error('Response data:', error.response.data);
+              console.error('Response status:', error.response.status);
+              console.error('Response headers:', error.response.headers);
+            } else if (error.request) {
+              // A solicitação foi feita, mas não houve resposta do servidor
+              console.error('No response received. Request details:', error.request);
+            } else {
+              // Algo aconteceu durante a configuração da solicitação que acionou um erro
+              console.error('Error setting up the request:', error.message);
+            }
+
             this.message =
               'Erro ao alterar senha. Verifique o console para obter mais detalhes.';
             this.messageBackgroundColor = '#ff4d4d';
@@ -82,6 +97,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 form {
