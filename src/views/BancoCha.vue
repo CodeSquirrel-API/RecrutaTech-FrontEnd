@@ -99,8 +99,6 @@ export default {
       this.conhecimento = '';
       this.habilidade = '';
       this.atitude = '';
-      this.nivel = '';
-      this.cargo = '';
       this.buscaRealizada = false;
     },
 
