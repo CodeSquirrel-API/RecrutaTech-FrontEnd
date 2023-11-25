@@ -183,6 +183,7 @@ export default {
       code: '',
       isPopupVisible: false,
       email: '',
+      savedUsername: '',
       password: '',
       manterConectado: false,
       carregando: false,
@@ -239,7 +240,6 @@ export default {
       }
     },
 
-    
     async Codigo () {
       this.isPopupVisible = true;
       try{
@@ -256,7 +256,11 @@ export default {
         }
       console.log("codigo enviado para:", this.username);
       console.log(this.verificado);
+      
+      localStorage.setItem('email', this.username);
       }
+
+      
 
       catch (error) {
         console.error('Erro ao enviar o código')
