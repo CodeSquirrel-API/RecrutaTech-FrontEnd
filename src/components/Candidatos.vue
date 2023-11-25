@@ -87,7 +87,7 @@ export default {
       selectedCargo: '',
       nivel: '',
       candidatesProfessions: [],
-      positionsExperience: [],
+      positionsExperience: ["Junior", "Pleno", "Senior"],
       candidatosFiltrados: [],
       candidatoSelecionado: null,
       visualizar: false,
@@ -112,9 +112,10 @@ export default {
 
     async getCandidates() {
       try {
-        const response = await axios.get(`${baseURL}candidates/getAll`);
+        const response = await axios.get(`${baseURL}position/getAll`);
         this.candidates = response.data;
-        this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
+        // this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
+        this.candidatesProfessions = this.candidates.map((cand) => cand.name)
       } catch (error) {
         console.error('Erro na requisição:', error);
       }
@@ -143,15 +144,17 @@ export default {
     async getPositions() {
       try {
         const response = await axios.get(`${baseURL}position/getAll`);
-        this.positionsExperience = [...new Set(response.data)];
+        // this.positionsExperience = [...new Set(response.data)];
       } catch (error) {
         console.error('Erro na requisição de posições:', error);
       }
     },
 
     getNivel(selectedCargo) {
-      const filteredCandidates = this.candidates.filter(cand => cand.currentProfession === selectedCargo);
-      this.positionsExperience = [...new Set(filteredCandidates.map(cand => cand.experiences))];
+      // const filteredCandidates = this.candidates.filter(cand => cand.currentProfession === selectedCargo);
+      // this.positionsExperience = [...new Set(filteredCandidates.map(cand => cand.experiences))];
+
+      this.candidatoSelecionado = selectedCargo
     },
 
 
@@ -162,16 +165,21 @@ export default {
     // },
     async buscarCandidatosPorFiltro() {
       try {
+        console.log(this.candidatoSelecionado)
         const payload = {
           desenvolvedor: {
             profissao: this.selectedCargo,
             habilidades: ["Python", "Java", "Node.js", "MySQL", "PostgreSQL"],
             conhecimentos: ["Manipulação de Dados", "Conhecimento em SQL", "Testes Automatizados"],
             atitudes: ["Lógica de Programação", "Empatia", "Criatividade", "Resiliência"],
+            // profissao: this.selectedCargo,
+            // habilidades: this.habilidades,
+            // conhecimentos: this.candidato.skillsList,
+            // atitudes: this.atitudes,
           }
         };
 
-        const response = await axios.post('https://ia-api-bmmx.onrender.com/colaborador', payload);
+        const response = await axios.post('http://127.0.0.1:5000/colaborador', payload);
 
         if (response.status === 200) {
           this.candidatosFiltrados = response.data;
