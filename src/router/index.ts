@@ -5,10 +5,12 @@ import Chat from '../components/Chat.vue'
 import Configuracoes from '../views/Configuracoes.vue'
 
 const router = createRouter({
-
-  
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      redirect: '/Login',
+    },
     {
       path: '/Home',
       name: 'home',
