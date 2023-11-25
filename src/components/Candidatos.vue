@@ -78,6 +78,11 @@ import baseURL from '@/service/api';
 export default {
   data() {
     return {
+      Python: '',
+      Java: '',
+      Node: '',
+      MySQL: '',
+      PostgreSQL: '',
       candidates: [],
       selectedCargo: '',
       nivel: '',
@@ -99,11 +104,42 @@ export default {
     },
   },
   methods: {
+
     async getCandidates() {
       try {
         const response = await axios.get(`${baseURL}candidates/getAll`);
         this.candidates = response.data;
         this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
+      } catch (error) {
+        console.error('Erro na requisição:', error);
+      }
+    },
+
+    async getCandidates2() {
+      try {
+        const responseCheck = await axios.post(`https://ia-api-bmmx.onrender.com/colaborador`);
+          "desenvolvedor": {
+            "profissao": "Desenvolvedor Back-End",
+            "habilidades": {
+              Python: this.Python,
+              Java: this.Java,
+              Node.js: this.Node,
+              MySQL: this.MySQL,
+              PostgreSQL: this.PostgreSQL,
+            },
+            "conhecimentos": [
+              "Manipulação de Dados",
+              "Conhecimento em SQL",
+              "Testes Automatizados"
+            ],
+            "atitudes": [
+              "Lógica de Programação",
+              "Empatia",
+              "Criatividade",
+              "Resiliência"
+            ]
+          }
+        }
       } catch (error) {
         console.error('Erro na requisição:', error);
       }
