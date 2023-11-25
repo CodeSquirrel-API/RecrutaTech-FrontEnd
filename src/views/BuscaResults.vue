@@ -3,9 +3,8 @@
 	<Sidebar></Sidebar>
 	<div class="page-content">
 		<div class="container">
-			
-			<h1>BUSCAR CANDIDATOS</h1>
-        	<p>Para encontrar um candidato, selecione o cargo e nível de atuação profissional. Ao realizar a busca clique em visualizar para ver o currículo do candidato</p>
+			<h2 class="title">Buscar Candidatos</h2>
+        	<p>Encontre o candidato ideal ao selecionar o cargo e o nível de atuação profissional desejados. Após efetuar a busca, clique em "Visualizar" para acessar o currículo completo do candidato.</p>
 			<!-- <SelectMenu></SelectMenu> -->
 		</div>	
 		<div class="container-candidato">
@@ -43,7 +42,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 /*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');*/
 
 
@@ -52,6 +51,14 @@ export default {
 * {
 	font-family: Poppins;
 } */
+
+.title {
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  font-weight: bold;
+  margin-left: 20px;
+  margin-top: 30px;
+}
 
 .candidatos{
 	width: 50%;
@@ -93,7 +100,7 @@ export default {
 
 .container p {
 	color: #999898;
-	margin: 0vh 0vh 1vh 6vh;
+	margin: 10px 20px 15px 20px;
 	font-size: 17px;	
 }
 </style>

@@ -207,7 +207,7 @@ input{
   color: #fff;
   font-size: 35px;
   font-weight: bolder;
-  margin-top: 25px;
+  margin-top: 20px;
 }
 .opcao1{
   margin-right: 10px;
@@ -240,7 +240,7 @@ input{
   margin-top: 5px;
   border-radius: 10px;
   width: 133px;
-  height: 40px;
+  height: 43px;
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;

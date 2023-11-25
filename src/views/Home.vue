@@ -456,8 +456,10 @@ export default {
   color: #fff;
   border: 1px solid #5D5DFF;
   border-radius: 5px;
-  padding: 10px 20px;
+  padding: 10px 30px;
   margin-right: 15px;
+  margin-top: -20px;
+  margin-bottom: 20px;
   cursor: pointer;
   outline: none;
   transition: background-color 0.3s, color 0.3s;
