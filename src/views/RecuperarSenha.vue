@@ -6,7 +6,8 @@
     <h2 class="titulo ">Esqueceu a sua senha?</h2>
     <form>
             <div>
-              <label for="input1" class="font" >Para redefinir a sua senha, informe o seu email cadastrado <br> na sua conta e lhe enviaremos um link com as instruções.</label>    
+              <label for="input1" class="font" >Para redefinir sua senha, digite o e-mail associado à sua conta.</label>    
+              <label for="input1" class="font" >Enviaremos um link com as instruções necessárias.</label>    
             </div>
             <div class="style">
               <input type="text" maxlength="75" @focus="onInputFocus('input1')" class="campoInput" :class="{ 'empty-required': email === '' && focusedInput === 'input1' }" id="input1" v-model="email" placeholder="exemplo@gmail.com" required/>
@@ -15,9 +16,9 @@
             <RouterLink to="/login">
               <button class="entrar" @click="Codigo">Enviar</button>
             </RouterLink>
-            <RouterLink to="/login">
+             <!-- <RouterLink to="/login">
               <button class="entrar">Voltar</button>
-            </RouterLink>
+            </RouterLink> -->
             </div>
       </form>
   </div>  
@@ -83,24 +84,27 @@ height: 38px;
 color: #fff;
 border-radius: 10px;
 font-size: 16px;
-margin: 5px 5px;
+margin: 5px auto;
 border-style:solid;
 border-color:#33363A;
+display: block;
 }
 .font{
 color: #FFFFFF;
+text-align: center;
 }
 .titulo{
 text-align: center;
 font-size: 35px;
+margin-top: 20px;
 font-weight: bolder;
 color: white;
 }
 .entrar{
-margin-top:10px ;
+margin-top:5px ;
 margin-bottom: 25px;
 border-radius: 10px;
-width: 400px;
+width: 200px;
 height: 48px;
 background-color: #5D5DFF;
 color: white;
