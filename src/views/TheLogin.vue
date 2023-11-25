@@ -105,6 +105,7 @@
   border-radius: 10px;
   font-size: 16px;
   margin: 5px 5px;
+  margin-top: 3px;
   border-style: solid;
   border-color: #33363A;
 }
@@ -121,11 +122,11 @@
 }
 
 .entrar {
-  margin-top: 50px;
+  margin-top: 20px;
   margin-bottom: 25px;
   border-radius: 10px;
   width: 400px;
-  height: 48px;
+  height: 44px;
   background-color: #5D5DFF;
   color: white;
   font-size: 20px;
