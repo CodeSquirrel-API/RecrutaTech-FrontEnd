@@ -15,14 +15,14 @@
 			</router-link>
 			<router-link to="/busca" class="button">
 				<span class="material-icons">search</span>
-				<span class="text">Buscar</span>
+				<span class="text">Candidatos</span>
 			</router-link>
 			<!-- <router-link to="/resultados" class="button">
 		  <span class="material-icons">timeline</span>
 		  <span class="text">Resultados</span>
 		</router-link> -->
 			<router-link to="/bancocha" class="button">
-				<span class="material-icons">group</span>
+				<span class="material-icons">storage</span>
 				<span class="text">Banco CHA</span>
 			</router-link>
 			<router-link to="/configuracoes" class="button">
