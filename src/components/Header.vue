@@ -24,13 +24,13 @@
 
 </style> -->
 <template>
-    <header>
+    <header :class="{ 'sticky': isHeaderSticky }">
         <a href="home.html" class="logo"></a>
         <div class="menu-btn">
             <div class="navigation">
                 <div class="navigation-items">
-                    <a href=""><span style="vertical-align: bottom; font-size: 1.5em;"
-                            class="material-icons">account_circle</span>{{ username ? `Username: ${username}` : 'Loading...' }}</a>
+                    <a style="cursor: default;" href=""><span style="vertical-align: bottom; font-size: 1.5em;"
+                            class="material-icons">account_circle</span>{{username}}</a>
                 </div>
             </div>
         </div>
@@ -43,21 +43,6 @@
     text-align: center;
     vertical-align: center;
 
-}
-
-
-header.sticky {
-    z-index: 999;
-    position: fixed;
-    top: 0;
-    background: #121415;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 200px;
-    transition: 0.5s ease;
 }
 
 header .logo {
@@ -86,23 +71,6 @@ header {
     transition: 0.5s ease;
 
 }
-
-
-
-header.sticky {
-    z-index: 999;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background: transparent;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 200px;
-    transition: 0.5s ease;
-}
-
 
 header .navigation {
     position: relative;
@@ -152,14 +120,7 @@ header .navigation .navigation-items a:hover:before {
     background: #5D5DFF;
 }
 </style>
-<!-- <script>
-window.addEventListener("scroll", function () {
-    var header = document.querySelector("header");
-    var mediaicons = document.querySelector(".media-icons")
-    header.classList.toggle("sticky", window.scrollY > 0)
-    mediaicons.classList.toggle("sticky", window.scrollY > 350)
-})
-</script> -->
+
 <script>
 import axios from 'axios';
 import baseURL from '../service/api';
@@ -170,38 +131,15 @@ export default {
       username: '',
       error:'',
       config:'',
+      
     };
   },
-  methods: {
-    getUser() {
 
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error('Token not found in local storage');
-        return;
-      }
+    mounted() {
+      this.username = (localStorage.getItem('email') || '').split('@')[0];
 
-      const config = {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      };
-
-    const response = axios.get(`${baseURL}user/getUser/${token}`, config).then(response => {
-        console.log('Resposta da API:', response.data);
-        this.username = response.data.name;
-        })
-
-        .catch(error => {
-          console.error('Error fetching user:', error);
-        });  
     },
-    
-  },
-  mounted() {
-    this.getUser();
-  },
 
-  
 };
+        
 </script>
