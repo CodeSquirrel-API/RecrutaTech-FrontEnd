@@ -8,4 +8,6 @@ const api2 = axios.create({
 })
 const baseURL = axios.defaults.baseURL = "https://api-recrutatech.onrender.com/"
 
+const baseURL2 = axios.defaults.baseURL2 = "https://ia-api-bmmx.onrender.com/colaborador"
+
 export default baseURL; api; api2;
