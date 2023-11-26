@@ -167,19 +167,23 @@ export default {
     // },
     async buscarCandidatosPorFiltro() {
       try {
+
+        let candidate =  await this.candidates.filter(el => el.name === this.candidatoSelecionado)
+        candidate = candidate[0]
         const payload = {
           desenvolvedor: {
             profissao: this.selectedCargo,
+            // habilidades: candidate.skill.split(","),
+            // conhecimentos: candidate.knowledge.split(","),
+            // atitudes: candidate.attitude.split(","),
             habilidades: ["Python", "Java", "Node.js", "MySQL", "PostgreSQL"],
             conhecimentos: ["Manipulação de Dados", "Conhecimento em SQL", "Testes Automatizados"],
             atitudes: ["Lógica de Programação", "Empatia", "Criatividade", "Resiliência"],
-            // profissao: this.selectedCargo,
-            // habilidades: this.habilidades,
-            // conhecimentos: this.candidato.skillsList,
-            // atitudes: this.atitudes,
           }
+          
         };
-
+        console.log(payload)
+        
         const response = await axios.post('http://127.0.0.1:5000/colaborador', payload);
         // if (response.status === 200) {
           this.candidatosFiltrados = response.data.resultado;
