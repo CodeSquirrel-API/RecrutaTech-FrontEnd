@@ -24,7 +24,9 @@
       <div class="candidato-card">
         <div class="info">
           <span class="candidato">{{ candidato.name }}</span>
-          <span class="match">{{ candidato.match }}%</span>
+          <span class="match">{{ candidato.email }}</span>
+          <span class="match">{{ candidato.pontuacao }}</span>
+          <span class="match">{{ candidato.qualificacao }}</span>
           <button class="visualizar-button" @click="toggleVisualizar(candidato)">
             {{ visualizar && candidatoSelecionado === candidato ? 'Fechar' : 'Visualizar' }}
           </button>
@@ -165,7 +167,6 @@ export default {
     // },
     async buscarCandidatosPorFiltro() {
       try {
-        console.log(this.candidatoSelecionado)
         const payload = {
           desenvolvedor: {
             profissao: this.selectedCargo,
@@ -180,11 +181,12 @@ export default {
         };
 
         const response = await axios.post('http://127.0.0.1:5000/colaborador', payload);
-
-        if (response.status === 200) {
-          this.candidatosFiltrados = response.data;
+        // if (response.status === 200) {
+          this.candidatosFiltrados = response.data.resultado;
           console.log("Requisição bem-sucedida");
-        }
+        // }
+
+
       } catch (error) {
         console.error('Erro na requisição:', error);
       }
