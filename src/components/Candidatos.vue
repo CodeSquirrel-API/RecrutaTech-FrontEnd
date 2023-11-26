@@ -2,15 +2,15 @@
   <div class="container" style="color: rgb(255, 255, 255);">
 
     <div class="select-btn">
-      
+
       <select v-model="selectedCargo" class="select-option txt-select" @change="getNivel(selectedCargo)">
         <option value="" disabled selected>Selecione o cargo</option>
         <option v-for="(item, index) in sortedCandidates" :key="index" :value="item" class="select-option txt-select">
-        {{ item }}
-      </option>
+          {{ item }}
+        </option>
       </select>
 
-      <select v-model="nivel" name="experience"  class="select-option txt-select">
+      <select v-model="nivel" name="experience" class="select-option txt-select">
         <option value="" disabled selected>Selecione o nível</option>
         <option v-for="(experience, index) in positionsExperience" :key="index" :value="experience">
           {{ experience }}
@@ -88,17 +88,22 @@ export default {
       selectedCargo: '',
       nivel: '',
       candidatesProfessions: [],
-      positionsExperience: [],
+      positionsExperience: ["Junior", "Pleno", "Senior"],
       candidatosFiltrados: [],
       candidatoSelecionado: null,
       visualizar: false,
+      desenvolvedor: [],
+      habilidades: [],
+      conhecimentos: [],
+      atitudes: [],
+
     };
   },
 
   computed: {
     sortedCandidates() {
       const sortedList = [...this.candidatesProfessions];
-      
+
       sortedList.sort();
 
       return sortedList;
@@ -108,64 +113,84 @@ export default {
 
     async getCandidates() {
       try {
-        const response = await axios.get(`${baseURL}candidates/getAll`);
+        const response = await axios.get(`${baseURL}position/getAll`);
         this.candidates = response.data;
-        this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
+        // this.candidatesProfessions = [...new Set(this.candidates.map((cand) => cand.currentProfession))];
+        this.candidatesProfessions = this.candidates.map((cand) => cand.name)
       } catch (error) {
         console.error('Erro na requisição:', error);
       }
     },
 
-    async getCandidates2() {
-      try {
-        const responseCheck = await axios.post(`${baseURL2}`);
-          "desenvolvedor": {
-            "profissao": "Desenvolvedor Back-End",
-            "habilidades": {
-              Python: this.Python,
-              Java: this.Java,
-              Node.js: this.Node,
-              MySQL: this.MySQL,
-              PostgreSQL: this.PostgreSQL,
-            },
-            "conhecimentos": [
-              "Manipulação de Dados",
-              "Conhecimento em SQL",
-              "Testes Automatizados"
-            ],
-            "atitudes": [
-              "Lógica de Programação",
-              "Empatia",
-              "Criatividade",
-              "Resiliência"
-            ]
-          }
-        }
-      } catch (error) {
-        console.error('Erro na requisição:', error);
-      }
-    },
+    //     async getCandidates() {
+    //   try {
+    //     const candidato = {
+    //       profissao: this.selectedCargo,
+    //       habilidades: this.habilidades,
+    //       conhecimentos: this.conhecimentos, 
+    //       atitudes: this.atitudes,
+    //     };
+
+    //     const response = await axios.post('https://ia-api-bmmx.onrender.com/colaborador', { candidato });
+
+    //     if (response.status === 200) {
+    //       console.log("Requisição bem-sucedida");
+    //     }
+    //   } catch (error) {
+    //     console.error('Erro na requisição:', error);
+    //   }
+    // },
+
 
     async getPositions() {
       try {
         const response = await axios.get(`${baseURL}position/getAll`);
-        this.positionsExperience = [...new Set(response.data)];
+        // this.positionsExperience = [...new Set(response.data)];
       } catch (error) {
         console.error('Erro na requisição de posições:', error);
       }
     },
 
     getNivel(selectedCargo) {
-      const filteredCandidates = this.candidates.filter(cand => cand.currentProfession === selectedCargo);
-      this.positionsExperience = [...new Set(filteredCandidates.map(cand => cand.experiences))];
+      // const filteredCandidates = this.candidates.filter(cand => cand.currentProfession === selectedCargo);
+      // this.positionsExperience = [...new Set(filteredCandidates.map(cand => cand.experiences))];
+
+      this.candidatoSelecionado = selectedCargo
     },
 
 
-    buscarCandidatosPorFiltro() {
-      this.candidatosFiltrados = this.candidates.filter(
-        (cand) => cand.currentProfession === this.selectedCargo && cand.experiences === this.nivel
-      );
+    // buscarCandidatosPorFiltro() {   //acho que aqui que tenho que mudar. Tenho que enviar as infos que eu peguei para a I.A e ela me devolve os candidatos filtrados
+    //   this.candidatosFiltrados = this.candidates.filter(
+    //     (cand) => cand.currentProfession === this.selectedCargo && cand.experiences === this.nivel
+    //   );
+    // },
+    async buscarCandidatosPorFiltro() {
+      try {
+        console.log(this.candidatoSelecionado)
+        const payload = {
+          desenvolvedor: {
+            profissao: this.selectedCargo,
+            habilidades: ["Python", "Java", "Node.js", "MySQL", "PostgreSQL"],
+            conhecimentos: ["Manipulação de Dados", "Conhecimento em SQL", "Testes Automatizados"],
+            atitudes: ["Lógica de Programação", "Empatia", "Criatividade", "Resiliência"],
+            // profissao: this.selectedCargo,
+            // habilidades: this.habilidades,
+            // conhecimentos: this.candidato.skillsList,
+            // atitudes: this.atitudes,
+          }
+        };
+
+        const response = await axios.post('http://127.0.0.1:5000/colaborador', payload);
+
+        if (response.status === 200) {
+          this.candidatosFiltrados = response.data;
+          console.log("Requisição bem-sucedida");
+        }
+      } catch (error) {
+        console.error('Erro na requisição:', error);
+      }
     },
+
 
     visualizarCandidato(candidato) {
       this.candidatoSelecionado = candidato;
@@ -187,7 +212,7 @@ export default {
 <style scoped>
 .container {
   display: block;
-  
+
 
 }
 
@@ -292,7 +317,7 @@ export default {
   position: relative;
 }
 
-.btn-buscar:hover{
+.btn-buscar:hover {
   opacity: 0.8;
 }
 
@@ -311,9 +336,9 @@ export default {
 .select-option,
 .btn-buscar {
   display: block;
-  margin: 5px; 
+  margin: 5px;
 }
-  
+
 .select-btn select {
   display: block;
   cursor: pointer;
