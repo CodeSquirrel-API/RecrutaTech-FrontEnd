@@ -76,6 +76,7 @@
 <script lang="ts">
 import axios from 'axios';
 import baseURL from '@/service/api';
+import baseURL2 from '@/service/api';
 
 export default {
   data() {
