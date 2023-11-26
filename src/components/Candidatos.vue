@@ -74,6 +74,7 @@
 <script lang="ts">
 import axios from 'axios';
 import baseURL from '@/service/api';
+import baseURL2 from '@/service/api';
 
 export default {
   data() {
@@ -117,7 +118,7 @@ export default {
 
     async getCandidates2() {
       try {
-        const responseCheck = await axios.post(`https://ia-api-bmmx.onrender.com/colaborador`);
+        const responseCheck = await axios.post(`${baseURL2}`);
           "desenvolvedor": {
             "profissao": "Desenvolvedor Back-End",
             "habilidades": {
