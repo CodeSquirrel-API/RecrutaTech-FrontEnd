@@ -183,7 +183,9 @@ export default {
 
         if (response.status === 200) {
           this.candidatosFiltrados = response.data;
-          console.log("Requisição bem-sucedida");
+          let candidatos = Array.isArray(response.data) ? response.data : [];
+          this.candidatosFiltrados = candidatos.sort((a, b) => b.compatibilidade - a.compatibilidade);          console.log("Requisição bem-sucedida");
+          console.log(response.data)
         }
       } catch (error) {
         console.error('Erro na requisição:', error);
