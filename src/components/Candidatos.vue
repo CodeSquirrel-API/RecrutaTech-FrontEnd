@@ -27,9 +27,9 @@
           <span class="match">{{ candidato.email }}</span>
           <span class="match">{{ candidato.pontuacao }}</span>
           <span class="match">{{ candidato.qualificacao }}</span>
-          <button class="visualizar-button" @click="toggleVisualizar(candidato)">
+          <!-- <button class="visualizar-button" @click="toggleVisualizar(candidato)">
             {{ visualizar && candidatoSelecionado === candidato ? 'Fechar' : 'Visualizar' }}
-          </button>
+          </button> -->
         </div>
         <div class="bar">
           <div class="ranked-bar" :style="{ width: `${candidato.match}%` }"></div>
@@ -73,7 +73,7 @@
 </template>
 
 
-<script lang="ts">
+<script>
 import axios from 'axios';
 import baseURL from '@/service/api';
 import baseURL2 from '@/service/api';
@@ -317,7 +317,7 @@ export default {
   font-size: 20px;
   padding: 8px 56px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 0 5px 15px rgb(0, 0, 0, 0.5);
   transition: all 0.5s ease;
   position: relative;
